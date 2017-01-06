@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="toolvendor"/>
+  <table-filter match-name="brand"/>
+  <table-filter match-name="modules"/>
+  <table-filter match-name="order_detail"/>
+  <table-filter match-name="presentation"/>
+  <table-filter match-name="product"/>
+  <table-filter match-name="promotions"/>
+  <table-filter match-name="user"/>
+  <table-filter match-name="user_groups"/>
+  <table-filter match-name="stock"/>
+  <table-filter match-name="user_type"/>
+  <table-filter match-name="user_zone"/>
+  <table-filter match-name="city"/>
+  <table-filter match-name="permission"/>
+  <table-filter match-name="visit"/>
+  <table-filter match-name="family"/>
+  <table-filter match-name="groups"/>
+  <table-filter match-name="customer"/>
+  <table-filter match-name="visit_type"/>
+  <table-filter match-name="call"/>
+  <table-filter match-name="country"/>
+  <table-filter match-name="zone"/>
+  <table-filter match-name="cellar"/>
+  <table-filter match-name="contact"/>
+  <table-filter match-name="category"/>
+  <table-filter match-name="company"/>
+  <table-filter match-name="visit_picture"/>
+  <table-filter match-name="order"/>
+  <table-filter match-name="catalog"/>
+  <table-filter match-name="product_type"/>
+</hibernate-reverse-engineering>

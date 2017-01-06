@@ -113,7 +113,7 @@ public class VisitDAO {
         try{
            Criteria cr = session.createCriteria(Visit.class);
            // Add restriction.
-           cr.add(Restrictions.eq("customer_id", customerId));
+           cr.add(Restrictions.eq("customerId", customerId));
            //crit.add(Restrictions.like("id", id+"%"));
            result = cr.list();
            if ( result!=null )

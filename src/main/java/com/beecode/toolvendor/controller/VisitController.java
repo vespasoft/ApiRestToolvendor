@@ -5,14 +5,12 @@
  */
 package com.beecode.toolvendor.controller;
 
-import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.Visit;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.service.VisitServiceImpl;
 import com.beecode.toolvendor.service.SecurityServiceImpl;
 import com.beecode.toolvendor.service.VisitPictureServiceImpl;
 import com.beecode.toolvendor.util.AppPreferences;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

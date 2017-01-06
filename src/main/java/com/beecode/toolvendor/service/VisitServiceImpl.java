@@ -221,7 +221,15 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List getAllByCustomer(Integer customerId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dao = new VisitDAO();
+        List<Visit> list = null;
+        try {
+            // Se consulta en la bd los usuarios registrados de una compañia.
+            list = dao.getAllByCustomer(customerId);
+        } catch ( Exception e ) {
+            System.out.println("Error in visit getAllByCustomer: " + e.getMessage());
+        }
+        return list;
     }
     
 }

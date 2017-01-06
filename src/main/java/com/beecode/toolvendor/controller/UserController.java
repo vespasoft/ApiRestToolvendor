@@ -45,7 +45,7 @@ public class UserController extends AppPreferences {
     SecurityServiceImpl security = new SecurityServiceImpl();
     CustomerServiceImpl cstmrserv = new CustomerServiceImpl();
     CompanyServiceImpl companyserv = new CompanyServiceImpl();
-    
+    VisitServiceImpl visitserv = new VisitServiceImpl();
     
     //-------------------Retrieve All Customer By User--------------------------------------------------------
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -351,9 +351,10 @@ public class UserController extends AppPreferences {
     //-------------------Retrieve All Visit By User--------------------------------------------------------
     @RequestMapping(value = "/user/{id}/visit", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllVisit(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        VisitServiceImpl visitserv = new VisitServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        visitserv = new VisitServiceImpl();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {

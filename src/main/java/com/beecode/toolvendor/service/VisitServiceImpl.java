@@ -13,6 +13,7 @@ import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.Visit;
 import com.beecode.toolvendor.thread.SendEmailScheduleVisitThread;
 import com.beecode.toolvendor.thread.SendEmailVisitThread;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -67,7 +68,9 @@ public class VisitServiceImpl implements VisitService {
             message="No existe un registro con este VisitTypeId.";
         } else {
             //--- Created At fecha de creación del registro
-            visit.setCreatedAt(new Date() );
+            Timestamp timestamp = new Timestamp(new Date().getTime());
+            visit.setCreatedAt( timestamp );
+            
             dao.add(visit);
             User user = userserv.findById(visit.getCustomerId(), visit.getCompanyId());
             // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
@@ -113,7 +116,8 @@ public class VisitServiceImpl implements VisitService {
                 if (visit.getFirm()!=null) currentVisit.setFirm(visit.getFirm());
                 //if (visit.getVisitPictures()!=null) currentVisit.setVisitPictures(visit.getVisitPictures());
                 //--- LastUpdate fecha de actualizacion del registro
-                currentVisit.setLastUpdate(new Date());
+                Timestamp timestamp = new Timestamp(new Date().getTime());
+                currentVisit.setLastUpdate(timestamp);
                 //--- se ejecuta el update en la capa de datos ---
                 dao.update(currentVisit);
             } else {

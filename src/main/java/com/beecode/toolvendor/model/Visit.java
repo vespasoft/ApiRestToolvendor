@@ -3,6 +3,7 @@ package com.beecode.toolvendor.model;
 
 
 import com.beecode.toolvendor.util.HibernateUtil;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +31,11 @@ public class Visit  implements java.io.Serializable {
      private Integer userId;
      private Integer companyId;
      private VisitType visitType;
-     private Date createdAt;
-     private Date lastUpdate;
-     private Date scheduledDate;
-     private Date checkin;
-     private Date checkout;
+     private Timestamp createdAt;
+     private Timestamp lastUpdate;
+     private Timestamp scheduledDate;
+     private Timestamp checkin;
+     private Timestamp checkout;
      private String firm;
      private String comment;
      private String reason;
@@ -42,7 +43,7 @@ public class Visit  implements java.io.Serializable {
     public Visit() {
     }
 
-    public Visit(Integer customerId, Integer userId, Integer companyId, VisitType visitType, Date createdAt, Date scheduledDate, String reason) {
+    public Visit(Integer customerId, Integer userId, Integer companyId, VisitType visitType, Timestamp createdAt, Timestamp scheduledDate, String reason) {
        this.customerId = customerId;
        this.userId = userId;
        this.companyId = companyId;
@@ -103,51 +104,51 @@ public class Visit  implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_at", length=19)
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return this.createdAt;
     }
     
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="last_update", length=19)
-    public Date getLastUpdate() {
+    public Timestamp getLastUpdate() {
         return this.lastUpdate;
     }
     
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="scheduled_date", length=19)
-    public Date getScheduledDate() {
+    public Timestamp getScheduledDate() {
         return this.scheduledDate;
     }
     
-    public void setScheduledDate(Date scheduledDate) {
+    public void setScheduledDate(Timestamp scheduledDate) {
         this.scheduledDate = scheduledDate;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="checkin", length=19)
-    public Date getCheckin() {
+    public Timestamp getCheckin() {
         return this.checkin;
     }
     
-    public void setCheckin(Date checkin) {
+    public void setCheckin(Timestamp checkin) {
         this.checkin = checkin;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="checkout", length=19)
-    public Date getCheckout() {
+    public Timestamp getCheckout() {
         return this.checkout;
     }
     
-    public void setCheckout(Date checkout) {
+    public void setCheckout(Timestamp checkout) {
         this.checkout = checkout;
     }
 

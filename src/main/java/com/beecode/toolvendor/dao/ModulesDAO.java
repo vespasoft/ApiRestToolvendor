@@ -20,7 +20,6 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class ModulesDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = UserDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from Modules WHERE id= :id";
@@ -29,7 +28,7 @@ public class ModulesDAO {
     private static String queryDelete = "delete from Modules where id = :id";
     
     public void add(Modules entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -42,7 +41,7 @@ public class ModulesDAO {
     }
     
     public void update(Modules entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -55,14 +54,14 @@ public class ModulesDAO {
     }
     
     public List getAll() {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Query query = session.createQuery(queryAll);
         List result = query.list();
         return result;
     }
     
     public Modules findById(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Modules result = null;
         Transaction tx = null;
         try{
@@ -86,7 +85,7 @@ public class ModulesDAO {
     }
     
     public Modules findByName(String name) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Modules result = null;
         Transaction tx = null;
         try{
@@ -110,7 +109,7 @@ public class ModulesDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

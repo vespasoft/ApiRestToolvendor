@@ -22,7 +22,6 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class ZoneDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = ZoneDAO.class.getName();
     private static String fieldId = "id";
     private static String table = "Zone";
@@ -32,7 +31,7 @@ public class ZoneDAO {
     private static String queryDelete = "delete from "+table+" where id = :id";
     
     public void add(Zone entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -45,7 +44,7 @@ public class ZoneDAO {
     }
     
     public void update(Zone entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -58,7 +57,7 @@ public class ZoneDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Zone.class);
@@ -76,7 +75,7 @@ public class ZoneDAO {
     }
     
     public List getAllByUser(Integer userId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Zone.class)
@@ -99,7 +98,7 @@ public class ZoneDAO {
     }
     
     public Zone findById(int id, int companyId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Zone result = null;
         try {
            Criteria cr = session.createCriteria(Zone.class);
@@ -121,7 +120,7 @@ public class ZoneDAO {
     }
     
     public Zone findByName(String name, int companyId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Zone result = null;
         try {
            Criteria cr = session.createCriteria(Zone.class);
@@ -143,7 +142,7 @@ public class ZoneDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

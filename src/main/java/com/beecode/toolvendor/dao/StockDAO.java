@@ -20,13 +20,12 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class StockDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private final String TAG = StockDAO.class.getName();
     private final String fieldId = "id";
     private final String queryDelete = "delete from Stock where id = :id";
     
     public void add(Stock entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -39,7 +38,7 @@ public class StockDAO {
     }
     
     public void update(Stock entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -52,7 +51,7 @@ public class StockDAO {
     }
     
     public List getAllByProduct(Integer productId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Stock.class);
@@ -70,7 +69,7 @@ public class StockDAO {
     }
     
     public Stock findById(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Stock result = null;
         Transaction tx = null;
         try{
@@ -94,7 +93,7 @@ public class StockDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

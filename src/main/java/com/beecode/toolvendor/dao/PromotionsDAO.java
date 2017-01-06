@@ -20,7 +20,6 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class PromotionsDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = PromotionsDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from Promotions WHERE id= :id";
@@ -28,7 +27,7 @@ public class PromotionsDAO {
     private static String queryDelete = "delete from Promotions where id = :id";
     
     public void add(Promotions entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +40,7 @@ public class PromotionsDAO {
     }
     
     public void update(Promotions entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -55,7 +54,7 @@ public class PromotionsDAO {
     
     public List getAllByCompany(Integer companyId) {
         List result = null;
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         try{
             Transaction tx = session.beginTransaction();
             Query query = session.createQuery(queryAll);
@@ -74,7 +73,7 @@ public class PromotionsDAO {
     }
     
     public Promotions findById(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Promotions result = null;
         Transaction tx = null;
         try{
@@ -98,7 +97,7 @@ public class PromotionsDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

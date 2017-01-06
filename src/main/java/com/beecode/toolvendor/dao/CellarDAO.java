@@ -25,10 +25,8 @@ public class CellarDAO {
     private final String fieldName = "cellar";
     private final String queryDelete = "delete from Cellar where id = :id";
     
-    SessionUtil sessionutil = new SessionUtil();
-    
     public void add(Cellar entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +39,7 @@ public class CellarDAO {
     }
     
     public void update(Cellar entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +52,7 @@ public class CellarDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Cellar.class);
@@ -72,7 +70,7 @@ public class CellarDAO {
     }
     
     public Cellar findById(int id, int companyId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Cellar result = null;
         Transaction tx = null;
         try{
@@ -97,7 +95,7 @@ public class CellarDAO {
     }
     
     public Cellar findByName(String name, int companyId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Cellar result = null;
         Transaction tx = null;
         try{
@@ -122,7 +120,7 @@ public class CellarDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

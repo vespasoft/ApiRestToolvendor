@@ -20,13 +20,12 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class VisitPictureDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = VisitPictureDAO.class.getName();
     private static String fieldId = "id";
     private static String queryDelete = "delete from VisitPicture where id = :id";
     
     public void add(VisitPicture entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -39,7 +38,7 @@ public class VisitPictureDAO {
     }
     
     public void update(VisitPicture entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -58,7 +57,7 @@ public class VisitPictureDAO {
     Return: List<VisitPicture>
     */
     public List getAllByVisit(int visitId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(VisitPicture.class);
@@ -84,7 +83,7 @@ public class VisitPictureDAO {
     Return: VisitPicture
     */
     public VisitPicture findById(Integer id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         VisitPicture result = null;
         try{
            Criteria cr = session.createCriteria(VisitPicture.class);
@@ -111,7 +110,7 @@ public class VisitPictureDAO {
     Return: VisitPicture
     */
     public VisitPicture findByPicture(String picture) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         VisitPicture result = null;
         try{
            Criteria cr = session.createCriteria(VisitPicture.class);
@@ -131,7 +130,7 @@ public class VisitPictureDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

@@ -20,14 +20,13 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class OrderTypeDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private final String TAG = OrderTypeDAO.class.getName();
     private final String fieldId = "id";
     private final String fieldName = "name";
     private final String queryDelete = "delete from OrderType where id = :id";
     
     public void add(OrderType entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -40,7 +39,7 @@ public class OrderTypeDAO {
     }
     
     public void update(OrderType entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -53,7 +52,7 @@ public class OrderTypeDAO {
     }
     
     public List getAll() {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(OrderType.class);
@@ -70,7 +69,7 @@ public class OrderTypeDAO {
     }
     
     public OrderType findById(Integer id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         OrderType result = null;
         try{
            Criteria cr = session.createCriteria(OrderType.class);
@@ -91,7 +90,7 @@ public class OrderTypeDAO {
     }
     
     public OrderType findByName(String name) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         OrderType result = null;
         try{
            Criteria cr = session.createCriteria(OrderType.class);
@@ -114,7 +113,7 @@ public class OrderTypeDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

@@ -20,7 +20,6 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class UserZoneDAO {
-    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = UserDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from UserZone WHERE Id= :Id";
@@ -29,7 +28,7 @@ public class UserZoneDAO {
     private static String queryDelete = "delete from UserZone where id = :id";
     
     public void add(UserZone entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -42,7 +41,7 @@ public class UserZoneDAO {
     }
     
     public void update(UserZone entity) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -55,7 +54,7 @@ public class UserZoneDAO {
     }
     
     public List getAllByUser(Integer userId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(UserZone.class)
@@ -75,7 +74,7 @@ public class UserZoneDAO {
     }
     
     public UserZone findById(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         UserZone result = null;
         try {
            Criteria cr = session.createCriteria(UserZone.class);
@@ -96,7 +95,7 @@ public class UserZoneDAO {
     }
     
     public UserZone findByUserZone(Integer userId, Integer zoneId) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         UserZone result = null;
         try {
            Criteria cr = session.createCriteria(UserZone.class);
@@ -118,7 +117,7 @@ public class UserZoneDAO {
     }
     
     public int delete(int id) {
-        Session session = sessionutil.getSession();
+        Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

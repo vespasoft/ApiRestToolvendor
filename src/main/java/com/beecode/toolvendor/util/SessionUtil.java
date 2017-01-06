@@ -15,6 +15,7 @@ import org.hibernate.cfg.Configuration;
  * @author luisvespa
  */
 public class SessionUtil {
+    
     private static SessionUtil  instance= new SessionUtil();
     private SessionFactory sessionFactory;
     
@@ -22,16 +23,12 @@ public class SessionUtil {
         return instance;
     }
     
-    public Session getSession() {
-        Configuration configuration = new Configuration().configure();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
-        applySettings(configuration.getProperties());
-        sessionFactory= configuration.buildSessionFactory(builder.build());
+    public static Session getSession() {
         Session session = getInstance().sessionFactory.openSession();
         return session;
     }
     
-    public SessionUtil() {
+    private SessionUtil() {
         /*Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
         sessionFactory = configuration.buildSessionFactory();*/

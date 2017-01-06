@@ -27,12 +27,21 @@ public class ProductDAO {
     private static final String queryAll = "from Product";
     private static final String queryDelete = "delete from Product where id = :id";
     
-    public void add(Product entity) {
+    public boolean add(Product entity) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        add(session, entity);
-        tx.commit();
-        session.close();
+        boolean result = false;
+        try {
+            add(session, entity);
+            tx.commit();
+            result = true;
+        } catch ( Exception e ) {
+            System.out.println("Error in DAO product add: " + e.getMessage());
+            result = false;
+        }finally {
+           session.close(); 
+        }
+        return result;
     }
     
     private void add(Session session, Product entity) {
@@ -40,12 +49,21 @@ public class ProductDAO {
         session.save(object);
     }
     
-    public void update(Product entity) {
+    public boolean update(Product entity) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        update(session, entity);
-        tx.commit();
-        session.close();
+        boolean result = false;
+        try {
+            update(session, entity);
+            tx.commit();
+            result = true;
+        } catch ( Exception e ) {
+            System.out.println("Error in DAO product add: " + e.getMessage());
+            result = false;
+        }finally {
+           session.close(); 
+        }
+        return result;
     }
     
     private void update(Session session, Product entity) {

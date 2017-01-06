@@ -24,11 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
     private static final AtomicLong counter = new AtomicLong();
     
     //----------------------------- SERVICES ---------------------------------
-    private UserServiceImpl userserv = new UserServiceImpl();
-    private CityServiceImpl cityserv = new CityServiceImpl();
+    private final UserServiceImpl userserv = new UserServiceImpl();
+    private final CityServiceImpl cityserv = new CityServiceImpl();
     
     //------------------------------- DAO ------------------------------------
-    private CustomerDAO dao;
+    private final CustomerDAO dao = new CustomerDAO();
 
     public CustomerServiceImpl() {
     }
@@ -36,7 +36,6 @@ public class CustomerServiceImpl implements CustomerService {
     //----------------------------- SAVE CUSTOMER --------------------------------
     @Override
     public String save(Customer cstmr) {
-        dao = new CustomerDAO();
         Customer currentCustomer = null;
         String message="";
         try {
@@ -65,8 +64,9 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 //--- AtCreated fecha de creación del registro
                 cstmr.setCreatedAt(new Date() );
-                if ( !dao.add(cstmr) ) 
+                if ( !dao.add(cstmr) ) {
                     message="El registro no se pudo guardar, ocurrio un error inesperado.";
+                }
                 
             }
         } catch ( Exception e ) {
@@ -78,7 +78,6 @@ public class CustomerServiceImpl implements CustomerService {
     //----------------------------- UPDATE CUSTOMER --------------------------------
     @Override
     public String update(Customer cstmr) {
-        dao = new CustomerDAO();
         Customer currentCustomer = null;
         String message="";
         try {
@@ -130,7 +129,6 @@ public class CustomerServiceImpl implements CustomerService {
     //----------------------------- DELETE USER ----------------------------------
     @Override
     public boolean delete(int id) {
-        dao = new CustomerDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -147,7 +145,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean findId(int id, int companyId) {
         // se consulta en la BD si el id del usuario existe y es valido
-        dao = new CustomerDAO();
         return dao.findById(id, companyId)!=null;
     }
     
@@ -155,14 +152,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean findEmail(String email) {
         // se consulta en la BD si el email del usuario existe y es valido
-        dao = new CustomerDAO();
         return dao.findByEmail(email)!=null;
     }
     
     //--------------------- FIND BY ID OBJECT CUSTOMER --------------------------
     @Override
     public Customer findById(int id, int companyId) {
-        dao = new CustomerDAO();
         Customer result = null;
         try {
             // Se busca en la bd los datos del customer por Id.
@@ -176,7 +171,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- FIND BY EMAIL OBJECT CUSTOMER --------------------------
     @Override
     public Customer findByEmail(String email) {
-        dao = new CustomerDAO();
         Customer result = null;
         try {
             // Se busca en la bd los datos del customer por Email.
@@ -190,7 +184,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- GET ALL CUSTOMER BY COMPANY --------------------------
     @Override
     public List getAllByCompany(Integer companyId) {
-        dao = new CustomerDAO();
         List<User> list = null;
         try {
             // Se consulta en la bd los customer registrados para un usuario.
@@ -204,7 +197,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- GET ALL CUSTOMER BY USER --------------------------
     @Override
     public List getAllByUser(Integer userId) {
-        dao = new CustomerDAO();
         List<User> list = null;
         try {
             // Se consulta en la bd los customer registrados para un usuario.

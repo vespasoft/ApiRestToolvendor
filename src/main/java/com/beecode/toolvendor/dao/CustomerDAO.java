@@ -33,15 +33,18 @@ public class CustomerDAO {
     public boolean add(Customer entity) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
+        boolean result = false;
         try {
             add(session, entity);
             tx.commit();
-            session.close();
-            return true;
+            result = true;
         } catch ( Exception e ) {
             System.out.println("Error in DAO customer add: " + e.getMessage());
-            return false;
+            result = false;
+        }finally {
+           session.close(); 
         }
+        return result;
     }
     
     private void add(Session session, Customer entity) {
@@ -52,15 +55,18 @@ public class CustomerDAO {
     public boolean update(Customer entity) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
+        boolean result = false;
         try {
             update(session, entity);
             tx.commit();
-            session.close();
-            return true;
+            result = true;
         } catch ( Exception e ) {
             System.out.println("Error in DAO customer add: " + e.getMessage());
-            return false;
+            result = false;
+        }finally {
+           session.close(); 
         }
+        return result;
     }
     
     private void update(Session session, Customer entity) {

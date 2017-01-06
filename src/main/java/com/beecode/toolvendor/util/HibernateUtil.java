@@ -5,10 +5,10 @@
  */
 package com.beecode.toolvendor.util;
 
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -20,9 +20,9 @@ public class HibernateUtil {
 
     public static final String CATALOG = "toolvendor";
     
-    private static final SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     
-    static {
+    /*static {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
@@ -39,6 +39,21 @@ public class HibernateUtil {
     }
     
     public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }*/
+    
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            // loads configuration and mappings
+            Configuration configuration = new Configuration().configure();
+            ServiceRegistry serviceRegistry
+                = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+
+            // builds a session factory from the service registry
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);           
+        }
+
         return sessionFactory;
     }
 }

@@ -22,7 +22,11 @@ public class SessionUtil {
         return instance;
     }
     
-    public static Session getSession() {
+    public Session getSession() {
+        Configuration configuration = new Configuration().configure();
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
+        applySettings(configuration.getProperties());
+        sessionFactory= configuration.buildSessionFactory(builder.build());
         Session session = getInstance().sessionFactory.openSession();
         return session;
     }

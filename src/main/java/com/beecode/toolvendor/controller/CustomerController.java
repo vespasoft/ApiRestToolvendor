@@ -45,6 +45,7 @@ public class CustomerController {
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllCustomer(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
+        service = new CustomerServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -73,6 +74,7 @@ public class CustomerController {
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCustomer(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         result = new HashMap<String,Object>();
+        service = new CustomerServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -110,6 +112,7 @@ public class CustomerController {
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(cstmr);
             if ( message.isEmpty() ) {
+                service = new CustomerServiceImpl();
                 Customer object = service.findByEmail(cstmr.getEmail());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
@@ -134,6 +137,7 @@ public class CustomerController {
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateCustomer(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody Customer cstmr) {
         result = new HashMap<String,Object>();
+        service = new CustomerServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -179,6 +183,7 @@ public class CustomerController {
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteCustomer(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         result = new HashMap<String,Object>();
+        service = new CustomerServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

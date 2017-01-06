@@ -65,14 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 //--- AtCreated fecha de creación del registro
                 cstmr.setCreatedAt(new Date() );
-                if ( dao.add(cstmr) ) {
-                    dao = new CustomerDAO();
-                    //--- obtiene el customer registrado con toda su info para la respuesta ---
-                    currentCustomer = dao.findByEmail(cstmr.getEmail());
-                    if ( currentCustomer==null) {
-                        message="El registro no se pudo guardar, ocurrio un error inesperado.";
-                    }
-                } else 
+                if ( !dao.add(cstmr) ) 
                     message="El registro no se pudo guardar, ocurrio un error inesperado.";
                 
             }

@@ -20,6 +20,7 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class PresentationDAO {
+    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = PresentationDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from Presentation WHERE id= :id";
@@ -28,7 +29,7 @@ public class PresentationDAO {
     private static String queryDelete = "delete from Presentation where id = :id";
     
     public void add(Presentation entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +42,7 @@ public class PresentationDAO {
     }
     
     public void update(Presentation entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +55,7 @@ public class PresentationDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Presentation.class);
@@ -72,7 +73,7 @@ public class PresentationDAO {
     }
     
     public Presentation findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Presentation result = null;
         Transaction tx = null;
         try{
@@ -97,7 +98,7 @@ public class PresentationDAO {
     }
     
     public Presentation findByName(String name, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Presentation result = null;
         Transaction tx = null;
         try{
@@ -122,7 +123,7 @@ public class PresentationDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

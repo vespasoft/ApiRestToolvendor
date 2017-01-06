@@ -27,8 +27,10 @@ public class CategoryDAO {
     private static String queryAll = "from Category";
     private static String queryDelete = "delete from Category where id = :id";
     
+    SessionUtil sessionutil = new SessionUtil();
+    
     public void add(Category entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +43,7 @@ public class CategoryDAO {
     }
     
     public void update(Category entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +56,7 @@ public class CategoryDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Category.class);
@@ -72,7 +74,7 @@ public class CategoryDAO {
     }
     
     public Category findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Category result = null;
         Transaction tx = null;
         try{
@@ -97,7 +99,7 @@ public class CategoryDAO {
     }
     
     public Category findByName(String name, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Category result = null;
         Transaction tx = null;
         try{
@@ -122,7 +124,7 @@ public class CategoryDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

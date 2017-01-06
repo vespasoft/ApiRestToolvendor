@@ -20,12 +20,13 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class OrderDetailDAO {
+    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = OrderDetailDAO.class.getName();
     private static String fieldId = "id";
     private static String queryDelete = "delete from OrderDetail where id = :id";
     
     public void add(OrderDetail entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -38,7 +39,7 @@ public class OrderDetailDAO {
     }
     
     public void update(OrderDetail entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -57,7 +58,7 @@ public class OrderDetailDAO {
     Return: List<OrderDetail>
     */
     public List getAllByOrder(int orderId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(OrderDetail.class);
@@ -83,7 +84,7 @@ public class OrderDetailDAO {
     Return: OrderDetail
     */
     public OrderDetail findById(Integer id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         OrderDetail result = null;
         try{
            Criteria cr = session.createCriteria(OrderDetail.class);
@@ -104,7 +105,7 @@ public class OrderDetailDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

@@ -20,13 +20,16 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class CatalogDAO {
+    
     private final static String TAG = CatalogDAO.class.getName();
     private final
             static String fieldId = "id";
     private final static String queryDelete = "delete from Catalog where id = :id";
     
+    SessionUtil sessionutil = new SessionUtil();
+    
     public void add(Catalog entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -39,7 +42,7 @@ public class CatalogDAO {
     }
     
     public void update(Catalog entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -52,7 +55,7 @@ public class CatalogDAO {
     }
     
     public List getAllByProduct(Integer productId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Catalog.class);
@@ -70,7 +73,7 @@ public class CatalogDAO {
     }
     
     public Catalog findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Catalog result = null;
         Transaction tx = null;
         try{
@@ -94,7 +97,7 @@ public class CatalogDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

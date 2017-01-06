@@ -20,6 +20,7 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class ProductTypeDAO {
+    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = ProductTypeDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from ProductType WHERE id= :id";
@@ -28,7 +29,7 @@ public class ProductTypeDAO {
     private static String queryDelete = "delete from ProductType where id = :id";
     
     public void add(ProductType entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +42,7 @@ public class ProductTypeDAO {
     }
     
     public void update(ProductType entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +55,7 @@ public class ProductTypeDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(ProductType.class);
@@ -72,7 +73,7 @@ public class ProductTypeDAO {
     }
     
     public ProductType findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         ProductType result = null;
         Transaction tx = null;
         try{
@@ -97,7 +98,7 @@ public class ProductTypeDAO {
     }
     
     public ProductType findByName(String name, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         ProductType result = null;
         Transaction tx = null;
         try{
@@ -122,7 +123,7 @@ public class ProductTypeDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

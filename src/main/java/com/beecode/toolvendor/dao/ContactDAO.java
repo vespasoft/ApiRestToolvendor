@@ -6,7 +6,6 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Contact;
-import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.util.SessionUtil;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -21,6 +20,8 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class ContactDAO {
+    SessionUtil sessionutil = new SessionUtil();
+    
     private static String TAG = UserDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from Contact WHERE id= :id";
@@ -29,7 +30,7 @@ public class ContactDAO {
     private static String queryDelete = "delete from Contact where id = :id";
     
     public void add(Contact entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -42,7 +43,7 @@ public class ContactDAO {
     }
     
     public void update(Contact entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -61,7 +62,7 @@ public class ContactDAO {
         Return: List<Call>
     */
     public List getAllByUser(Integer userId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Contact.class);
@@ -81,7 +82,7 @@ public class ContactDAO {
     }
     
     public Contact findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Contact result = null;
         try{
            Criteria cr = session.createCriteria(Contact.class);
@@ -102,7 +103,7 @@ public class ContactDAO {
     }
     
     public Contact findByName(String name) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Contact result = null;
         try{
            Criteria cr = session.createCriteria(Contact.class);
@@ -123,7 +124,7 @@ public class ContactDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

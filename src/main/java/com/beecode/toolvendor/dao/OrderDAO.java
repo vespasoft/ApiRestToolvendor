@@ -20,12 +20,13 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class OrderDAO {
+    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = OrderDAO.class.getName();
     private static String fieldId = "id";
     private static String queryDelete = "delete from Order where id = :id";
     
     public void add(Order entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -38,7 +39,7 @@ public class OrderDAO {
     }
     
     public void update(Order entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -57,7 +58,7 @@ public class OrderDAO {
         Return: List<OrderPicture>
     */
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try {
            Criteria cr = session.createCriteria(Order.class);
@@ -82,7 +83,7 @@ public class OrderDAO {
     Return: List<Order>
     */
     public List getAllByUser(int userId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Order.class);
@@ -108,7 +109,7 @@ public class OrderDAO {
     Return: List<Order>
     */
     public List getAllByCustomer(int customerId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Order.class);
@@ -134,7 +135,7 @@ public class OrderDAO {
     Return: Order
     */
     public Order findById(Integer id, Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Order result = null;
         try{
            Criteria cr = session.createCriteria(Order.class);
@@ -156,7 +157,7 @@ public class OrderDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

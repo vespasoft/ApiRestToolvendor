@@ -22,6 +22,7 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class GroupsDAO {
+    SessionUtil sessionutil = new SessionUtil();
     private final static String TAG = UserDAO.class.getName();
     private final static String fieldId = "id";
     private final static String queryId = "from Groups WHERE id= :id";
@@ -30,7 +31,7 @@ public class GroupsDAO {
     private final static String queryAllByUser = "select distinct from Groups";
     
     public void add(Groups entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -43,7 +44,7 @@ public class GroupsDAO {
     }
     
     public void update(Groups entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -56,7 +57,7 @@ public class GroupsDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Groups.class);
@@ -74,7 +75,7 @@ public class GroupsDAO {
     }
     
     public List getAllByUser(Integer userId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Groups.class)
@@ -97,7 +98,7 @@ public class GroupsDAO {
     }
     
     public Groups findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Groups result = null;
         try {
            Criteria cr = session.createCriteria(Groups.class);
@@ -119,7 +120,7 @@ public class GroupsDAO {
     }
     
     public Groups findByName(String name, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Groups result = null;
         try {
            Criteria cr = session.createCriteria(Groups.class);
@@ -141,7 +142,7 @@ public class GroupsDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

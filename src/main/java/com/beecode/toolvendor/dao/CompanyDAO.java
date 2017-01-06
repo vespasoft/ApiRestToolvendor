@@ -24,8 +24,10 @@ public class CompanyDAO {
     private static String fieldId = "id";
     private static String queryDelete = "delete from Company where id = :id";
     
+    SessionUtil sessionutil = new SessionUtil();
+    
     public void add(Company entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -38,7 +40,7 @@ public class CompanyDAO {
     }
     
     public void update(Company entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -51,7 +53,7 @@ public class CompanyDAO {
     }
     
     public List getAll() {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -69,7 +71,7 @@ public class CompanyDAO {
     }
     
     public Company findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Company result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -94,7 +96,7 @@ public class CompanyDAO {
        Este metodo permite hacer una busqueda por cualquier campo String de la tabla.
     */
     public Company findByEmail(String email) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Company result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -121,7 +123,7 @@ public class CompanyDAO {
        Este metodo permite hacer una busqueda por cualquier campo String de la tabla.
     */
     public Company findByStringField(String field, String value) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Company result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -144,7 +146,7 @@ public class CompanyDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

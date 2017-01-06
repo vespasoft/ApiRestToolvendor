@@ -20,6 +20,7 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class UserDAO {
+    SessionUtil sessionutil = new SessionUtil();
     private static String TAG = UserDAO.class.getName();
     private static String fieldId = "id";
     private static String queryAuth = "from User where email = :email AND password = :password";
@@ -27,7 +28,7 @@ public class UserDAO {
     
     public boolean add(User entity) {
         boolean success = false;
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         try {
             add(session, entity);
@@ -47,7 +48,7 @@ public class UserDAO {
     
     public boolean update(User entity) {
         boolean success = false;
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         try {
             update(session, entity);
@@ -66,7 +67,7 @@ public class UserDAO {
     }
     
     /*public int update(User entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryUpdate);
         query.setString("name", entity.getName());
@@ -88,7 +89,7 @@ public class UserDAO {
     }*/
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
@@ -106,7 +107,7 @@ public class UserDAO {
     }
     
     public User findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         User result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
@@ -127,7 +128,7 @@ public class UserDAO {
     }
     
     public User findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         User result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
@@ -149,7 +150,7 @@ public class UserDAO {
     }
     
     public User findByEmail(String email) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         User result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
@@ -173,7 +174,7 @@ public class UserDAO {
     
     public User authentication(String email, String password) {
         User result = null;
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         try{
             Transaction tx = session.beginTransaction();
             Query query = session.createQuery(queryAuth);
@@ -198,7 +199,7 @@ public class UserDAO {
        Este metodo permite hacer una busqueda por cualquier campo String de la tabla.
     */
     public User findByStringField(String field, String value) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         User result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
@@ -221,7 +222,7 @@ public class UserDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

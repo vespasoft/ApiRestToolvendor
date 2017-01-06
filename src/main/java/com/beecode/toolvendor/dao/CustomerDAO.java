@@ -20,6 +20,8 @@ import org.hibernate.criterion.Restrictions;
  * @author luisvespa
  */
 public class CustomerDAO {
+    SessionUtil sessionutil = new SessionUtil();
+    
     private static String TAG = CustomerDAO.class.getName();
     private static String fieldId = "id";
     private static String queryId = "from Customer WHERE id= :id";
@@ -30,7 +32,7 @@ public class CustomerDAO {
     private static String queryDelete = "delete from Customer where id = :id";
     
     public boolean add(Customer entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         try {
             add(session, entity);
@@ -49,7 +51,7 @@ public class CustomerDAO {
     }
     
     public boolean update(Customer entity) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         try {
             update(session, entity);
@@ -74,7 +76,7 @@ public class CustomerDAO {
         Return: List<Visit>
     */
     public List getAllByUser(Integer userId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -100,7 +102,7 @@ public class CustomerDAO {
         Return: List<Customer>
     */
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -120,7 +122,7 @@ public class CustomerDAO {
     }
     
     public Customer findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -142,7 +144,7 @@ public class CustomerDAO {
     }
     
     public Customer findByCompanyName(String companyname, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -164,7 +166,7 @@ public class CustomerDAO {
     }
     
     public Customer findByEmail(String email) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -185,7 +187,7 @@ public class CustomerDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = sessionutil.getSession();
         Transaction tx = session.beginTransaction();
         try {
             Query query = session.createQuery(queryDelete);

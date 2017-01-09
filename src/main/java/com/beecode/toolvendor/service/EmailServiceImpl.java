@@ -151,7 +151,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void SendEmailVisit(Customer cstmr, Visit visit) {
-        String toEmail = cstmr.getEmail();
+        String toEmail = cstmr.getContactEmail();
         String emailSubject = "Bienvenido a Toolvendor App";
         String emailBody = "<html>\n" +
                         "    <head>\n" +
@@ -162,7 +162,7 @@ public class EmailServiceImpl implements EmailService {
                         "    <body>\n" +
                         "        <H3>Toolvendor App </H3> \n" +
                         "        \n" +
-                        "        <h4>Estimado "+cstmr.getFirstName()+",</h4> \n" +
+                        "        <h4>Estimado "+cstmr.getContactName()+",</h4> \n" +
                         "        \n" +
                         "        <h4>Hemos finalizado exitosamente su visita,</h4> \n" +
                         "        \n" +
@@ -182,7 +182,7 @@ public class EmailServiceImpl implements EmailService {
     
     @Override
     public void SendEmailOrder(Customer cstmr, Order order) {
-        String toEmail = cstmr.getEmail();
+        String toEmail = cstmr.getContactEmail();
         String emailSubject = "Bienvenido a Toolvendor App";
         String emailBody = "<html>\n" +
                         "    <head>\n" +
@@ -193,7 +193,7 @@ public class EmailServiceImpl implements EmailService {
                         "    <body>\n" +
                         "        <H3>Toolvendor App </H3> \n" +
                         "        \n" +
-                        "        <h4>Estimado "+cstmr.getFirstName()+",</h4> \n" +
+                        "        <h4>Estimado "+cstmr.getContactName()+",</h4> \n" +
                         "        \n" +
                         "        <h4>Hemos procesado exitosamente su cotización,</h4> \n" +
                         "        \n" +

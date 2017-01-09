@@ -33,9 +33,9 @@ public class Customer  implements java.io.Serializable {
      private Date createdAt;
      private Date lastUpdate;
      private String companyName;
-     private String firstName;
-     private String lastName;
-     private String email;
+     private String contactName;
+     private String contactPhone;
+     private String contactEmail;
      private Boolean active;
      private String building;
      private String street;
@@ -52,13 +52,13 @@ public class Customer  implements java.io.Serializable {
         this.userId = userId;
     }
 	
-    public Customer(Date createdAt, Date lastUpdate, String companyName, String firstName, String lastName, String email, Boolean active, String building, String street, String postalCode, String reference, Float latitud, Float longitude, Integer companyId, Integer userId) {
+    public Customer(Date createdAt, Date lastUpdate, String companyName, String contactName, String contactPhone, String contactEmail, Boolean active, String building, String street, String postalCode, String reference, Float latitud, Float longitude, Integer companyId, Integer userId) {
        this.createdAt = createdAt;
        this.lastUpdate = lastUpdate;
        this.companyName = companyName;
-       this.firstName = firstName;
-       this.lastName = lastName;
-       this.email = email;
+       this.contactName = contactName;
+       this.contactPhone = contactPhone;
+       this.contactEmail = contactEmail;
        this.active = active;
        this.building = building;
        this.street = street;
@@ -151,35 +151,34 @@ public class Customer  implements java.io.Serializable {
     }
 
     
-    @Column(name="first_name", length=45)
-    public String getFirstName() {
-        return this.firstName;
+    @Column(name="contact_name", length=100)
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
     
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    @Column(name="contact_phone", length=45)
+    public String getContactPhone() {
+        return this.contactPhone;
     }
 
     
-    @Column(name="last_name", length=45)
-    public String getLastName() {
-        return this.lastName;
-    }
-    
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     
-    @Column(name="email", length=45)
-    public String getEmail() {
-        return this.email;
-    }
-    
-    public void setEmail(String email) {
-        this.email = email;
+    @Column(name="contact_email", length=255)
+    public String getContactEmail() {
+        return contactEmail;
     }
 
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
     
     @Column(name="active")
     public Boolean getActive() {

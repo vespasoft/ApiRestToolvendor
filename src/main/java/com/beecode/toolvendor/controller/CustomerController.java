@@ -113,7 +113,7 @@ public class CustomerController {
             String message = service.save(cstmr);
             if ( message.isEmpty() ) {
                 service = new CustomerServiceImpl();
-                Customer object = service.findByEmail(cstmr.getEmail());
+                Customer object = service.findByEmail(cstmr.getContactEmail());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);

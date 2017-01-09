@@ -43,19 +43,19 @@ public class CustomerServiceImpl implements CustomerService {
                 message="Se espero un objeto user en formato JSON";
             } else if ( cstmr.getCompanyName()==null ) {
                 message="El campo nombre no puede ser nullo";
-            } else if ( cstmr.getEmail()==null ) {
-                message="El campo email no puede ser nullo";
-            } else if ( cstmr.getFirstName()==null ) {
-                message="El campo FirstName no puede ser nullo";
-            } else if ( cstmr.getLastName()==null ) {
-                message="El campo LasttName no puede ser nullo";
-            } else if ( cstmr.getEmail().length()==0 ) {
-                message="El campo email no puede estar vacio";
+            } else if ( cstmr.getContactEmail()==null ) {
+                message="El campo contactEmail no puede ser nullo";
+            } else if ( cstmr.getContactName()==null ) {
+                message="El campo contactName no puede ser nullo";
+            } else if ( cstmr.getContactPhone()==null ) {
+                message="El campo contactPhone no puede ser nullo";
+            } else if ( cstmr.getContactEmail().length()==0 ) {
+                message="El campo contactEmail no puede estar vacio";
             } else if ( cstmr.getCity().getId()==0 ) {
                 message="El campo CityId no puede ser igual a 0";
             } else if ( cstmr.getUserId()==0 ) {
                 message="El campo UserId no puede ser igual a 0";
-            } else if ( findEmail(cstmr.getEmail()) ) {
+            } else if ( findEmail(cstmr.getContactEmail()) ) {
                 message="Ya existe un cliente con el mismo email";
             } else if ( !userserv.findId(cstmr.getUserId(), cstmr.getCompanyId()) ) {
                 message="No existe ningun usuario con este Id.";
@@ -97,9 +97,9 @@ public class CustomerServiceImpl implements CustomerService {
                 if (currentCustomer!=null) {
                     //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
                     if (cstmr.getId()!=0) currentCustomer.setId(cstmr.getId());
-                    if (cstmr.getFirstName()!=null) currentCustomer.setFirstName(cstmr.getFirstName());
-                    if (cstmr.getLastName()!=null) currentCustomer.setLastName(cstmr.getLastName());
-                    if (cstmr.getEmail()!=null) currentCustomer.setEmail(cstmr.getEmail());
+                    if (cstmr.getContactName()!=null) currentCustomer.setContactName(cstmr.getContactName());
+                    if (cstmr.getContactPhone()!=null) currentCustomer.setContactPhone(cstmr.getContactPhone());
+                    if (cstmr.getContactEmail()!=null) currentCustomer.setContactEmail(cstmr.getContactEmail());
                     if (cstmr.getActive()!=null) currentCustomer.setActive(cstmr.getActive());
                     if (cstmr.getLatitud()!=null) currentCustomer.setLatitud(cstmr.getLatitud());
                     if (cstmr.getLongitude()!=null) currentCustomer.setLongitude(cstmr.getLongitude());

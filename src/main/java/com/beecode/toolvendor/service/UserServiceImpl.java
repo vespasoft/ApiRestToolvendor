@@ -140,6 +140,7 @@ public class UserServiceImpl implements UserService {
         return message;
     }
     
+    //----------------------------- FORGOT ----------------------------------
     public String forgot(User user) {
         String message="";
         if ( user==null ) {

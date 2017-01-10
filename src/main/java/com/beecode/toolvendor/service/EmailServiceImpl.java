@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.service;
 
+import com.beecode.toolvendor.email.SendEmail;
 import com.beecode.toolvendor.email.SendEmailOffice365;
 import com.beecode.toolvendor.interfaces.EmailService;
 import com.beecode.toolvendor.model.Customer;
@@ -23,7 +24,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void SendEmailWellcome(User user) {
         String toEmail = user.getEmail();
-        String emailSubject = "Bienvenido a Toolvendor App";
+        String emailSubject = "Bienvenido a ToolvendorApp";
         String emailBodyAdmin = "<html>\n" +
                             "    <head>\n" +
                             "        <title>Toolvendor App</title>\n" +
@@ -58,7 +59,7 @@ public class EmailServiceImpl implements EmailService {
                             "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
                             "    </head>\n" +
                             "    <body>\n" +
-                            "        <H3>Bienvenido al sistema Toolvendor App, </H3> \n" +
+                            "        <H3>Bienvenido al sistema ToolvendorApp, </H3> \n" +
                             "        \n" +
                             "        <h4>Se ha creado su cuenta de usuario móvil satisfactoriamente, le invitamos a descargar el toolvendor app desde la tienda Play Store.\n" +
                             "            </h4> \n" +
@@ -70,22 +71,25 @@ public class EmailServiceImpl implements EmailService {
                             "        \n" +
                             "        \n" +
                             "        <h4>Le deseamos el mayor exito posible ya que su satisfacción es nuestro compromiso.</h4>\n" +
-                            "        <h4>Atentamente, el quipo de soporte Toolvendor App</h4>\n" +
+                            "        <h4>Atentamente, el quipo de soporte ToolvendorApp</h4>\n" +
                             "    </body>\n" +
                             "</html>";
         
-        SendEmailOffice365 se = new SendEmailOffice365();
+        SendEmail se = new SendEmail();
         // depende del tipo de usuario A o M se envia un email distinto (formato).
-        if ( user.getUsertype().getType().equalsIgnoreCase(AppPreferences.CONST_USER_TYPE_ADMIN))
-            se.sendEmailHTML(toEmail, emailSubject, emailBodyAdmin);
-        else if ( user.getUsertype().getType().equalsIgnoreCase(AppPreferences.CONST_USER_TYPE_MOVIL))
-            se.sendEmailHTML(toEmail, emailSubject, emailBodyMovil);
+        if ( user.getUsertype().getType().equalsIgnoreCase(AppPreferences.CONST_USER_TYPE_ADMIN)) {
+            se.SendMailTSL(toEmail, emailSubject, emailBodyAdmin, "text/html");
+        }
+            
+        else if ( user.getUsertype().getType().equalsIgnoreCase(AppPreferences.CONST_USER_TYPE_MOVIL)) {
+            se.SendMailTSL(toEmail, emailSubject, emailBodyMovil, "text/html");
+        }
     }
 
     @Override
     public void SendEmailForgot(User user) {
         String toEmail = user.getEmail();
-        String emailSubject = "Bienvenido a Toolvendor App";
+        String emailSubject = "Restauracion de contraseña";
         String emailBody = "<html>\n" +
                         "    <head>\n" +
                         "        <title>Toolvendor App</title>\n" +
@@ -95,21 +99,21 @@ public class EmailServiceImpl implements EmailService {
                         "    <body>\n" +
                         "        <H3>Hola "+user.getName()+", </H3> \n" +
                         "        \n" +
-                        "        <h4>Usted ha iniciado el proceso de recuperación de contraseña exitosamente, \n" +
-                        "            se a generado por motivos de seguridad una nueva contraseña temporal, la cual deberá iniciar sessión en la aplicación movil para completar el proceso.</h4> \n" +
-                        "            \n" +
+                        "        <h4>Usted ha iniciado el proceso de restauración de contraseña satisfactoriamente, \n" +
+                        "            por motivos de seguridad se ha generado una nueva contraseña temporal \n" +
+                        "            con la cual debe iniciar sessión para completar el proceso.</h4> \n" +
+                        "        \n" +
+                        "        <h3>Su nueva contraseña temporal es la siguiente: "+user.getPassword()+"</h3>\n" +
                         "        \n" +
                         "        \n" +
-                        "        <h3>Su nueva contraseña es la siguiente: "+user.getPassword()+"</h3>\n" +
+                        "        <h4>Luego de haber iniciado sessión le recomendamos cambiar su contraseña por una mas facil de recordar. </h4>\n" +
                         "        \n" +
-                        "        <h4>Una vez iniciado sessión puede cambiar su contraseña por una mas facil de recordar. </h4>\n" +
-                        "        \n" +
-                        "        <h4>Atentamente, el equipo de soporte Toolvendor App</h4>\n" +
+                        "        <h4>Atentamente, el equipo de soporte ToolvendorApp</h4>\n" +
                         "    </body>\n" +
                         "</html>";
         
-        SendEmailOffice365 se = new SendEmailOffice365();
-        se.sendEmailHTML(toEmail, emailSubject, emailBody);
+        SendEmail se = new SendEmail();
+        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
     @Override
@@ -145,8 +149,8 @@ public class EmailServiceImpl implements EmailService {
                         "    </body>\n" +
                         "</html>";
         
-        SendEmailOffice365 se = new SendEmailOffice365();
-        se.sendEmailHTML(toEmail, emailSubject, emailBody);
+        SendEmail se = new SendEmail();
+        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
     }
 
     @Override
@@ -176,8 +180,8 @@ public class EmailServiceImpl implements EmailService {
                         "    </body>\n" +
                         "</html>";
         
-        SendEmailOffice365 se = new SendEmailOffice365();
-        se.sendEmailHTML(toEmail, emailSubject, emailBody);
+        SendEmail se = new SendEmail();
+        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
     @Override
@@ -208,8 +212,8 @@ public class EmailServiceImpl implements EmailService {
                         "    </body>\n" +
                         "</html>";
         
-        SendEmailOffice365 se = new SendEmailOffice365();
-        se.sendEmailHTML(toEmail, emailSubject, emailBody);
+        SendEmail se = new SendEmail();
+        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
 }

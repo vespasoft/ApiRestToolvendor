@@ -38,7 +38,6 @@ public class SendEmailOffice365 implements SendEmail {
     public SendEmailOffice365() {
     }
 
-    @Override
     public void sendEmailText(String toEmail, String emailSubject, String emailContent) {
         this.to = toEmail;
         this.subject = emailSubject;
@@ -70,7 +69,6 @@ public class SendEmailOffice365 implements SendEmail {
         }
     }
     
-    @Override
     public void sendEmailHTML(String toEmail, String emailSubject, String emailBody) {
         this.to = toEmail;
         this.subject = emailSubject;
@@ -108,8 +106,18 @@ public class SendEmailOffice365 implements SendEmail {
         config.put("mail.transport.protocol", "smtp");
         config.put("mail.smtp.starttls.enable", "true");
         config.put("mail.smtp.host", SERVIDOR_SMTP);
-        config.put("mail.smtp.port", "587");
+        config.put("mail.smtp.port", SMTP_PORT);
         return config;
+    }
+
+    @Override
+    public void SendMailSSL(String toEmail, String emailSubject, String emailBody, String content) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

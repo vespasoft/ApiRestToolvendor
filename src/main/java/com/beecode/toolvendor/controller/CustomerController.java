@@ -31,7 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author luisvespa
  */
 @Controller
-public class CustomerController {
+public class CustomerController extends AppPreferences {
     // ------------------------------- OBJECTS ----------------------------------------
     Map<String,Object> result = new HashMap<String,Object>();
     
@@ -50,16 +50,16 @@ public class CustomerController {
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             //---- Obtiene todos los customer registrados de un usuario -----
             System.out.println("List all customer by user " + session.getId());
             List list = service.getAllByUser(session.getId());
             if ( list==null ) {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_HTTP_IS_EMPTY);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_HTTP_IS_EMPTY);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
@@ -79,8 +79,8 @@ public class CustomerController {
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("Customer with id " + id);
             Customer object = security.hasAccessCustomer(id);
@@ -90,8 +90,8 @@ public class CustomerController {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
     }
@@ -104,8 +104,8 @@ public class CustomerController {
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             // Se forza a guardar el registro relacionado con el Token
             cstmr.setCompanyId(session.getCompanyId());
@@ -116,18 +116,18 @@ public class CustomerController {
                 Customer object = service.findByEmail(cstmr.getContactEmail());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
-                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                    result.put("message", MESSAGE_HTTP_SAVE_FAILED);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
                     result.put("success", Boolean.TRUE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_OK);
+                    result.put("message", MESSAGE_HTTP_SAVE_OK);
                     result.put("result", object);
                     return new ResponseEntity<>(result, HttpStatus.CREATED);
                 }
             } else {
                 result.put("success", Boolean.FALSE);
                 result.put("message", message);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
         
@@ -142,8 +142,8 @@ public class CustomerController {
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("Updating customer " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
@@ -156,8 +156,8 @@ public class CustomerController {
                     Customer object = service.findById(id, session.getCompanyId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
-                        result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
-                        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                        result.put("message", MESSAGE_HTTP_ID_FAILED);
+                        return new ResponseEntity<>(result, HttpStatus.OK);
                     } else {
                         result.put("success", Boolean.TRUE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_UPDATE_OK);
@@ -167,12 +167,12 @@ public class CustomerController {
                 } else {
                     result.put("success", Boolean.FALSE);
                     result.put("message", message);
-                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 }
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_HTTP_ID_FAILED);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
         
@@ -188,8 +188,8 @@ public class CustomerController {
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("Fetching & Deleting Customer with id " + id);
             //------ se obtiene el registro de la busqueda ----
@@ -199,17 +199,17 @@ public class CustomerController {
                 boolean success = service.delete(id);
                 if ( success ) {
                     result.put("success", Boolean.TRUE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_DELETE_OK);
+                    result.put("message", MESSAGE_HTTP_DELETE_OK);
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
                     result.put("success", Boolean.FALSE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_DELETE_FAILED);
-                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                    result.put("message", MESSAGE_HTTP_DELETE_FAILED);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 }
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
         

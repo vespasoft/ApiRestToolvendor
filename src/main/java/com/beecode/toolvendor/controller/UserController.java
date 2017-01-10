@@ -59,8 +59,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Get all user by company with id " + session.getCompanyId());
             // se verifica que el usuario autenticado tenga permisos..
@@ -72,8 +72,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
     }
@@ -90,8 +90,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             // Use headers to get the information about all the request headers
             System.out.println("User with id " + session.getId());
@@ -103,8 +103,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
         
@@ -142,7 +142,7 @@ public class UserController extends AppPreferences {
         if ( message.length()>0 ) {
             result.put("success", Boolean.FALSE);
             result.put("message", message);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("User encontrado: " + user.getName());
             String token = security.createJWT(user);
@@ -177,15 +177,11 @@ public class UserController extends AppPreferences {
         if ( message.length()>0 ) {
             result.put("success", Boolean.FALSE);
             result.put("message", message);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
-            System.out.println("User encontrado: " + user.getName());
-            String token = security.createJWT(user);
-            User uid = security.parseJWT(token);
+            System.out.println("Se envio un email de restauracion a: " + user.getEmail());
             result.put("success", Boolean.TRUE);
-            result.put("message", "Bienvenido al sistema toolvendor");
-            result.put("tokenId", token);
-            result.put("result", user);
+            result.put("message", "Se envio un email de restauracion a: "+ user.getEmail());
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         //HttpHeaders headers = new HttpHeaders();
@@ -204,8 +200,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Customer by User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -218,8 +214,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
     }
@@ -234,8 +230,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Calls by User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -248,8 +244,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             
         }
@@ -265,8 +261,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Contact by User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -279,8 +275,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             
         }
@@ -296,8 +292,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Groups by User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -310,8 +306,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             
         }
@@ -327,8 +323,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Zone by User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -341,8 +337,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             
         }
@@ -359,8 +355,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
             System.out.println("Visit by User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -373,8 +369,8 @@ public class UserController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }        
         }
     }
@@ -392,8 +388,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             // Se forza a guardar el registro relacionado con el Token
             user.setCompanyId(session.getCompanyId());
@@ -404,18 +400,18 @@ public class UserController extends AppPreferences {
                 User object = service.findByEmail(user.getEmail());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
-                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                    result.put("message", MESSAGE_HTTP_SAVE_FAILED);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
                     result.put("success", Boolean.TRUE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_OK);
+                    result.put("message", MESSAGE_HTTP_SAVE_OK);
                     result.put("result", object);
-                    return new ResponseEntity<>(result, HttpStatus.CREATED);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 }
             } else {
                 result.put("success", Boolean.FALSE);
                 result.put("message", message);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
         
@@ -437,8 +433,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("Updating user " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -451,18 +447,18 @@ public class UserController extends AppPreferences {
                 String message = service.update(user);
                 if ( message.isEmpty() ) {
                     result.put("success", Boolean.TRUE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_UPDATE_OK);
+                    result.put("message", MESSAGE_HTTP_UPDATE_OK);
                     result.put("result", object);
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
                     result.put("success", Boolean.FALSE);
                     result.put("message", message);
-                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 }
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         }
         
@@ -482,8 +478,8 @@ public class UserController extends AppPreferences {
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
             result.put("success", Boolean.FALSE);
-            result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
-            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("Fetching & Deleting User with id " + id);
             // se verifica que el usuario autenticado tenga permisos..
@@ -494,21 +490,20 @@ public class UserController extends AppPreferences {
                 boolean success = service.delete(id);
                 if ( success ) {
                     result.put("success", Boolean.TRUE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_DELETE_OK);
+                    result.put("message", MESSAGE_HTTP_DELETE_OK);
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
                     result.put("success", Boolean.FALSE);
-                    result.put("message", AppPreferences.MESSAGE_HTTP_DELETE_FAILED);
-                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                    result.put("message", MESSAGE_HTTP_DELETE_FAILED);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
                 }
             } else {
                 result.put("success", Boolean.FALSE);
-                result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
-                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                result.put("message", MESSAGE_HTTP_ID_FAILED);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
             
         }
-        
         
     }
     

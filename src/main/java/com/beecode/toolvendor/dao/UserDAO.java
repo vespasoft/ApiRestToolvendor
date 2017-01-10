@@ -26,18 +26,21 @@ public class UserDAO {
     private static String queryDelete = "delete from User where id = :id";
     
     public boolean add(User entity) {
-        boolean success = false;
+        
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
+        boolean result = false;
         try {
             add(session, entity);
             tx.commit();
-            success = true;
+            result = true;
         } catch ( Exception e ) {
             System.out.println("Error in DAO user add: " + e.getMessage());
+            result = false;
+        }finally {
+           session.close(); 
         }
-        session.close();
-        return success;
+        return result;
     }
     
     private void add(Session session, User entity) {

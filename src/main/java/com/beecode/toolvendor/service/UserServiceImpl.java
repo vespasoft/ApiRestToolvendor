@@ -81,8 +81,10 @@ public class UserServiceImpl implements UserService {
                 // si se agrega satisfactoriamente el usuario
                 if ( dao.add(user) ) {
                     // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                    SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
-                    se.start();
+                    //SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
+                    //se.start();
+                    EmailServiceImpl instance = new EmailServiceImpl();
+                    instance.SendEmailWellcome(user);
                 } else 
                     message="El registro no se pudo guardar, ocurrio un error inesperado.";
                 
@@ -156,8 +158,10 @@ public class UserServiceImpl implements UserService {
                 //--- se ejecuta el update en la capa de datos ---
                 dao.update(user);
                 // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                SendEmailForgotThread se = new SendEmailForgotThread(user);
-                se.start();
+                // SendEmailForgotThread se = new SendEmailForgotThread(user);
+                // se.start();
+                EmailServiceImpl instance = new EmailServiceImpl();
+                instance.SendEmailForgot(user);
             }
         }
         return message;

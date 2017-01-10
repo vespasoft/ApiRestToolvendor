@@ -15,6 +15,7 @@ import com.beecode.toolvendor.service.SecurityServiceImpl;
 import com.beecode.toolvendor.service.UserServiceImpl;
 import com.beecode.toolvendor.service.VisitServiceImpl;
 import com.beecode.toolvendor.service.ZoneServiceImpl;
+import com.beecode.toolvendor.thread.SendEmailWellcomeThread;
 import com.beecode.toolvendor.util.AppPreferences;
 import java.util.HashMap;
 import java.util.List;
@@ -403,6 +404,9 @@ public class UserController extends AppPreferences {
                     result.put("message", MESSAGE_HTTP_SAVE_FAILED);
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
+                    // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
+                    SendEmailWellcomeThread se = new SendEmailWellcomeThread(object);
+                    se.start();
                     result.put("success", Boolean.TRUE);
                     result.put("message", MESSAGE_HTTP_SAVE_OK);
                     result.put("result", object);

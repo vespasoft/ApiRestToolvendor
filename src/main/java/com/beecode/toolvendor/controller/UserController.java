@@ -180,9 +180,9 @@ public class UserController extends AppPreferences {
             result.put("message", message);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
-            System.out.println("Se envio un email de restauracion a: " + user.getEmail());
+            System.out.println("Le hemos enviado su nueva contraseña a: " + user.getEmail());
             result.put("success", Boolean.TRUE);
-            result.put("message", "Se envio un email de restauracion a: "+ user.getEmail());
+            result.put("message", "Le hemos enviado su nueva contraseña al siguiente email: "+ user.getEmail());
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         //HttpHeaders headers = new HttpHeaders();
@@ -404,9 +404,6 @@ public class UserController extends AppPreferences {
                     result.put("message", MESSAGE_HTTP_SAVE_FAILED);
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
-                    // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                    SendEmailWellcomeThread se = new SendEmailWellcomeThread(object);
-                    se.start();
                     result.put("success", Boolean.TRUE);
                     result.put("message", MESSAGE_HTTP_SAVE_OK);
                     result.put("result", object);

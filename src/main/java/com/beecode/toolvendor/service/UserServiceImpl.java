@@ -124,6 +124,12 @@ public class UserServiceImpl implements UserService {
                     //--- se ejecuta el update en la capa de datos ---
                     if ( !dao.update(currentUser) )
                         message="El registro no se pudo actualizar, ocurrio un error inesperado.";
+                    else {
+                        // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
+                        SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
+                        se.start();
+                    } 
+                        
                 } else {
                     message="No se encontro un registro asociado para este id";
                 }

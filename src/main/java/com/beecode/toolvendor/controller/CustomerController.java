@@ -100,6 +100,7 @@ public class CustomerController extends AppPreferences {
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createCustomer(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Customer cstmr,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        service = new CustomerServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

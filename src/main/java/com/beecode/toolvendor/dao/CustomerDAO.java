@@ -154,7 +154,7 @@ public class CustomerDAO {
         try{
            Criteria cr = session.createCriteria(Customer.class);
            // Add restriction.
-           cr.add(Restrictions.eq("company_name", companyname));
+           cr.add(Restrictions.eq("companyName", companyname));
            cr.add(Restrictions.eq("companyId", companyId));
            //crit.add(Restrictions.like("id", id+"%"));
            cr.setMaxResults(1);
@@ -176,7 +176,7 @@ public class CustomerDAO {
         try{
            Criteria cr = session.createCriteria(Customer.class);
            // Add restriction.
-           cr.add(Restrictions.eq("email", email));
+           cr.add(Restrictions.eq("contactEmail", email));
            //crit.add(Restrictions.like("id", id+"%"));
            cr.setMaxResults(1);
            result = (Customer) cr.uniqueResult();

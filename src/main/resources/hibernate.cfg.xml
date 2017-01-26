@@ -4,12 +4,12 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://127.10.243.2:3306/toolvendor?zeroDateTimeBehavior=convertToNull</property>
+    <!--<property name="hibernate.connection.url">jdbc:mysql://127.10.243.2:3306/toolvendor?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">admin44PjVCd</property>
-    <property name="hibernate.connection.password">mAdCv7rhesFI</property>
-    <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:8889/toolvendor?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.password">mAdCv7rhesFI</property>-->
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/toolvendor?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property>-->
+    <property name="hibernate.connection.password">root</property>
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.show_sql">true</property>
     <mapping class="com.beecode.toolvendor.model.Call"/>

@@ -79,8 +79,12 @@ public class UserServiceImpl implements UserService {
                 user.setPhoto("user.png");
                 user.setEnabled(Boolean.TRUE);
                 // si se agrega satisfactoriamente el usuario
-                if ( !dao.add(user) ) {
+                if ( !dao.add(user) ) 
                     message="El registro no se pudo guardar, ocurrio un error inesperado.";
+                else {
+                    // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
+                    SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
+                    se.start();
                 }
             }
         } catch ( Exception e ) {
@@ -124,11 +128,7 @@ public class UserServiceImpl implements UserService {
                     //--- se ejecuta el update en la capa de datos ---
                     if ( !dao.update(currentUser) )
                         message="El registro no se pudo actualizar, ocurrio un error inesperado.";
-                    else {
-                        // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                        SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
-                        se.start();
-                    } 
+                    
                         
                 } else {
                     message="No se encontro un registro asociado para este id";

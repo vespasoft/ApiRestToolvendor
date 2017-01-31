@@ -78,11 +78,13 @@ public class EmailServiceImpl implements EmailService {
         SendEmail se = new SendEmail();
         // depende del tipo de usuario A o M se envia un email distinto (formato).
         if ( user.getUsertype().getType().equalsIgnoreCase(AppPreferences.CONST_USER_TYPE_ADMIN)) {
-            se.SendMailTSL(toEmail, emailSubject, emailBodyAdmin, "text/html");
+            //se.SendMailTSL(toEmail, emailSubject, emailBodyAdmin, "text/html");
+            se.SendMailSSL(toEmail, emailSubject, emailBodyAdmin, "text/html");
         }
             
         else if ( user.getUsertype().getType().equalsIgnoreCase(AppPreferences.CONST_USER_TYPE_MOVIL)) {
-            se.SendMailTSL(toEmail, emailSubject, emailBodyMovil, "text/html");
+            //se.SendMailTSL(toEmail, emailSubject, emailBodyMovil, "text/html");
+            se.SendMailSSL(toEmail, emailSubject, emailBodyAdmin, "text/html");
         }
     }
 
@@ -113,7 +115,7 @@ public class EmailServiceImpl implements EmailService {
                         "</html>";
         
         SendEmail se = new SendEmail();
-        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
+        //se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
         se.SendMailSSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
@@ -151,7 +153,7 @@ public class EmailServiceImpl implements EmailService {
                         "</html>";
         
         SendEmail se = new SendEmail();
-        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
+        se.SendMailSSL(toEmail, emailSubject, emailBody, "text/html");
     }
 
     @Override
@@ -182,7 +184,7 @@ public class EmailServiceImpl implements EmailService {
                         "</html>";
         
         SendEmail se = new SendEmail();
-        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
+        se.SendMailSSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
     @Override
@@ -214,7 +216,7 @@ public class EmailServiceImpl implements EmailService {
                         "</html>";
         
         SendEmail se = new SendEmail();
-        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
+        se.SendMailSSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
 }

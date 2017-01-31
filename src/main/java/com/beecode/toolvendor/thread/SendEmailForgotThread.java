@@ -34,8 +34,8 @@ public class SendEmailForgotThread extends Thread {
         EmailServiceImpl emailserv = new EmailServiceImpl();
         // se valida que el object user no sea nulo
         if ( user!=null )
-            // se envia el correo de recuperación de contraseña al usuario
-            emailserv.SendEmailForgot(user);
+            emailserv.SendEmailForgot(user); // se envia el correo de recuperación de contraseña al usuario
+        
     }
     
     

@@ -114,6 +114,7 @@ public class EmailServiceImpl implements EmailService {
         
         SendEmail se = new SendEmail();
         se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
+        se.SendMailSSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
     @Override

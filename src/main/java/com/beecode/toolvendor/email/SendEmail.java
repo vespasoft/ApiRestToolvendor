@@ -47,12 +47,12 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
         this.messageContent = emailBody;
         
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.host", SERVIDOR_SMTP);
+        props.put("mail.smtp.socketFactory.port", SMTP_PORT_SSL);
         props.put("mail.smtp.socketFactory.class",
                         "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.port", SMTP_PORT_SSL);
 
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {

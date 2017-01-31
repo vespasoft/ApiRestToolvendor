@@ -1,0 +1,8 @@
+{
+  "name"        : "apidoc motoflash",
+  "version"     : "1.0.0",
+  "description" : "Documentacion de los web services para la implementacion de la API Rest en FlashMoto Project",
+  "title"       : "Documentacion API Rest MotoFlash",
+  "url"         : "/api"
+
+}

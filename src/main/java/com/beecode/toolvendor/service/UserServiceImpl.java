@@ -68,8 +68,6 @@ public class UserServiceImpl implements UserService {
                 message="No existe ningun tipo de usuario con este Id.";    
             } else if ( !companyserv.findId(user.getCompanyId()) ) {
                 message="No existe ninguna compañia con este Id.";    
-            } else if ( !companyserv.findId(user.getCompanyId()) ) {
-                message="No existe ninguna compañia con este Id.";
             } else if ( !cityserv.findId(user.getCity().getId()) ) {
                 message="No existe ninguna ciudad con este Id.";
             } else {
@@ -78,14 +76,12 @@ public class UserServiceImpl implements UserService {
                 user.setPassword(StringUtil.generateTokenString(TOKEN_PASSWORD_LENGTH));
                 user.setPhoto("user.png");
                 user.setEnabled(Boolean.TRUE);
+                user.setCountry(user.getCity().getCountry());
                 // si se agrega satisfactoriamente el usuario
-                if ( !dao.add(user) ) 
-                    message="El registro no se pudo guardar, ocurrio un error inesperado.";
-                else {
-                    // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                    SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
-                    se.start();
-                }
+                dao.add(user);
+                // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
+                SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
+                se.start();
             }
         } catch ( Exception e ) {
             System.out.println("Error in user save: " + e.getMessage());
@@ -126,10 +122,7 @@ public class UserServiceImpl implements UserService {
                     //--- LastUpdate fecha de actualizacion del registro
                     user.setLastUpdate(new Date());
                     //--- se ejecuta el update en la capa de datos ---
-                    if ( !dao.update(currentUser) )
-                        message="El registro no se pudo actualizar, ocurrio un error inesperado.";
-                    
-                        
+                    dao.update(currentUser);
                 } else {
                     message="No se encontro un registro asociado para este id";
                 }

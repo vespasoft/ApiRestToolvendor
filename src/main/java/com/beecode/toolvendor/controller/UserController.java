@@ -15,7 +15,6 @@ import com.beecode.toolvendor.service.SecurityServiceImpl;
 import com.beecode.toolvendor.service.UserServiceImpl;
 import com.beecode.toolvendor.service.VisitServiceImpl;
 import com.beecode.toolvendor.service.ZoneServiceImpl;
-import com.beecode.toolvendor.thread.SendEmailWellcomeThread;
 import com.beecode.toolvendor.util.AppPreferences;
 import java.util.HashMap;
 import java.util.List;
@@ -398,17 +397,12 @@ public class UserController extends AppPreferences {
             String message = service.save(user);
             if ( message.isEmpty() ) {
                 service = new UserServiceImpl();
-                User object = service.findByEmail(user.getEmail());
-                if ( object==null ) {
-                    result.put("success", Boolean.FALSE);
-                    result.put("message", MESSAGE_HTTP_SAVE_FAILED);
-                    return new ResponseEntity<>(result, HttpStatus.OK);
-                } else {
-                    result.put("success", Boolean.TRUE);
-                    result.put("message", MESSAGE_HTTP_SAVE_OK);
-                    result.put("result", object);
-                    return new ResponseEntity<>(result, HttpStatus.OK);
-                }
+                
+                result.put("success", Boolean.TRUE);
+                result.put("message", MESSAGE_HTTP_SAVE_OK);
+                // result.put("result", object);
+                return new ResponseEntity<>(result, HttpStatus.OK);
+
             } else {
                 result.put("success", Boolean.FALSE);
                 result.put("message", message);
@@ -449,7 +443,7 @@ public class UserController extends AppPreferences {
                 if ( message.isEmpty() ) {
                     result.put("success", Boolean.TRUE);
                     result.put("message", MESSAGE_HTTP_UPDATE_OK);
-                    result.put("result", object);
+                    // result.put("result", object);
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
                     result.put("success", Boolean.FALSE);

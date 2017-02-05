@@ -64,9 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 //--- AtCreated fecha de creación del registro
                 cstmr.setCreatedAt(new Date() );
-                if ( !dao.add(cstmr) ) {
-                    message="El registro no se pudo guardar, ocurrio un error inesperado.";
-                }
+                dao.add(cstmr);
                 
             }
         } catch ( Exception e ) {
@@ -114,8 +112,7 @@ public class CustomerServiceImpl implements CustomerService {
                     currentCustomer.setLastUpdate(new Date());
                     //--- se ejecuta el update en la capa de datos ---
                     dao.update(currentCustomer);
-                    if ( !dao.update(cstmr) )
-                        message="El registro no se pudo actualizar, ocurrio un error inesperado.";
+                    dao.update(cstmr);
                 } else {
                     message="No se encontro un registro asociado para este id";
                 }

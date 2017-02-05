@@ -113,18 +113,10 @@ public class CustomerController extends AppPreferences {
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(cstmr);
             if ( message.isEmpty() ) {
-                service = new CustomerServiceImpl();
-                Customer object = service.findByEmail(cstmr.getContactEmail());
-                if ( object==null ) {
-                    result.put("success", Boolean.FALSE);
-                    result.put("message", MESSAGE_HTTP_SAVE_FAILED);
-                    return new ResponseEntity<>(result, HttpStatus.OK);
-                } else {
-                    result.put("success", Boolean.TRUE);
-                    result.put("message", MESSAGE_HTTP_SAVE_OK);
-                    result.put("result", object);
-                    return new ResponseEntity<>(result, HttpStatus.CREATED);
-                }
+                result.put("success", Boolean.TRUE);
+                result.put("message", MESSAGE_HTTP_SAVE_OK);
+                //result.put("result", object);
+                return new ResponseEntity<>(result, HttpStatus.CREATED);
             } else {
                 result.put("success", Boolean.FALSE);
                 result.put("message", message);
@@ -162,7 +154,7 @@ public class CustomerController extends AppPreferences {
                     } else {
                         result.put("success", Boolean.TRUE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_UPDATE_OK);
-                        result.put("result", object);
+                        // result.put("result", object);
                         return new ResponseEntity<>(result, HttpStatus.OK);
                     }
                 } else {

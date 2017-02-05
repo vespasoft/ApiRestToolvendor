@@ -60,10 +60,11 @@ public class CustomerServiceImpl implements CustomerService {
             } else if ( !userserv.findId(cstmr.getUserId(), cstmr.getCompanyId()) ) {
                 message="No existe ningun usuario con este Id.";
             } else if ( !cityserv.findId(cstmr.getCity().getId()) ) {
-                message="No existe un registro con este cityId.";        
+                message="No existe una ciudad con este cityId.";        
             } else {
                 //--- AtCreated fecha de creación del registro
                 cstmr.setCreatedAt(new Date() );
+                cstmr.setCountry(cstmr.getCity().getCountry());
                 dao.add(cstmr);
                 
             }

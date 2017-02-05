@@ -124,13 +124,13 @@ public class UserDAO {
                    .add(Projections.property("photo"), "photo")
                    .add(Projections.property("latitud"), "latitud")
                    .add(Projections.property("longitude"), "longitude")
-                   .add(Projections.property("companyId"), "companyId"))
-                   .setResultTransformer(Transformers.aliasToBean(User.class));
-                   
+                   .add(Projections.property("companyId"), "companyId"));
+           cr.setResultTransformer(Transformers.aliasToBean(User.class)); 
            // Add restriction.
            cr.add(Restrictions.eq("id", id));
            //crit.add(Restrictions.like("id", id+"%"));
            cr.setMaxResults(1);
+           
            result = (User) cr.uniqueResult();
            if ( result!=null )
                 System.out.print("User Name sin Transaction: " + result.getName()); 

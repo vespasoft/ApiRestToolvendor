@@ -13,7 +13,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 
 /**
  *
@@ -109,10 +111,22 @@ public class UserDAO {
     }
     
     public User findById(int id) {
+        
         Session session = SessionUtil.getSession();
         User result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
+           cr.setProjection(Projections.projectionList()
+                   .add(Projections.property("id"), "id")
+                   .add(Projections.property("name"), "name")
+                   .add(Projections.property("phone"), "phone")
+                   .add(Projections.property("email"), "email")
+                   .add(Projections.property("photo"), "photo")
+                   .add(Projections.property("latitud"), "latitud")
+                   .add(Projections.property("longitude"), "longitude")
+                   .add(Projections.property("companyId"), "companyId"))
+                   .setResultTransformer(Transformers.aliasToBean(User.class));
+                   
            // Add restriction.
            cr.add(Restrictions.eq("id", id));
            //crit.add(Restrictions.like("id", id+"%"));

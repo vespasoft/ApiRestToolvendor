@@ -149,9 +149,8 @@ public class UserController extends AppPreferences {
             User uid = security.parseJWT(token);
             result.put("success", Boolean.TRUE);
             result.put("message", "Bienvenido al sistema toolvendor");
-            result.put("userId", user.getId());
+            result.put("user", user);
             result.put("tokenId", token);
-            result.put("name", user.getName());
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         //HttpHeaders headers = new HttpHeaders();

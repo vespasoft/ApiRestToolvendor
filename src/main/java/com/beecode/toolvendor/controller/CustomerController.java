@@ -233,7 +233,7 @@ public class CustomerController extends AppPreferences {
             if ( object!=null ) {
                  //---- Obtiene todos las visitas de un cliente -----
                 System.out.println("List all visit by customer " + session.getId());
-                List list = visitserv.getAllByCompany(id);
+                List list = visitserv.getAllByCustomer(id);
                 if ( list==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", MESSAGE_HTTP_IS_EMPTY);

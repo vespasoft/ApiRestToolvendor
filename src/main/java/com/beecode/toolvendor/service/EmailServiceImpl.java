@@ -142,7 +142,7 @@ public class EmailServiceImpl implements EmailService {
                         "        \n" +
                         "        <h4>Motivo: "+visit.getReason()+"</h4>\n" +
                         "        \n" +
-                        "        <h4>Cliente: "+visit.getCustomerId()+" </h4>\n" +
+                        "        <h4>Cliente: "+visit.getCustomer().getCompanyName()+" </h4>\n" +
                         "        \n" +
                         "        <h4>Le recordamos que debe iniciar la visita antes de la hora programada para \n" +
                         "            que pueda ser aceptada por el sistema de lo contrario cambiará a estatus: Vencida</h4>\n" +

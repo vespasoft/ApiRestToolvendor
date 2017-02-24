@@ -11,7 +11,10 @@ import com.beecode.toolvendor.service.CallServiceImpl;
 import com.beecode.toolvendor.service.CompanyServiceImpl;
 import com.beecode.toolvendor.service.CustomerServiceImpl;
 import com.beecode.toolvendor.service.SecurityServiceImpl;
+import com.beecode.toolvendor.service.VisitServiceImpl;
 import com.beecode.toolvendor.util.AppPreferences;
+import static com.beecode.toolvendor.util.AppPreferences.MESSAGE_HTTP_IS_EMPTY;
+import static com.beecode.toolvendor.util.AppPreferences.MESSAGE_USER_NOT_ACCESS;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,7 @@ public class CustomerController extends AppPreferences {
     SecurityServiceImpl security = new SecurityServiceImpl();
     CompanyServiceImpl companyserv = new CompanyServiceImpl();
     CallServiceImpl callserv = new CallServiceImpl();
+    VisitServiceImpl visitserv = new VisitServiceImpl();
     
     //-------------------Retrieve All Customer-----------------------------------------
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
@@ -204,6 +208,49 @@ public class CustomerController extends AppPreferences {
                 result.put("message", MESSAGE_USER_NOT_ACCESS);
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
+        }
+        
+    }
+    
+    //------------------- Retrieve all visit by customer --------------------------------------------------------
+    
+    @RequestMapping(value = "/customer/{id}/visit", method = RequestMethod.GET)
+    public ResponseEntity<Map<String,Object>> getAllVisit(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
+        
+        result = new HashMap<String,Object>();
+        visitserv = new VisitServiceImpl();
+        System.out.println("Fetching Header Access Token " + accessToken);
+        // Se obtiene la session del usuario a partir del token proporsionado
+        User session = security.inicialized(accessToken);
+        if ( session==null ) {
+            result.put("success", Boolean.FALSE);
+            result.put("message", MESSAGE_USER_NOT_ACCESS);
+            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+        } else {
+            // Si el usuario tiene acceso a los datos del usuario indicado
+            System.out.println("Customer with id " + id);
+            Customer object = security.hasAccessCustomer(id);
+            if ( object!=null ) {
+                 //---- Obtiene todos las visitas de un cliente -----
+                System.out.println("List all visit by customer " + session.getId());
+                List list = visitserv.getAllByCompany(id);
+                if ( list==null ) {
+                    result.put("success", Boolean.FALSE);
+                    result.put("message", MESSAGE_HTTP_IS_EMPTY);
+                    return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                } else {
+                    result.put("success", Boolean.TRUE);
+                    result.put("result", list);
+                    return new ResponseEntity<>(result, HttpStatus.OK);
+                }
+                
+            } else {
+                // El usurio tiene el acceso denegado ...
+                result.put("success", Boolean.FALSE);
+                result.put("message", MESSAGE_USER_NOT_ACCESS);
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            
         }
         
     }

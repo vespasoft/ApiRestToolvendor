@@ -44,8 +44,8 @@ public class VisitServiceImpl implements VisitService {
         String message="";
         if ( visit==null ) {
             message="Se espero un objeto visit en formato JSON";
-        } else if ( visit.getCustomerId()==null ) {
-            message="El campo CustomerId no puede ser nullo";
+        } else if ( visit.getCustomer()==null ) {
+            message="El campo Customer no puede ser nullo";
         } else if ( visit.getScheduledDate()==null ) {
             message="El campo ScheduledDate no puede ser nullo";
         } else if ( visit.getUserId()==null ) {
@@ -54,7 +54,7 @@ public class VisitServiceImpl implements VisitService {
             message="El campo VisitTypeId no puede ser nullo";
         } else if ( visit.getUserId()==0 ) {
             message="El campo UserId no puede ser nullo";
-        } else if ( visit.getCustomerId()==0 ) {
+        } else if ( visit.getCustomer().getId()==0 ) {
             message="El campo CustomerId no puede ser nullo";
         } else if ( visit.getVisitType().getId()==0 ) {
             message="El campo VisitTypeId no puede estar vacio";
@@ -62,7 +62,7 @@ public class VisitServiceImpl implements VisitService {
             message="El campo Reason es obligatorio";
         } else if ( !userserv.findId(visit.getUserId(), visit.getCompanyId()) ) {
             message="No existe un registro con este UserId.";
-        } else if ( !cstmrserv.findId(visit.getCustomerId(), visit.getCompanyId()) ) {
+        } else if ( !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
             message="No existe un registro con este CustomerId.";   
         } else if ( !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
             message="No existe un registro con este VisitTypeId.";
@@ -72,7 +72,7 @@ public class VisitServiceImpl implements VisitService {
             visit.setCreatedAt( timestamp );
             
             dao.add(visit);
-            User user = userserv.findById(visit.getCustomerId(), visit.getCompanyId());
+            User user = userserv.findById(visit.getCustomer().getId(), visit.getCompanyId());
             // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
             SendEmailScheduleVisitThread se = new SendEmailScheduleVisitThread(user, visit);
             se.start();
@@ -95,7 +95,7 @@ public class VisitServiceImpl implements VisitService {
             message="El campo Id no puede ser 0";
         } else if ( visit.getUserId()!=null && !userserv.findId(visit.getUserId(), visit.getCompanyId()) ) {
             message="No existe un registro con este UserId.";
-        } else if ( visit.getCustomerId()!=null && !cstmrserv.findId(visit.getCustomerId(), visit.getCompanyId()) ) {
+        } else if ( visit.getCustomer()!=null && !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
             message="No existe un registro con este CustomerId.";
         } else if ( visit.getVisitType()!=null && !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
             message="No existe un registro con este visitucttypeId.";
@@ -109,7 +109,7 @@ public class VisitServiceImpl implements VisitService {
                 if (visit.getCheckin()!=null) currentVisit.setCheckin(visit.getCheckin());
                 if (visit.getCheckout()!=null) currentVisit.setCheckout(visit.getCheckout());
                 if (visit.getUserId()!=null) currentVisit.setUserId(visit.getUserId());
-                if (visit.getCustomerId()!=null) currentVisit.setCustomerId(visit.getCustomerId());
+                if (visit.getCustomer().getId()!=null) currentVisit.setCustomer(visit.getCustomer());
                 if (visit.getVisitType()!=null) currentVisit.setVisitType(visit.getVisitType());
                 if (visit.getComment()!=null) currentVisit.setComment(visit.getComment());
                 if (visit.getReason()!=null) currentVisit.setReason(visit.getReason());
@@ -140,7 +140,7 @@ public class VisitServiceImpl implements VisitService {
             if ( visit==null ) {
                 message="El Id de la visita no existe o es invalido";
             } else {
-                cstmr = cstmrserv.findById(visit.getCustomerId(), companyId);
+                cstmr = cstmrserv.findById(visit.getCustomer().getId(), companyId);
                 if ( cstmr==null ) {
                     message="El id del cliente no existe o es invalido";
                 } else {

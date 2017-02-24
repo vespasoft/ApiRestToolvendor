@@ -27,7 +27,7 @@ public class Visit  implements java.io.Serializable {
 
 
      private Integer id;
-     private Integer customerId;
+     private Customer customer;
      private Integer userId;
      private Integer companyId;
      private VisitType visitType;
@@ -43,8 +43,8 @@ public class Visit  implements java.io.Serializable {
     public Visit() {
     }
 
-    public Visit(Integer customerId, Integer userId, Integer companyId, VisitType visitType, Timestamp createdAt, Timestamp scheduledDate, String reason) {
-       this.customerId = customerId;
+    public Visit(Customer customer, Integer userId, Integer companyId, VisitType visitType, Timestamp createdAt, Timestamp scheduledDate, String reason) {
+       this.customer = customer;
        this.userId = userId;
        this.companyId = companyId;
        this.visitType = visitType;
@@ -65,15 +65,16 @@ public class Visit  implements java.io.Serializable {
         this.id = id;
     }
 
-    @Column(name="customer_id", nullable=false)
-    public Integer getCustomerId() {
-        return customerId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="customer_id", nullable=false)
+    public Customer getCustomer() {
+        return this.customer;
     }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    
+    public void setCustomer(Customer cstmr) {
+        this.customer = cstmr;
     }
-
+    
     @Column(name="user_id", nullable=false)
     public Integer getUserId() {
         return userId;

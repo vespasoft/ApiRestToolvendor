@@ -69,11 +69,10 @@ public class AmazonS3Controller {
 		// upload file to folder and set it to public
 		String fileName = folderName + SUFFIX + "cocacolalata.jpg";
 		s3client.putObject(new PutObjectRequest(bucketName, fileName, 
-				new File(System.getenv("OPENSHIFT_DATA_DIR") + "/55_1-cocacolalata.jpg"))
+				new File("http://toolvendor-beecode.rhcloud.com/" + System.getenv("OPENSHIFT_DATA_DIR") + "/55_1-cocacolalata.jpg"))
 				.withCannedAcl(CannedAccessControlList.PublicReadWrite));
 		
 		//deleteFolder(bucketName, folderName, s3client);
-		
 		// deletes bucket
 		//s3client.deleteBucket(bucketName);
                 

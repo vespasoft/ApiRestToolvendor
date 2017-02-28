@@ -54,7 +54,7 @@ public class FileUploadServlet extends HttpServlet {
         
         for (Part part : parts) {
             printEachPart(part, out);
-            String fileName = "products" + "/" + getFileName(part);
+            String fileName = "avatar/" + getFileName(part);
             part.write(getFileName(part));
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
                     new File(System.getenv("OPENSHIFT_DATA_DIR") + getFileName(part)));

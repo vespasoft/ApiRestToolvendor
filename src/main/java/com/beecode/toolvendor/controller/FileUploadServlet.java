@@ -9,6 +9,8 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.beecode.toolvendor.service.AmazonS3Service;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
@@ -45,15 +47,16 @@ public class FileUploadServlet extends HttpServlet {
  
         out.write("<h2> Total parts : " + parts.size() + "</h2>");
  
-        AWSCredentials credentials = new BasicAWSCredentials(
-				"AKIAJ76F5XF6OLA4M2UA", 
-				"nI53hnZggapTLX+TQZ6WPTxSUDaEhqDKfY8HCFC4");
         // create a client connection based on credentials
-        AmazonS3 s3client = new AmazonS3Client(credentials);
+        AmazonS3Service s3service = new AmazonS3Service();
+        s3service.getBucket("toolvendor-files-bucket");
+        s3service.createFolder("toolvendor-files-bucket", "products");
         
         for (Part part : parts) {
             printEachPart(part, out);
+            String fileName = getFileName(part);
             part.write(getFileName(part));
+            s3service.uploadFile("toolvendor-files-bucket", fileName, new File(System.getenv("OPENSHIFT_DATA_DIR") + fileName));
         }
     }
  

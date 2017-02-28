@@ -113,7 +113,7 @@ public class VisitDAO {
         try{
            Criteria cr = session.createCriteria(Visit.class);
            // Add restriction.
-           cr.add(Restrictions.eq("customerId", customerId));
+           cr.add(Restrictions.eq("customer.id", customerId));
            //crit.add(Restrictions.like("id", id+"%"));
            result = cr.list();
            if ( result!=null )
@@ -122,7 +122,7 @@ public class VisitDAO {
             if ( e != null )
                 System.out.print("Error DAO: " + e.getMessage());
         }finally {
-           session.close(); 
+           session.close();
         }
         return result;
     }

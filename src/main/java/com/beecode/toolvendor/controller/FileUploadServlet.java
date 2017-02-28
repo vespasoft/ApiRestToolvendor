@@ -5,6 +5,10 @@
  */
 package com.beecode.toolvendor.controller;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
@@ -41,6 +45,12 @@ public class FileUploadServlet extends HttpServlet {
  
         out.write("<h2> Total parts : " + parts.size() + "</h2>");
  
+        AWSCredentials credentials = new BasicAWSCredentials(
+				"AKIAJ76F5XF6OLA4M2UA", 
+				"nI53hnZggapTLX+TQZ6WPTxSUDaEhqDKfY8HCFC4");
+        // create a client connection based on credentials
+        AmazonS3 s3client = new AmazonS3Client(credentials);
+        
         for (Part part : parts) {
             printEachPart(part, out);
             part.write(getFileName(part));

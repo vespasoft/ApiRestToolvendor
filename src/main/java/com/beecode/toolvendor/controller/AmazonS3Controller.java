@@ -63,14 +63,14 @@ public class AmazonS3Controller {
 		}
 		
 		// create folder into bucket
-		String folderName = "testfolder";
+		String folderName = "products";
 		createFolder(bucketName, folderName, s3client);
 		
 		// upload file to folder and set it to public
-		String fileName = folderName + SUFFIX + "testfile.jpg";
+		String fileName = folderName + SUFFIX + "cocacolalata.jpg";
 		s3client.putObject(new PutObjectRequest(bucketName, fileName, 
-				new File("/Users/luisvespa/Pictures/IMG-20160706-WA0004.jpg"))
-				.withCannedAcl(CannedAccessControlList.PublicRead));
+				new File(System.getenv("OPENSHIFT_DATA_DIR") + "/55_1-cocacolalata.jpg"))
+				.withCannedAcl(CannedAccessControlList.PublicReadWrite));
 		
 		//deleteFolder(bucketName, folderName, s3client);
 		

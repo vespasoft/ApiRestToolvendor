@@ -14,8 +14,10 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
  
 import javax.servlet.ServletException;
@@ -49,8 +51,8 @@ public class FileUploadServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Collection<Part> parts = request.getParts();
- 
-        out.write("<h2> Total parts : " + parts.size() + "</h2>");
+        
+        //out.write("{ result: " + parts.size() + "</h2>");
  
         // create a client connection based on credentials
         AmazonS3Service s3service = new AmazonS3Service();
@@ -61,7 +63,7 @@ public class FileUploadServlet extends HttpServlet {
             //printEachPart(part, out);
             printJSONPart(part, out);
             String fileName = "products/" + getFileName(part);
-            part.write(getFileName(part));
+            //part.write(getFileName(part));
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
                     new File(System.getenv("OPENSHIFT_DATA_DIR") + getFileName(part)));
         }
@@ -70,8 +72,8 @@ public class FileUploadServlet extends HttpServlet {
     
     private void printJSONPart(Part part, PrintWriter pw) {
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("filename", part.getName());
-        data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/products/" + part.getName());
+        data.put("filename", getFileName(part));
+        data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/products/" + getFileName(part));
         data.put("filesize", part.getSize());
         pw.write(new Gson().toJson(data));
     }

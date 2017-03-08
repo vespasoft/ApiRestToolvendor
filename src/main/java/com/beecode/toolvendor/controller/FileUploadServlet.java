@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,6 @@ import javax.servlet.http.Part;
 public class FileUploadServlet extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
-    
-    private static final SecurityUtil sUtil = new SecurityUtil();
  
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
@@ -68,7 +67,8 @@ public class FileUploadServlet extends HttpServlet {
        for (Part part : parts) {
             //printEachPart(part, out);
             // se genera un HASH para el nombre de la imagen ...
-            String name = sUtil.encodeHexMD5(getFileName(part));
+            SecurityUtil sUtil = new SecurityUtil();
+            String name = sUtil.encodeHexMD5(String.valueOf(new Date().getTime()));
             String fileName = repository+ "/" + name;
             // se crea la respuesta json con los datos de la imagen subida
             printJSONPart(part, out, fileName);

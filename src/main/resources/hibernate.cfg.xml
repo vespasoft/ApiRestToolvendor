@@ -10,6 +10,9 @@
     <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:8889/toolvendor?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>-->
+    <property name="hibernate.connection.autoReconnect">true</property>
+    <property name="hibernate.connection.autoReconnectForPools">true</property>
+    <property name="hibernate.connection.is-connection-validation-required">true</property>
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.show_sql">true</property>
     <mapping class="com.beecode.toolvendor.model.Call"/>

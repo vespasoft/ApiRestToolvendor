@@ -10,10 +10,13 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.beecode.toolvendor.service.AmazonS3Service;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
  
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -41,8 +44,10 @@ public class FileUploadServlet extends HttpServlet {
  
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
- 
+        
         Collection<Part> parts = request.getParts();
  
         out.write("<h2> Total parts : " + parts.size() + "</h2>");
@@ -53,13 +58,22 @@ public class FileUploadServlet extends HttpServlet {
         s3service.createFolder("toolvendor-files-bucket", "products");
         
         for (Part part : parts) {
-            printEachPart(part, out);
+            //printEachPart(part, out);
+            printJSONPart(part, out);
             String fileName = "products/" + getFileName(part);
             part.write(getFileName(part));
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
                     new File(System.getenv("OPENSHIFT_DATA_DIR") + getFileName(part)));
         }
         
+    }
+    
+    private void printJSONPart(Part part, PrintWriter pw) {
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("filename", part.getName());
+        data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/products/" + part.getName());
+        data.put("filesize", part.getSize());
+        pw.write(new Gson().toJson(data));
     }
  
     private void printEachPart(Part part, PrintWriter pw) {

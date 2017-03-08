@@ -9,6 +9,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.beecode.toolvendor.security.SecurityUtil;
 import com.beecode.toolvendor.service.AmazonS3Service;
 import com.google.gson.Gson;
 import java.io.File;
@@ -37,6 +38,8 @@ import javax.servlet.http.Part;
 public class FileUploadServlet extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
+    
+    private static final SecurityUtil sUtil = new SecurityUtil();
  
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
@@ -59,10 +62,15 @@ public class FileUploadServlet extends HttpServlet {
         s3service.getBucket("toolvendor-files-bucket");
         s3service.createFolder("toolvendor-files-bucket", "products");
         
-        for (Part part : parts) {
+       for (Part part : parts) {
             //printEachPart(part, out);
+            // se genera un HASH para el nombre de la imagen ...
+            String name = sUtil.encodeHexMD5(getFileName(part));
+            String fileName = "products/" + name;
+            // se crea la respuesta json con los datos de la imagen subida
             printJSONPart(part, out);
-            String fileName = "products/" + getFileName(part);
+            //String fileName = "products/" + getFileName(part);
+            // se guarda la imagen en el servidor
             part.write(getFileName(part));
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
                     new File(System.getenv("OPENSHIFT_DATA_DIR") + getFileName(part)));

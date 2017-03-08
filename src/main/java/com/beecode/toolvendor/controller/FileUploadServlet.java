@@ -53,6 +53,8 @@ public class FileUploadServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         
+        String repository = request.getParameter("repository");
+        
         Collection<Part> parts = request.getParts();
         
         //out.write("{ result: " + parts.size() + "</h2>");
@@ -66,9 +68,9 @@ public class FileUploadServlet extends HttpServlet {
             //printEachPart(part, out);
             // se genera un HASH para el nombre de la imagen ...
             String name = sUtil.encodeHexMD5(getFileName(part));
-            String fileName = "products/" + name;
+            String fileName = repository+ "/" + name;
             // se crea la respuesta json con los datos de la imagen subida
-            printJSONPart(part, out);
+            printJSONPart(part, out, name);
             //String fileName = "products/" + getFileName(part);
             // se guarda la imagen en el servidor
             part.write(getFileName(part));
@@ -78,10 +80,10 @@ public class FileUploadServlet extends HttpServlet {
         
     }
     
-    private void printJSONPart(Part part, PrintWriter pw) {
+    private void printJSONPart(Part part, PrintWriter pw, String name) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("filename", getFileName(part));
-        data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/products/" + getFileName(part));
+        data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/products/" + name);
         data.put("filesize", part.getSize());
         pw.write(new Gson().toJson(data));
     }

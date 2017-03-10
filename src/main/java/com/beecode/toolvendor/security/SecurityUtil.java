@@ -5,7 +5,6 @@
  */
 package com.beecode.toolvendor.security;
 
-import com.beecode.toolvendor.util.StringUtil;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Hex;
@@ -16,10 +15,7 @@ import org.apache.commons.codec.binary.Hex;
  */
 public class SecurityUtil {
 
-    public SecurityUtil() {
-    }
-    
-    public String encodeHexSHA512(String password) {
+    public static String encodeHexSHA512(String password) {
         MessageDigest md = null;
         try {
             //SHA-512
@@ -34,7 +30,7 @@ public class SecurityUtil {
         }
     }
     
-    public String encodeHexSHA1(String password) {
+    public static String encodeHexSHA1(String password) {
         MessageDigest md = null;
         try {
             //SHA-1
@@ -49,7 +45,7 @@ public class SecurityUtil {
         }
     }
     
-    public String encodeHexMD5(String password) {
+    public static String encodeHexMD5(String password) {
         MessageDigest md = null;
         try {
             //MD5

@@ -68,16 +68,16 @@ public class FileUploadServlet extends HttpServlet {
        for (Part part : parts) {
             // printEachPart(part, out);
             // se genera un HASH para el nombre de la imagen ...
-            String name = StringUtil.generateTokenString(16);
+            String name = SecurityUtil.encodeHexMD5(StringUtil.generateTokenString(16))+".jpg";
             String fileName = repository+ "/" + name;
             // se crea la respuesta json con los datos de la imagen subida
             printJSONPart(part, out, fileName);
             //String fileName = "products/" + getFileName(part);
             // se guarda la imagen en el servidor
-            part.write(name);
-            // part.write(getFileName(part));
+            //part.write(name);
+            part.write(getFileName(part));
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
-                    new File(System.getenv("OPENSHIFT_DATA_DIR") + name));
+                    new File(System.getenv("OPENSHIFT_DATA_DIR") + getFileName(part)));
         }
         
     }

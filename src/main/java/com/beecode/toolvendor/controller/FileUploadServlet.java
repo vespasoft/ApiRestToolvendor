@@ -11,6 +11,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.beecode.toolvendor.security.SecurityUtil;
 import com.beecode.toolvendor.service.AmazonS3Service;
+import com.beecode.toolvendor.util.ImageValidator;
 import com.beecode.toolvendor.util.StringUtil;
 import com.google.gson.Gson;
 import java.io.File;
@@ -55,6 +56,8 @@ public class FileUploadServlet extends HttpServlet {
         
         Collection<Part> parts = request.getParts();
         
+        ImageValidator imageValidator = new ImageValidator();
+        
         //out.write("{ result: " + parts.size() + "</h2>");
  
         // create a client connection based on credentials
@@ -65,24 +68,38 @@ public class FileUploadServlet extends HttpServlet {
        for (Part part : parts) {
             // printEachPart(part, out);
             String imageName = getFileName(part);
-            // se genera un HASH para el nombre de la imagen ...
-            String token = SecurityUtil.encodeHexSHA1(imageName)+ ".png";
-            // String name = StringUtil.generateTokenString(16) + ".png";
-            String fileName = "products/" + token;
-            // se crea la respuesta json con los datos de la imagen subida
-            printJSONPart(part, out, fileName);
-            //String fileName = "products/" + getFileName(part);
-            // se guarda la imagen en el servidor
-            part.write(token);
-            //part.write(imageName);
-            s3service.uploadFile("toolvendor-files-bucket", fileName, 
-                    new File(System.getenv("OPENSHIFT_DATA_DIR") + token));
+            if ( !imageValidator.validate(imageName) ) {
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("success", false);
+                data.put("message", "La extensión de la imagen es invalida. solo puede subir archivos (jpg|png|gif|bmp)");
+                part.write(new Gson().toJson(data));
+            } else if (part.getSize()>1024) {
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("success", false);
+                data.put("message", "El tamaño del archivo que intenta subir es muy grande, El maximo permitido es de 1024KB");
+                part.write(new Gson().toJson(data));
+            } else {
+                // se genera un HASH para el nombre de la imagen ...
+                String token = SecurityUtil.encodeHexSHA1(imageName)+ ".png";
+                // String name = StringUtil.generateTokenString(16) + ".png";
+                String fileName = "products/" + token;
+                // se crea la respuesta json con los datos de la imagen subida
+                printJSONPart(part, out, fileName);
+                //String fileName = "products/" + getFileName(part);
+                // se guarda la imagen en el servidor
+                part.write(token);
+                //part.write(imageName);
+                s3service.uploadFile("toolvendor-files-bucket", fileName, 
+                        new File(System.getenv("OPENSHIFT_DATA_DIR") + token));
+            }
+            
         }
         
     }
     
     private void printJSONPart(Part part, PrintWriter pw, String name) {
         Map<String, Object> data = new HashMap<String, Object>();
+        data.put("success", true);
         data.put("filename", name);
         data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/" + name);
         data.put("filesize", part.getSize());

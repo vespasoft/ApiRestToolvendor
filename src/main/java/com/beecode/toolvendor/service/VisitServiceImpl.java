@@ -72,7 +72,7 @@ public class VisitServiceImpl implements VisitService {
             visit.setCreatedAt( timestamp );
             
             dao.add(visit);
-            User user = userserv.findById(visit.getCustomer().getId(), visit.getCompanyId());
+            User user = userserv.findById(visit.getUserId(), visit.getCompanyId());
             // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
             SendEmailScheduleVisitThread se = new SendEmailScheduleVisitThread(user, visit);
             se.start();

@@ -219,4 +219,30 @@ public class EmailServiceImpl implements EmailService {
         se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");
     }
     
+    String emailTemplateAdmin = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
+        "<html lang=\"en\">\n" +
+        "<head>\n" +
+        "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+        "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+        "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+        "\n" +
+        "  <title></title>\n" +
+        "\n" +
+        "  <style type=\"text/css\">\n" +
+        "  </style>    \n" +
+        "</head>\n" +
+        "<body style=\"margin:0; padding:0; background-color:#F2F2F2;\">\n" +
+        "  <center>\n" +
+        "    <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#F2F2F2\">\n" +
+        "        <tr>\n" +
+        "            <td align=\"center\" valign=\"top\">\n" +
+        "                \n" +
+        "                \n" +
+        "            </td>\n" +
+        "        </tr>\n" +
+        "    </table>\n" +
+        "  </center>\n" +
+        "</body>\n" +
+        "</html>";
+    
 }

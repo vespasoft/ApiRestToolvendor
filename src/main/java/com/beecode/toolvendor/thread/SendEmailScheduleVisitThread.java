@@ -44,7 +44,7 @@ public class SendEmailScheduleVisitThread extends Thread {
         // se instancia la clase controladora de correos
         EmailServiceImpl emailserv = new EmailServiceImpl();
         // se valida que el object user no sea nulo
-        if ( user!=null )
+        if ( user!=null && visit!=null )
             // se envia el correo de notificación de la visita programada al usuario
             emailserv.SendEmailProgramVisit(user, visit);
     }

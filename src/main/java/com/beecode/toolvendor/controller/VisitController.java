@@ -125,6 +125,7 @@ public class VisitController extends AppPreferences {
                 return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
             }
         }
+        
     }
      
     // ------------------- Update Visit --------------------------------------------------------

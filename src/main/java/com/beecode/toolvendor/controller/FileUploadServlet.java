@@ -68,7 +68,7 @@ public class FileUploadServlet extends HttpServlet {
        for (Part part : parts) {
             // printEachPart(part, out);
             String imageName = getFileName(part);
-            if ( !imageValidator.validate(imageName) ) {
+            /*if ( !imageValidator.validate(imageName) ) {
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("success", false);
                 data.put("message", "La extensión de la imagen es invalida. solo puede subir archivos (jpg|png|gif|bmp)");
@@ -78,7 +78,7 @@ public class FileUploadServlet extends HttpServlet {
                 data.put("success", false);
                 data.put("message", "El tamaño del archivo que intenta subir es muy grande, El maximo permitido es de 1024KB");
                 part.write(new Gson().toJson(data));
-            } else {
+            } else {*/
                 // se genera un HASH para el nombre de la imagen ...
                 String token = SecurityUtil.encodeHexSHA1(imageName)+ ".png";
                 // String name = StringUtil.generateTokenString(16) + ".png";
@@ -91,7 +91,7 @@ public class FileUploadServlet extends HttpServlet {
                 //part.write(imageName);
                 s3service.uploadFile("toolvendor-files-bucket", fileName, 
                         new File(System.getenv("OPENSHIFT_DATA_DIR") + token));
-            }
+            //}
             
         }
         

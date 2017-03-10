@@ -73,7 +73,7 @@ public class FileUploadServlet extends HttpServlet {
             // String name = StringUtil.generateTokenString(16) + ".png";
             String fileName = repository+ "/" + imageName;
             // se crea la respuesta json con los datos de la imagen subida
-            printJSONPart(part, out, fileName, "");
+            printJSONPart(part, out, fileName);
             //String fileName = "products/" + getFileName(part);
             // se guarda la imagen en el servidor
             //part.write(name);
@@ -84,10 +84,9 @@ public class FileUploadServlet extends HttpServlet {
         
     }
     
-    private void printJSONPart(Part part, PrintWriter pw, String name, String token) {
+    private void printJSONPart(Part part, PrintWriter pw, String name) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("filename", name);
-        data.put("tokenname", token);
         data.put("url", "https://s3.amazonaws.com/toolvendor-files-bucket/" + name);
         data.put("filesize", part.getSize());
         pw.write(new Gson().toJson(data));

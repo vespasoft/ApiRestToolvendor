@@ -11,6 +11,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.beecode.toolvendor.security.SecurityUtil;
 import com.beecode.toolvendor.service.AmazonS3Service;
+import com.beecode.toolvendor.util.StringUtil;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
@@ -65,18 +66,18 @@ public class FileUploadServlet extends HttpServlet {
         s3service.createFolder("toolvendor-files-bucket", "products");
         
        for (Part part : parts) {
-            //printEachPart(part, out);
+            // printEachPart(part, out);
             // se genera un HASH para el nombre de la imagen ...
-            SecurityUtil sUtil = new SecurityUtil();
-            String name = sUtil.encodeHexMD5(String.valueOf(new Date().getTime()));
+            String name = StringUtil.generateTokenString(16);
             String fileName = repository+ "/" + name;
             // se crea la respuesta json con los datos de la imagen subida
             printJSONPart(part, out, fileName);
             //String fileName = "products/" + getFileName(part);
             // se guarda la imagen en el servidor
-            part.write(getFileName(part));
+            part.write(name);
+            // part.write(getFileName(part));
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
-                    new File(System.getenv("OPENSHIFT_DATA_DIR") + getFileName(part)));
+                    new File(System.getenv("OPENSHIFT_DATA_DIR") + name));
         }
         
     }

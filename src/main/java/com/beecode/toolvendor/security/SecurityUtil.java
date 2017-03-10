@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.security;
 
+import com.beecode.toolvendor.util.StringUtil;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Hex;

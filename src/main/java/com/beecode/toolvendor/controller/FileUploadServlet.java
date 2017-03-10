@@ -69,11 +69,11 @@ public class FileUploadServlet extends HttpServlet {
             // printEachPart(part, out);
             String imageName = getFileName(part);
             // se genera un HASH para el nombre de la imagen ...
-            String token = SecurityUtil.encodeHexSHA1(imageName);
+            //String token = SecurityUtil.encodeHexSHA1(imageName);
             String name = StringUtil.generateTokenString(16) + ".png";
             String fileName = repository+ "/" + name;
             // se crea la respuesta json con los datos de la imagen subida
-            printJSONPart(part, out, fileName, token);
+            printJSONPart(part, out, fileName, "");
             //String fileName = "products/" + getFileName(part);
             // se guarda la imagen en el servidor
             //part.write(name);

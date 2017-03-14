@@ -6,7 +6,6 @@
 package com.beecode.toolvendor.thread;
 
 import com.beecode.toolvendor.model.Customer;
-import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.Visit;
 import com.beecode.toolvendor.service.EmailServiceImpl;
 

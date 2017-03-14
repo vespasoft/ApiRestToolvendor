@@ -74,14 +74,18 @@ public class UserServiceImpl implements UserService {
                 //--- AtCreated fecha de creación del registro
                 user.setCreatedAt(new Date());
                 user.setPassword(StringUtil.generateTokenString(TOKEN_PASSWORD_LENGTH));
-                user.setPhoto("user.png");
+                user.setPhoto("");
                 user.setEnabled(Boolean.TRUE);
                 user.setCountry(user.getCity().getCountry());
                 // si se agrega satisfactoriamente el usuario
                 dao.add(user);
+                // se instancia la clase controladora de correos
+                EmailServiceImpl emailserv = new EmailServiceImpl();
+                // se envia el correo de bienvenida al usuario
+                emailserv.SendEmailWellcome(user);
                 // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
-                se.start();
+                // SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
+                // se.start();
             }
         } catch ( Exception e ) {
             System.out.println("Error in user save: " + e.getMessage());

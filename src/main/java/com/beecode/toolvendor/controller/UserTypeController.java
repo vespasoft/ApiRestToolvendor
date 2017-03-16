@@ -46,6 +46,9 @@ public class UserTypeController {
         
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new UserTypeServiceImpl();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -76,6 +79,11 @@ public class UserTypeController {
         
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new UserTypeServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -104,6 +112,10 @@ public class UserTypeController {
     @RequestMapping(value = "/usertype", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createType(@RequestHeader(value="Access-Token") String accessToken, @RequestBody UserType usertype,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new UserTypeServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
@@ -146,6 +158,11 @@ public class UserTypeController {
         
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new UserTypeServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -192,6 +209,11 @@ public class UserTypeController {
     public ResponseEntity<Map<String,Object>> deleteUser(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         
         result = new HashMap<String,Object>();
+        result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new UserTypeServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

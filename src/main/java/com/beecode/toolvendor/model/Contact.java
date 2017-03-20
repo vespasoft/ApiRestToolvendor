@@ -19,7 +19,6 @@ import javax.persistence.Table;
 )
 public class Contact  implements java.io.Serializable {
 
-
      private Integer id;
      private Integer userId;
      private String name;

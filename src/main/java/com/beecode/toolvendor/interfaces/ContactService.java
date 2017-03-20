@@ -22,11 +22,11 @@ public interface ContactService {
     
     public Contact findById(int id);
     
-    public Contact findByName(String name);
+    public Contact findByPhone(Integer userId, String phone);
     
     public boolean findId(int id);
     
-    public boolean findName(String name);
+    public boolean findPhone(Integer userId, String phone);
     
     public List getAllByUser(Integer userId);
     

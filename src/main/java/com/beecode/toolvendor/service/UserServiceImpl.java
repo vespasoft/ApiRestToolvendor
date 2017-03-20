@@ -28,10 +28,9 @@ public class UserServiceImpl implements UserService {
     private UserDAO dao = new UserDAO();
     
     //----------------------------- SERVICES ---------------------------------
-    private CountryServiceImpl countryserv = new CountryServiceImpl();
-    private CityServiceImpl cityserv = new CityServiceImpl();
-    private CompanyServiceImpl companyserv = new CompanyServiceImpl();
-    private UserTypeServiceImpl usertypeserv = new UserTypeServiceImpl();
+    private CityServiceImpl cityserv;
+    private CompanyServiceImpl companyserv;
+    private UserTypeServiceImpl usertypeserv;
     
 
     public UserServiceImpl() {
@@ -41,6 +40,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String save(User user) {
         dao = new UserDAO();
+        cityserv = new CityServiceImpl();
+        companyserv = new CompanyServiceImpl();
+        usertypeserv = new UserTypeServiceImpl();
         User currentUser = null;
         String message="";
         try {
@@ -98,6 +100,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String update(User user) {
         dao = new UserDAO();
+        cityserv = new CityServiceImpl();
+        companyserv = new CompanyServiceImpl();
+        usertypeserv = new UserTypeServiceImpl();
         User currentUser = null;
         String message="";
         try {
@@ -141,6 +146,7 @@ public class UserServiceImpl implements UserService {
     
     //----------------------------- FORGOT ----------------------------------
     public String forgot(User user) {
+        dao = new UserDAO();
         String message="";
         if ( user==null ) {
             message="An object user with email is required.";

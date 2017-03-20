@@ -54,10 +54,10 @@ public class CityServiceImpl implements CityService {
                 //--- AtCreated fecha de creación del registro
                 dao.add(obj);
                 //--- obtiene el registro con toda su info para la respuesta ---
-                current = dao.findByName(obj.getCity());
+                /*current = dao.findByName(obj.getCity());
                 if ( current==null) {
                     message="El registro no se pudo guardar, ocurrio un error inesperado.";
-                }
+                }*/
             }
         } catch ( Exception e ) {
             System.out.println("Error in city save: " + e.getMessage());

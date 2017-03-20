@@ -35,8 +35,8 @@ public class UserTypeController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    UserTypeServiceImpl service = new UserTypeServiceImpl();
+    SecurityServiceImpl security;
+    UserTypeServiceImpl service;
     
     //-------------------Retrieve All Users--------------------------------------------------------
      

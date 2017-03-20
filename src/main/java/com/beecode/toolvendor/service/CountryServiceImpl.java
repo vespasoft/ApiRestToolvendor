@@ -32,28 +32,26 @@ public class CountryServiceImpl implements CountryService {
         Country current = null;
         String message="";
         try {
-            
+            if ( obj==null ) {
+                message="Se espero un objeto user en formato JSON";
+            } else if ( obj.getName()==null ) {
+                message="El campo Country no puede estar vacio";
+            } else if ( obj.getName().length()==0 ) {
+                message="El campo Description no puede estar vacio";
+            } else if ( findName(obj.getName()) ) {
+                message="Ya existe un pais con el mismo nombre";
+            } else {
+                //--- AtCreated fecha de creación del registro
+                dao.add(obj);
+                // se actualiza los mapas contra la base de datos
+                /*dao = new CountryDAO();
+                current = dao.findByName(obj.getName());
+                if ( current==null) {
+                    message="El registro no se pudo guardar, ocurrio un error inesperado.";
+                }*/
+            }
         } catch ( Exception e ) {
             System.out.println("Error in country save: " + e.getMessage());
-        }
-        if ( obj==null ) {
-            message="Se espero un objeto user en formato JSON";
-        } else if ( obj.getName()==null ) {
-            message="El campo Country no puede estar vacio";
-        } else if ( obj.getName().length()==0 ) {
-            message="El campo Description no puede estar vacio";
-        } else if ( findName(obj.getName()) ) {
-            message="Ya existe un pais con el mismo nombre";
-        } else {
-            //--- AtCreated fecha de creación del registro
-            dao.add(obj);
-            // se actualiza los mapas contra la base de datos
-            dao = new CountryDAO();
-            //--- obtiene el registro con toda su info para la respuesta ---
-            current = dao.findByName(obj.getName());
-            if ( current==null) {
-                message="El registro no se pudo guardar, ocurrio un error inesperado.";
-            }
         }
         //-------------- si ocurrio un error la variable contiene el mensaje de error ---------------
         

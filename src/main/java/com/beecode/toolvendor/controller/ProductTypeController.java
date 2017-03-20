@@ -34,14 +34,16 @@ public class ProductTypeController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    ProductTypeServiceImpl service = new ProductTypeServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    ProductTypeServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve All ProductType--------------------------------------------------------
     @RequestMapping(value = "/producttype", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllProductType(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
         service = new ProductTypeServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -70,10 +72,11 @@ public class ProductTypeController {
      
     @RequestMapping(value = "/producttype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProductType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
         service = new ProductTypeServiceImpl();
+        security = new SecurityServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -101,6 +104,8 @@ public class ProductTypeController {
     public ResponseEntity<Map<String,Object>> createProductType(@RequestHeader(value="Access-Token") String accessToken, @RequestBody ProductType producttype,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
         service = new ProductTypeServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -136,10 +141,11 @@ public class ProductTypeController {
     // ------------------- Update a ProductType --------------------------------------------------------
     @RequestMapping(value = "/producttype/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateProductType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody ProductType producttype) {
-        
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
         service = new ProductTypeServiceImpl();
+        security = new SecurityServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -186,9 +192,10 @@ public class ProductTypeController {
     
     @RequestMapping(value = "/producttype/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteProductType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         result = new HashMap<String,Object>();
         service = new ProductTypeServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

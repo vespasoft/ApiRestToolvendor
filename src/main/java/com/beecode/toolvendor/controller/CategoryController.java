@@ -8,7 +8,6 @@ package com.beecode.toolvendor.controller;
 import com.beecode.toolvendor.model.Category;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.service.CategoryServiceImpl;
-import com.beecode.toolvendor.service.CategoryServiceImpl;
 import com.beecode.toolvendor.service.SecurityServiceImpl;
 import com.beecode.toolvendor.util.AppPreferences;
 import java.util.HashMap;

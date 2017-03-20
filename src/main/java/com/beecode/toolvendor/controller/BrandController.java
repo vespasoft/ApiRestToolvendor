@@ -34,13 +34,16 @@ public class BrandController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    BrandServiceImpl service = new BrandServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    BrandServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve All Brand--------------------------------------------------------
     @RequestMapping(value = "/brand", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllBrand(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
+        service = new BrandServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -69,10 +72,12 @@ public class BrandController {
      
     @RequestMapping(value = "/brand/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getBrand(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
-        System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        service = new BrandServiceImpl();
+        security = new SecurityServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
+        System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
@@ -98,6 +103,9 @@ public class BrandController {
     @RequestMapping(value = "/brand", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createBrand(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Brand brand,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        service = new BrandServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -133,9 +141,11 @@ public class BrandController {
     // ------------------- Update a Brand --------------------------------------------------------
     @RequestMapping(value = "/brand/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateBrand(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody Brand brand) {
+        result = new HashMap<String,Object>();
+        service = new BrandServiceImpl();
+        security = new SecurityServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
-        result = new HashMap<String,Object>();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -180,8 +190,10 @@ public class BrandController {
     
     @RequestMapping(value = "/brand/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteBrand(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         result = new HashMap<String,Object>();
+        service = new BrandServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

@@ -35,16 +35,18 @@ public class OrderTypeController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    UserServiceImpl userserv = new UserServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    OrderTypeServiceImpl service = new OrderTypeServiceImpl();
+    UserServiceImpl userserv;
+    SecurityServiceImpl security;
+    OrderTypeServiceImpl service;
     
     //-------------------Retrieve All Users--------------------------------------------------------
      
     @RequestMapping(value = "/ordertype", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllOrderType() {
-        
         result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new OrderTypeServiceImpl();
         
         System.out.println("Get all ordertype... ");
         //---- obtiene listado de registros ----
@@ -65,6 +67,10 @@ public class OrderTypeController {
      
     @RequestMapping(value = "/ordertype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getOrderType( @PathVariable("id") int id) {
+        result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new OrderTypeServiceImpl();
         
         
             //Use headers to get the information about all the request headers
@@ -87,6 +93,10 @@ public class OrderTypeController {
     @RequestMapping(value = "/ordertype", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createOrderType(@RequestHeader(value="Access-Token") String accessToken, @RequestBody OrderType ordertype,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new OrderTypeServiceImpl();
+        
         
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
@@ -124,9 +134,12 @@ public class OrderTypeController {
     // ------------------- Update a OrderType --------------------------------------------------------
     @RequestMapping(value = "/ordertype/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateOrderType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody OrderType ordertype) {
+        result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new OrderTypeServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
-        result = new HashMap<String,Object>();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -169,8 +182,11 @@ public class OrderTypeController {
     
     @RequestMapping(value = "/ordertype/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteUser(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         result = new HashMap<String,Object>();
+        userserv = new UserServiceImpl();
+        security = new SecurityServiceImpl();
+        service = new OrderTypeServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

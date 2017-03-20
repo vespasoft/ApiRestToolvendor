@@ -41,6 +41,9 @@ public class CountryController {
     @RequestMapping(value = "/country", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllCountry() {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CountryServiceImpl();
+        cityserv = new CityServiceImpl();
         
         System.out.println("Get all country... ");
         //---- obtiene listado de registros ----
@@ -62,6 +65,9 @@ public class CountryController {
     @RequestMapping(value = "/country/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCountry(@PathVariable("id") int id) {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CountryServiceImpl();
+        cityserv = new CityServiceImpl();
         
         System.out.println("Fetching Country with id " + id);
         Country obj = service.findById(id);
@@ -82,6 +88,9 @@ public class CountryController {
     @RequestMapping(value = "/country/{id}/city", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllCityByCountry(@PathVariable("id") int id) {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CountryServiceImpl();
+        cityserv = new CityServiceImpl();
         
         System.out.println("Fetching All Cities by Country with id " + id);
         Country obj = service.findById(id);
@@ -108,6 +117,9 @@ public class CountryController {
     @RequestMapping(value = "/country", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createCountry(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Country country,  UriComponentsBuilder ucBuilder) {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CountryServiceImpl();
+        cityserv = new CityServiceImpl();
         
         //----------------------------- crea un nuevo registro -------------------------------
         System.out.println("Fetching Header Access Token " + accessToken);
@@ -145,8 +157,11 @@ public class CountryController {
     // ------------------- Update a Country --------------------------------------------------------
     @RequestMapping(value = "/country/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateCountry(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody Country country) {
-        
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CountryServiceImpl();
+        cityserv = new CityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.parseJWT(accessToken);
         if ( session==null ) {
@@ -182,8 +197,11 @@ public class CountryController {
     
     @RequestMapping(value = "/country/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteCountry(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CountryServiceImpl();
+        cityserv = new CityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.parseJWT(accessToken);
         if ( session==null ) {

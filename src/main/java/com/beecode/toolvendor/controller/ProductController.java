@@ -35,15 +35,17 @@ public class ProductController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ---------------------------------------
-    ProductServiceImpl service = new ProductServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    ProductServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve All Product--------------------------------------------------------
     
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllProduct(@RequestHeader(value="Access-Token") String accessToken) {
-        
         result = new HashMap<String,Object>();
+        service = new ProductServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -71,9 +73,10 @@ public class ProductController {
      
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProduct(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
-        Map<String,Object> result = new HashMap<String,Object>();
-        
         result = new HashMap<String,Object>();
+        service = new ProductServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -99,8 +102,10 @@ public class ProductController {
     //-------------------Create a Product --------------------------------------------------------
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createProduct(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Product prod,  UriComponentsBuilder ucBuilder) {
-        
         result = new HashMap<String,Object>();
+        service = new ProductServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -135,8 +140,10 @@ public class ProductController {
     // ------------------- Update a Product --------------------------------------------------------
     @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateProduct(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id, @RequestBody Product prod) {
-        
         result = new HashMap<String,Object>();
+        service = new ProductServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -182,6 +189,9 @@ public class ProductController {
     @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteProduct(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
         result = new HashMap<String,Object>();
+        service = new ProductServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

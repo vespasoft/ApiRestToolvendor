@@ -7,8 +7,6 @@ package com.beecode.toolvendor.controller;
 
 import com.beecode.toolvendor.model.Contact;
 import com.beecode.toolvendor.model.User;
-import com.beecode.toolvendor.service.CallServiceImpl;
-import com.beecode.toolvendor.service.CompanyServiceImpl;
 import com.beecode.toolvendor.service.ContactServiceImpl;
 import com.beecode.toolvendor.service.SecurityServiceImpl;
 import com.beecode.toolvendor.util.AppPreferences;
@@ -36,15 +34,16 @@ public class ContactController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ---------------------------------------
-    ContactServiceImpl service = new ContactServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    CompanyServiceImpl companyserv = new CompanyServiceImpl();
-    CallServiceImpl callserv = new CallServiceImpl();
+    ContactServiceImpl service;
+    SecurityServiceImpl security;
     
-    //-------------------Retrieve All Contact-----------------------------------------
+    //-------------------Retrieve All Contact------------------------------------------
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllContact(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
+        service = new ContactServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -73,6 +72,9 @@ public class ContactController {
     @RequestMapping(value = "/contact/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getContact(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         result = new HashMap<String,Object>();
+        service = new ContactServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -98,6 +100,9 @@ public class ContactController {
     @RequestMapping(value = "/contact", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createContact(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Contact contact,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        service = new ContactServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -110,7 +115,7 @@ public class ContactController {
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(contact, session.getCompanyId());
             if ( message.isEmpty() ) {
-                Contact object = service.findByName(contact.getName());
+                Contact object = service.findByPhone(session.getId(), contact.getPhone());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -134,6 +139,9 @@ public class ContactController {
     @RequestMapping(value = "/contact/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateContact(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody Contact contact) {
         result = new HashMap<String,Object>();
+        service = new ContactServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -179,6 +187,9 @@ public class ContactController {
     @RequestMapping(value = "/contact/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteContact(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         result = new HashMap<String,Object>();
+        service = new ContactServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

@@ -34,17 +34,18 @@ public class VisitTypeController {
     // ------------------------------- OBJECTS ----------------------------------------
     Map<String,Object> result = new HashMap<String,Object>();
     
-    // ------------------------------- SERVICES ----------------------------------------
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    VisitTypeServiceImpl service = new VisitTypeServiceImpl();
+    // ------------------------------- SERVICES ---------------------------------------
+    SecurityServiceImpl security;
+    VisitTypeServiceImpl service;
     
-    //-------------------Retrieve All VisitType---------------------------------------------
-     
+    //-------------------Retrieve All VisitType----------------------------------------
     @RequestMapping(value = "/visittype", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllVisitType(@RequestHeader(value="Access-Token") String accessToken) {
-        
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new VisitTypeServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -73,9 +74,11 @@ public class VisitTypeController {
      
     @RequestMapping(value = "/visittype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getVisitType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
+        result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new VisitTypeServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
-        result = new HashMap<String,Object>();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -102,9 +105,10 @@ public class VisitTypeController {
     //-------------------Create a VisitType--------------------------------------------------------
     @RequestMapping(value = "/visittype", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createVisitType(@RequestHeader(value="Access-Token") String accessToken, @RequestBody VisitType visittype,  UriComponentsBuilder ucBuilder) {
-        
-        
         result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new VisitTypeServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -141,9 +145,11 @@ public class VisitTypeController {
     // ------------------- Update a VisitType --------------------------------------------------------
     @RequestMapping(value = "/visittype/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateVisitType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody VisitType visittype) {
+        result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new VisitTypeServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
-        result = new HashMap<String,Object>();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -189,8 +195,10 @@ public class VisitTypeController {
     
     @RequestMapping(value = "/visittype/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteVisitType(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new VisitTypeServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

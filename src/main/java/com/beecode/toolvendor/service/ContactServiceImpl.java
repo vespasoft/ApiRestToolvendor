@@ -44,7 +44,7 @@ public class ContactServiceImpl implements ContactService {
                 message="El campo Phone no puede estar vacio";
             } else if ( obj.getUserId()==0 ) {
                 message="El campo UserId no puede ser igual a 0";
-            } else if ( findName(obj.getName() ) ) {
+            } else if ( findPhone(obj.getUserId(), obj.getPhone() ) ) {
                 message="Ya existe un contacto con el mismo nombre";
             } else {
                 //--- obtiene el usuario a partir del userId ---
@@ -54,11 +54,6 @@ public class ContactServiceImpl implements ContactService {
                 } else {
                     //--- AtCreated fecha de creación del registro
                     dao.add(obj);
-                    //--- obtiene el usuario registrado con toda su info para la respuesta ---
-                    current = findByName(obj.getName());
-                    if ( current==null) {
-                        message="El registro no se pudo guardar, ocurrio un error inesperado.";
-                    }
                 }
             }
         } catch ( Exception e ) {
@@ -139,9 +134,9 @@ public class ContactServiceImpl implements ContactService {
     }
     
     @Override
-    public boolean findName(String name) {
+    public boolean findPhone(Integer userId, String phone) {
         // se consulta en la BD si el name del contact existe y es valido
-        return dao.findByName(name)!=null;
+        return dao.findByPhone(userId, phone)!=null;
     }
 
     @Override
@@ -158,11 +153,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Contact findByName(String name) {
+    public Contact findByPhone(Integer userId, String phone) {
         Contact result = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            result = dao.findByName(name);
+            result = dao.findByPhone(userId, phone);
         } catch ( Exception e ) {
             System.out.println("Error in Contact findByName: " + e.getMessage());
         }

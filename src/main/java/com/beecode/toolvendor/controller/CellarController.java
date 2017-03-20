@@ -34,13 +34,16 @@ public class CellarController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    CellarServiceImpl service = new CellarServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    CellarServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve All Cellar--------------------------------------------------------
     @RequestMapping(value = "/cellar", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllCellar(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
+        service = new CellarServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -69,10 +72,12 @@ public class CellarController {
      
     @RequestMapping(value = "/cellar/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCellar(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
-        System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        service = new CellarServiceImpl();
+        security = new SecurityServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
+        System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
@@ -98,6 +103,9 @@ public class CellarController {
     @RequestMapping(value = "/cellar", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createCellar(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Cellar cellar,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        service = new CellarServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -133,10 +141,12 @@ public class CellarController {
     // ------------------- Update a Cellar --------------------------------------------------------
     @RequestMapping(value = "/cellar/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateCellar(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody Cellar cellar) {
-        
-        System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        service = new CellarServiceImpl();
+        security = new SecurityServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
+        System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
             result.put("success", Boolean.FALSE);
@@ -180,8 +190,10 @@ public class CellarController {
     
     @RequestMapping(value = "/cellar/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteCellar(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
         result = new HashMap<String,Object>();
+        service = new CellarServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

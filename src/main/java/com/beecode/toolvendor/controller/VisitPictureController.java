@@ -35,16 +35,17 @@ public class VisitPictureController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ---------------------------------------
-    VisitPictureServiceImpl service = new VisitPictureServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    VisitPictureServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve Single VisitPicture--------------------------------------------------------
      
     @RequestMapping(value = "/visitpicture/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getVisitPicture(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
-        Map<String,Object> result = new HashMap<String,Object>();
-        
         result = new HashMap<String,Object>();
+        service = new VisitPictureServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -70,8 +71,10 @@ public class VisitPictureController {
     //-------------------Create a VisitPicture --------------------------------------------------------
     @RequestMapping(value = "/visitpicture", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createVisitPicture(@RequestHeader(value="Access-Token") String accessToken, @RequestBody VisitPicture visitpicture,  UriComponentsBuilder ucBuilder) {
-        
         result = new HashMap<String,Object>();
+        service = new VisitPictureServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -96,8 +99,10 @@ public class VisitPictureController {
     // ------------------- Update a VisitPicture --------------------------------------------------------
     @RequestMapping(value = "/visitpicture/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updateVisitPicture(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id, @RequestBody VisitPicture visitpicture) {
-        
         result = new HashMap<String,Object>();
+        service = new VisitPictureServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -141,6 +146,9 @@ public class VisitPictureController {
     @RequestMapping(value = "/visitpicture/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteVisitPicture(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
         result = new HashMap<String,Object>();
+        service = new VisitPictureServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

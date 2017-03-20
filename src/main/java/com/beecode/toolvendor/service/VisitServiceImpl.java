@@ -29,9 +29,9 @@ public class VisitServiceImpl implements VisitService {
     //----------------------------- DAO ------------------------------------------
     private VisitDAO dao = new VisitDAO();
     //----------------------------- SERVICES -------------------------------------
-    private UserServiceImpl userserv = new UserServiceImpl();
-    private CustomerServiceImpl cstmrserv = new CustomerServiceImpl();
-    private VisitTypeServiceImpl visittypeserv = new VisitTypeServiceImpl();
+    private UserServiceImpl userserv;
+    private CustomerServiceImpl cstmrserv;
+    private VisitTypeServiceImpl visittypeserv;
     
     public VisitServiceImpl() {
     }
@@ -40,6 +40,9 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public String save(Visit visit) {
         dao = new VisitDAO();
+        userserv = new UserServiceImpl();
+        cstmrserv = new CustomerServiceImpl();
+        visittypeserv = new VisitTypeServiceImpl();
         Visit currentVisit = null;
         String message="";
         if ( visit==null ) {
@@ -85,6 +88,9 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public String update(Visit visit) {
         dao = new VisitDAO();
+        userserv = new UserServiceImpl();
+        cstmrserv = new CustomerServiceImpl();
+        visittypeserv = new VisitTypeServiceImpl();
         Visit currentVisit = null;
         String message="";
         if ( visit==null ) {
@@ -131,6 +137,9 @@ public class VisitServiceImpl implements VisitService {
     //--------------------- Send email service page --------------------------
     public String sendEmailServicePage(int id, int companyId) {
         dao = new VisitDAO();
+        userserv = new UserServiceImpl();
+        cstmrserv = new CustomerServiceImpl();
+        visittypeserv = new VisitTypeServiceImpl();
         Visit visit = null;
         Customer cstmr = null;
         String message="";

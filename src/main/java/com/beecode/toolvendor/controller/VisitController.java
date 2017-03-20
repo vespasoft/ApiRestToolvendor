@@ -36,16 +36,18 @@ public class VisitController extends AppPreferences {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ---------------------------------------
-    VisitServiceImpl service = new VisitServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    VisitServiceImpl service;
+    SecurityServiceImpl security;
+    VisitPictureServiceImpl pictureserv;
     
     //-------------------Retrieve All Visit--------------------------------------------------------
     
     @RequestMapping(value = "/visit", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllVisit(@RequestHeader(value="Access-Token") String accessToken) {
-        
         result = new HashMap<String,Object>();
         service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -73,9 +75,9 @@ public class VisitController extends AppPreferences {
      
     @RequestMapping(value = "/visit/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getVisit(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
-        
         result = new HashMap<String,Object>();
         service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
@@ -102,8 +104,10 @@ public class VisitController extends AppPreferences {
     //-------------------Create a Visit --------------------------------------------------------
     @RequestMapping(value = "/visit", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createVisit(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Visit visit,  UriComponentsBuilder ucBuilder) {
-        
         result = new HashMap<String,Object>();
+        service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -131,8 +135,10 @@ public class VisitController extends AppPreferences {
     // ------------------- Update Visit --------------------------------------------------------
     @RequestMapping(value = "/visit/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> checkinVisit(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id, @RequestBody Visit visit) {
-        
         result = new HashMap<String,Object>();
+        service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -176,8 +182,10 @@ public class VisitController extends AppPreferences {
     // ------------------- Send Service Page Visit --------------------------------------------------------
     @RequestMapping(value = "/visit/sendservicepage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> sendservicepage(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
-
         result = new HashMap<String,Object>();
+        service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -214,6 +222,9 @@ public class VisitController extends AppPreferences {
     @RequestMapping(value = "/visit/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteVisit(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
         result = new HashMap<String,Object>();
+        service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -248,8 +259,11 @@ public class VisitController extends AppPreferences {
     
     @RequestMapping(value = "/visit/{id}/pictures", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllVisitPicture(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
-        VisitPictureServiceImpl pictureserv = new VisitPictureServiceImpl();
         result = new HashMap<String,Object>();
+        service = new VisitServiceImpl();
+        security = new SecurityServiceImpl();
+        pictureserv = new VisitPictureServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

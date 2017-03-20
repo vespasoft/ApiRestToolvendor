@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,15 +35,16 @@ public class PromotionsController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ---------------------------------------
-    PromotionsServiceImpl service = new PromotionsServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    CompanyServiceImpl companyserv = new CompanyServiceImpl();
-    CallServiceImpl callserv = new CallServiceImpl();
+    PromotionsServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve All Promotions-----------------------------------------
     @RequestMapping(value = "/promotions", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllPromotions(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
+        service = new PromotionsServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -72,6 +72,9 @@ public class PromotionsController {
     @RequestMapping(value = "/promotions", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createPromotions(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Promotions promo,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        service = new PromotionsServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -100,6 +103,9 @@ public class PromotionsController {
     @RequestMapping(value = "/promotions/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String,Object>> updatePromotions(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody Promotions promo) {
         result = new HashMap<String,Object>();
+        service = new PromotionsServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -143,6 +149,9 @@ public class PromotionsController {
     @RequestMapping(value = "/promotions/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deletePromotions(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         result = new HashMap<String,Object>();
+        service = new PromotionsServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.inicialized(accessToken);
         if ( session==null ) {

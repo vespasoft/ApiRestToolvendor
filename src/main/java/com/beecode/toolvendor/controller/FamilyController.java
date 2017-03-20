@@ -34,13 +34,16 @@ public class FamilyController {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    FamilyServiceImpl service = new FamilyServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
+    FamilyServiceImpl service;
+    SecurityServiceImpl security;
     
     //-------------------Retrieve All Family--------------------------------------------------------
     @RequestMapping(value = "/family", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllFamily(@RequestHeader(value="Access-Token") String accessToken) {
         result = new HashMap<String,Object>();
+        service = new FamilyServiceImpl();
+        security = new SecurityServiceImpl();
+        
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -72,6 +75,8 @@ public class FamilyController {
         
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        service = new FamilyServiceImpl();
+        security = new SecurityServiceImpl();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -98,6 +103,8 @@ public class FamilyController {
     @RequestMapping(value = "/family", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createFamily(@RequestHeader(value="Access-Token") String accessToken, @RequestBody Family family,  UriComponentsBuilder ucBuilder) {
         result = new HashMap<String,Object>();
+        service = new FamilyServiceImpl();
+        security = new SecurityServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
@@ -136,6 +143,8 @@ public class FamilyController {
         
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        service = new FamilyServiceImpl();
+        security = new SecurityServiceImpl();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null ) {
@@ -182,6 +191,8 @@ public class FamilyController {
     public ResponseEntity<Map<String,Object>> deleteFamily(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         
         result = new HashMap<String,Object>();
+        service = new FamilyServiceImpl();
+        security = new SecurityServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);

@@ -101,13 +101,14 @@ public class ContactDAO {
         return result;
     }
     
-    public Contact findByName(String name) {
+    public Contact findByPhone(Integer userId, String phone) {
         Session session = SessionUtil.getSession();
         Contact result = null;
         try{
            Criteria cr = session.createCriteria(Contact.class);
            // Add restriction.
-           cr.add(Restrictions.eq("name", name));
+           cr.add(Restrictions.eq("userId", userId));
+           cr.add(Restrictions.eq("phone", phone));
            //crit.add(Restrictions.like("id", id+"%"));
            cr.setMaxResults(1);
            result = (Contact) cr.uniqueResult();

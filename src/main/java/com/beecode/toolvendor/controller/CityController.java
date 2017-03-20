@@ -31,18 +31,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CityController {
     
     // ------------------------------- SERVICES ----------------------------------------
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    CityServiceImpl service = new CityServiceImpl();
-    
+    SecurityServiceImpl security;
+    CityServiceImpl service;
     
     //-------------------Retrieve Single City--------------------------------------------------------
      
     @RequestMapping(value = "/city/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCity(@PathVariable("id") int id) {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CityServiceImpl();
         
         System.out.println("Fetching City with id " + id);
-        
         City obj = service.findById(id);
         if ( obj!=null ) {
             // Obtenemos el listado de customer de una compañia
@@ -60,6 +60,8 @@ public class CityController {
     @RequestMapping(value = "/city", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> createCity(@RequestHeader(value="Access-Token") String accessToken, @RequestBody City city,  UriComponentsBuilder ucBuilder) {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CityServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.parseJWT(accessToken);
@@ -98,6 +100,8 @@ public class CityController {
     public ResponseEntity<Map<String,Object>> updateCity(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id, @RequestBody City city) {
         Map<String,Object> result = new HashMap<String,Object>();
         System.out.println("Updating City " + id);
+        security = new SecurityServiceImpl();
+        service = new CityServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.parseJWT(accessToken);
@@ -134,6 +138,8 @@ public class CityController {
     @RequestMapping(value = "/city/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String,Object>> deleteCity(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
         Map<String,Object> result = new HashMap<String,Object>();
+        security = new SecurityServiceImpl();
+        service = new CityServiceImpl();
         
         System.out.println("Fetching Header Access Token " + accessToken);
         User session = security.parseJWT(accessToken);

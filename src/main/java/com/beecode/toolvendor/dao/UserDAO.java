@@ -99,6 +99,7 @@ public class UserDAO {
            Criteria cr = session.createCriteria(User.class);
            cr.add(Restrictions.eq("companyId", companyId));
            result = cr.list();
+           session.refresh(User.class);
            if ( result!=null )
                 System.out.print("filas obtenidas: " + result.size()); 
         }catch (HibernateException e) {
@@ -115,6 +116,7 @@ public class UserDAO {
         Session session = SessionUtil.getSession();
         User result = null;
         try{
+           session.refresh(User.class); 
            Criteria cr = session.createCriteria(User.class);
            cr.setProjection(Projections.projectionList()
                    .add(Projections.property("id"), "id")
@@ -147,6 +149,7 @@ public class UserDAO {
         Session session = SessionUtil.getSession();
         User result = null;
         try{
+           session.refresh(User.class);
            Criteria cr = session.createCriteria(User.class);
            // Add restriction.
            cr.add(Restrictions.eq("id", id));
@@ -169,6 +172,7 @@ public class UserDAO {
         Session session = SessionUtil.getSession();
         User result = null;
         try{
+           session.refresh(User.class); 
            Criteria cr = session.createCriteria(User.class);
            // Add restriction.
            cr.add(Restrictions.eq("email", email));

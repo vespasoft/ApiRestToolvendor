@@ -262,6 +262,7 @@ public class UserServiceImpl implements UserService {
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByCompany(companyId);
+            
         } catch ( Exception e ) {
             System.out.println("Error in user getAllByCompany: " + e.getMessage());
         }

@@ -27,15 +27,15 @@ public class CustomerServiceImpl implements CustomerService {
     private CityServiceImpl cityserv = new CityServiceImpl();
     
     //------------------------------- DAO ------------------------------------
-    private CustomerDAO dao = new CustomerDAO();
+    private CustomerDAO dao;
 
     public CustomerServiceImpl() {
+        dao = new CustomerDAO();
     }
     
     //----------------------------- SAVE CUSTOMER --------------------------------
     @Override
     public String save(Customer cstmr) {
-        dao = new CustomerDAO();
         Customer currentCustomer = null;
         String message="";
         try {
@@ -77,7 +77,6 @@ public class CustomerServiceImpl implements CustomerService {
     //----------------------------- UPDATE CUSTOMER --------------------------------
     @Override
     public String update(Customer cstmr) {
-        dao = new CustomerDAO();
         Customer currentCustomer = null;
         String message="";
         try {
@@ -113,7 +112,6 @@ public class CustomerServiceImpl implements CustomerService {
                     currentCustomer.setLastUpdate(new Date());
                     //--- se ejecuta el update en la capa de datos ---
                     dao.update(currentCustomer);
-                    dao.update(cstmr);
                 } else {
                     message="No se encontro un registro asociado para este id";
                 }
@@ -128,7 +126,6 @@ public class CustomerServiceImpl implements CustomerService {
     //----------------------------- DELETE USER ----------------------------------
     @Override
     public boolean delete(int id) {
-        dao = new CustomerDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -144,7 +141,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- FIND BY ID BOOLEAN --------------------------
     @Override
     public boolean findId(int id, int companyId) {
-        dao = new CustomerDAO();
         // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id, companyId)!=null;
     }
@@ -152,7 +148,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- FIND BY EMAIL BOOLEAN --------------------------
     @Override
     public boolean findEmail(String email) {
-        dao = new CustomerDAO();
         // se consulta en la BD si el email del usuario existe y es valido
         return dao.findByEmail(email)!=null;
     }
@@ -160,7 +155,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- FIND BY ID OBJECT CUSTOMER --------------------------
     @Override
     public Customer findById(int id, int companyId) {
-        dao = new CustomerDAO();
         Customer result = null;
         try {
             // Se busca en la bd los datos del customer por Id.
@@ -174,7 +168,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- FIND BY EMAIL OBJECT CUSTOMER --------------------------
     @Override
     public Customer findByEmail(String email) {
-        dao = new CustomerDAO();
         Customer result = null;
         try {
             // Se busca en la bd los datos del customer por Email.
@@ -188,7 +181,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- GET ALL CUSTOMER BY COMPANY --------------------------
     @Override
     public List getAllByCompany(Integer companyId) {
-        dao = new CustomerDAO();
         List<User> list = null;
         try {
             // Se consulta en la bd los customer registrados para un usuario.
@@ -202,7 +194,6 @@ public class CustomerServiceImpl implements CustomerService {
     //--------------------- GET ALL CUSTOMER BY USER --------------------------
     @Override
     public List getAllByUser(Integer userId) {
-        dao = new CustomerDAO();
         List<User> list = null;
         try {
             // Se consulta en la bd los customer registrados para un usuario.

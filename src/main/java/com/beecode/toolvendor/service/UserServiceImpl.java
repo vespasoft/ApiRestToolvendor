@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
         String message="";
         try {
             // se cablea la compañia siempre sera companyId = 1
-            user.setCompanyId(companyserv.findById(1).getId()); 
+            // user.setCompanyId(companyserv.findById(1).getId()); 
             if ( user==null ) {
                 message="Se espero un objeto user en formato JSON";
             } else if ( user.getId()==0 ) {

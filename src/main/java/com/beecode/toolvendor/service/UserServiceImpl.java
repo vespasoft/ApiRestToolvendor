@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private static final AtomicLong counter = new AtomicLong();
     
     //----------------------------- DAO --------------------------------------
-    private UserDAO dao = new UserDAO();
+    private UserDAO dao;
     
     //----------------------------- SERVICES ---------------------------------
     private CityServiceImpl cityserv;
@@ -34,15 +34,15 @@ public class UserServiceImpl implements UserService {
     
 
     public UserServiceImpl() {
+        dao = new UserDAO();
+        cityserv = new CityServiceImpl();
+        companyserv = new CompanyServiceImpl();
+        usertypeserv = new UserTypeServiceImpl();
     }
     
     //--------------------------- SAVE USER -----------------------------------
     @Override
     public String save(User user) {
-        dao = new UserDAO();
-        cityserv = new CityServiceImpl();
-        companyserv = new CompanyServiceImpl();
-        usertypeserv = new UserTypeServiceImpl();
         User currentUser = null;
         String message="";
         try {
@@ -99,10 +99,6 @@ public class UserServiceImpl implements UserService {
     //----------------------------- UPDATE USER --------------------------------
     @Override
     public String update(User user) {
-        dao = new UserDAO();
-        cityserv = new CityServiceImpl();
-        companyserv = new CompanyServiceImpl();
-        usertypeserv = new UserTypeServiceImpl();
         User currentUser = null;
         String message="";
         try {
@@ -146,7 +142,6 @@ public class UserServiceImpl implements UserService {
     
     //----------------------------- FORGOT ----------------------------------
     public String forgot(User user) {
-        dao = new UserDAO();
         String message="";
         if ( user==null ) {
             message="An object user with email is required.";
@@ -173,7 +168,6 @@ public class UserServiceImpl implements UserService {
     //----------------------------- DELETE USER ----------------------------------
     @Override
     public boolean delete(int id) {
-        dao = new UserDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -188,7 +182,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY ID OBJECT USER --------------------------
     @Override
     public User findById(int id) {
-        dao = new UserDAO();
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
@@ -203,7 +196,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY ID AND COMPANY OBJECT USER --------------------------
     @Override
     public User findById(int id, int companyId) {
-        dao = new UserDAO();
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
@@ -218,7 +210,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY EMAIL OBJECT USER --------------------------
     @Override
     public User findByEmail(String email) {
-        dao = new UserDAO();
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Email.
@@ -233,7 +224,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY AUTHENTICATION OBJECT USER -----------------
     @Override
     public User findByAuth(String email, String password) {
-        dao = new UserDAO();
         User user = null;
         try {
             // Este método consulta los datos del usuario verificando coincidencias de email y password
@@ -247,7 +237,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY ID BOOLEAN ---------------------------------
     @Override
     public boolean findId(int id) {
-        dao = new UserDAO();
         // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id)!=null;
     }
@@ -255,7 +244,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY ID BOOLEAN ---------------------------------
     @Override
     public boolean findId(int id, int companyId) {
-        dao = new UserDAO();
         // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id, companyId)!=null;
     }
@@ -263,7 +251,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- FIND BY EMAIL BOOLEAN ------------------------------
     @Override
     public boolean findEmail(String email) {
-        dao = new UserDAO();
         // se consulta en la BD si el email del usuario existe y es valido
         return dao.findByEmail(email)!=null;
     }
@@ -271,7 +258,6 @@ public class UserServiceImpl implements UserService {
     //--------------------- GET ALL COMPANY LIST --------------------------
     @Override
     public List getAllByCompany(Integer companyId) {
-        dao = new UserDAO();
         List<User> list = null;
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.

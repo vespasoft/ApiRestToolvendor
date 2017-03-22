@@ -41,11 +41,13 @@ public class UserController extends AppPreferences {
     Map<String,Object> result = new HashMap<String,Object>();
     
     // ------------------------------- SERVICES ----------------------------------------
-    UserServiceImpl service = new UserServiceImpl();
-    SecurityServiceImpl security = new SecurityServiceImpl();
-    CustomerServiceImpl cstmrserv = new CustomerServiceImpl();
-    CompanyServiceImpl companyserv = new CompanyServiceImpl();
-    VisitServiceImpl visitserv = new VisitServiceImpl();
+    UserServiceImpl service;
+    SecurityServiceImpl security;
+    CustomerServiceImpl cstmrserv;
+    CompanyServiceImpl companyserv;
+    VisitServiceImpl visitserv;
+    CallServiceImpl callserv;
+    ContactServiceImpl contactserv;
     
     //-------------------Retrieve All Customer By User--------------------------------------------------------
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -191,11 +193,12 @@ public class UserController extends AppPreferences {
     //-------------------Retrieve All Customer By User--------------------------------------------------------
     @RequestMapping(value = "/user/{id}/customer", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllCustomer(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        
+        System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
         service = new UserServiceImpl();
         security = new SecurityServiceImpl();
-        System.out.println("Fetching Header Access Token " + accessToken);
+        cstmrserv = new CustomerServiceImpl();
+        
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
@@ -223,9 +226,11 @@ public class UserController extends AppPreferences {
     //-------------------Retrieve All Call By User--------------------------------------------------------
     @RequestMapping(value = "/user/{id}/calls", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllCall(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        CallServiceImpl callserv = new CallServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
+        callserv = new CallServiceImpl();
         result = new HashMap<String,Object>();
+        service = new UserServiceImpl();
+        security = new SecurityServiceImpl();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
@@ -254,9 +259,9 @@ public class UserController extends AppPreferences {
     //-------------------Retrieve All Contact By User--------------------------------------------------------
     @RequestMapping(value = "/user/{id}/contact", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllContact(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") int id) {
-        ContactServiceImpl contactserv = new ContactServiceImpl();
         System.out.println("Fetching Header Access Token " + accessToken);
         result = new HashMap<String,Object>();
+        contactserv = new ContactServiceImpl();
         // Usamos la clase security para validar la permisología del usuario
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {

@@ -62,7 +62,7 @@ public class VisitPictureDAO {
         try{
            Criteria cr = session.createCriteria(VisitPicture.class);
            // Add restriction.
-           cr.add(Restrictions.eq("visit_id", visitId));
+           cr.add(Restrictions.eq("visitId", visitId));
            //crit.add(Restrictions.like("id", id+"%"));
            result = cr.list();
            if ( result!=null )

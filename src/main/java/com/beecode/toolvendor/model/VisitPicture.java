@@ -23,6 +23,7 @@ import javax.persistence.Table;
 public class VisitPicture  implements java.io.Serializable {
 
      private Integer id;
+     private Integer visitId;
      private Visit visit;
      private String picture;
      private String comment;
@@ -46,6 +47,15 @@ public class VisitPicture  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    @Column(name="visit_id", nullable=false)
+    public Integer getVisitId() {
+        return this.visitId;
+    }
+    
+    public void setVisitId(Integer visitId) {
+        this.visitId = visitId;
     }
 
     @ManyToOne(fetch=FetchType.LAZY)

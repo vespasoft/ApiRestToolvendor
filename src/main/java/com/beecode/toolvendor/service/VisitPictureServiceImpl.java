@@ -26,13 +26,13 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     private VisitPictureDAO dao;
 
     public VisitPictureServiceImpl() {
+        dao = new VisitPictureDAO();
+        visitserv = new VisitServiceImpl();
     }
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
     public String save(VisitPicture obj, Integer companyId) {
-        dao = new VisitPictureDAO();
-        visitserv = new VisitServiceImpl();
         VisitPicture current = null;
         String message="";
         if ( obj==null ) {
@@ -69,7 +69,6 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     //------------------- Actualizar los datos de un registro existente --------------------------
     @Override
     public String update(VisitPicture obj, Integer companyId) {
-        dao = new VisitPictureDAO();
         VisitPicture current = null;
         String message="";
         
@@ -100,7 +99,6 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     //----- eliminar un registro por id -----
     @Override
     public boolean delete(int id) {
-        dao = new VisitPictureDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -115,7 +113,6 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     //----- encontrar un registro por id -----
     @Override
     public VisitPicture findById(int id) {
-        dao = new VisitPictureDAO();
         VisitPicture result = null;
         try {
             // Se busca en la bd una imagen por Id.
@@ -129,7 +126,6 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     
     @Override
     public VisitPicture findByPicture(String picture) {
-        dao = new VisitPictureDAO();
         VisitPicture result = null;
         try {
             // Se busca en la bd una imagen por nombre.
@@ -144,14 +140,12 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     //-----  encontrar un registro por id  -----
     @Override
     public boolean findId(int id) {
-        dao = new VisitPictureDAO();
          // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id)!=null;
     }
     
     @Override
     public boolean findPicture(String picture) {
-        dao = new VisitPictureDAO();
          // se consulta en la BD si el id del usuario existe y es valido
         return dao.findByPicture(picture)!=null;
     }
@@ -159,7 +153,6 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     //----- retorna un listado registro por productId -----
     @Override
     public List getAllByVisit(Integer visitId) {
-        dao = new VisitPictureDAO();
         List<VisitPicture> list = null;
         try {
             // Se consulta en la bd las marcas registradas de una compañia.

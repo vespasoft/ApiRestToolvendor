@@ -27,22 +27,23 @@ public class VisitServiceImpl implements VisitService {
     private static final AtomicLong counter = new AtomicLong();
      
     //----------------------------- DAO ------------------------------------------
-    private VisitDAO dao = new VisitDAO();
+    private VisitDAO dao;
     //----------------------------- SERVICES -------------------------------------
     private UserServiceImpl userserv;
     private CustomerServiceImpl cstmrserv;
     private VisitTypeServiceImpl visittypeserv;
     
     public VisitServiceImpl() {
+        dao = new VisitDAO();
+        userserv = new UserServiceImpl();
+        cstmrserv = new CustomerServiceImpl();
+        visittypeserv = new VisitTypeServiceImpl();
     }
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
     public String save(Visit visit) {
-        dao = new VisitDAO();
-        userserv = new UserServiceImpl();
-        cstmrserv = new CustomerServiceImpl();
-        visittypeserv = new VisitTypeServiceImpl();
+        
         Visit currentVisit = null;
         String message="";
         if ( visit==null ) {
@@ -87,10 +88,6 @@ public class VisitServiceImpl implements VisitService {
     //----------------------- Actualizar los datos de un registro existente --------------------------
     @Override
     public String update(Visit visit) {
-        dao = new VisitDAO();
-        userserv = new UserServiceImpl();
-        cstmrserv = new CustomerServiceImpl();
-        visittypeserv = new VisitTypeServiceImpl();
         Visit currentVisit = null;
         String message="";
         if ( visit==null ) {
@@ -136,10 +133,6 @@ public class VisitServiceImpl implements VisitService {
     
     //--------------------- Send email service page --------------------------
     public String sendEmailServicePage(int id, int companyId) {
-        dao = new VisitDAO();
-        userserv = new UserServiceImpl();
-        cstmrserv = new CustomerServiceImpl();
-        visittypeserv = new VisitTypeServiceImpl();
         Visit visit = null;
         Customer cstmr = null;
         String message="";
@@ -169,7 +162,6 @@ public class VisitServiceImpl implements VisitService {
     //----------------------------- DELETE USER ----------------------------------
     @Override
     public boolean delete(int id) {
-        dao = new VisitDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -184,7 +176,6 @@ public class VisitServiceImpl implements VisitService {
     //--------------------- FIND BY ID OBJECT USER --------------------------
     @Override
     public Visit findById(int id, int companyId) {
-        dao = new VisitDAO();
         Visit result = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
@@ -199,7 +190,6 @@ public class VisitServiceImpl implements VisitService {
     //--------------------- FIND BY ID BOOLEAN --------------------------
     @Override
     public boolean findId(int id, int companyId) {
-        dao = new VisitDAO();
         // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id, companyId)!=null;
     }
@@ -208,7 +198,6 @@ public class VisitServiceImpl implements VisitService {
     //--------------------- GET ALL COMPANY LIST --------------------------
     @Override
     public List getAllByCompany(Integer companyId) {
-        dao = new VisitDAO();
         List<Visit> list = null;
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.
@@ -221,7 +210,6 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List getAllByUser(Integer userId) {
-        dao = new VisitDAO();
         List<Visit> list = null;
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.
@@ -234,7 +222,6 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List getAllByCustomer(Integer customerId) {
-        dao = new VisitDAO();
         List<Visit> list = null;
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.

@@ -57,7 +57,6 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     */
     @Override
     public User authentication(String email, String password) {
-        udao = new UserDAO();
         // Este método consulta los datos del usuario verificando coincidencias de email y password
         return udao.authentication(email, password);
     }

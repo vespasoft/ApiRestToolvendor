@@ -24,15 +24,14 @@ public class VisitPicture  implements java.io.Serializable {
 
      private Integer id;
      private Integer visitId;
-     private Visit visit;
      private String picture;
      private String comment;
 
     public VisitPicture() {
     }
 
-    public VisitPicture(Visit visit, String picture, String comment) {
-       this.visit = visit;
+    public VisitPicture(Integer visitId, String picture, String comment) {
+       this.visitId = visitId;
        this.picture = picture;
        this.comment = comment;
     }
@@ -58,16 +57,6 @@ public class VisitPicture  implements java.io.Serializable {
         this.visitId = visitId;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="visit_id", nullable=false)
-    public Visit getVisit() {
-        return this.visit;
-    }
-    
-    public void setVisit(Visit visit) {
-        this.visit = visit;
-    }
-    
     @Column(name="picture")
     public String getPicture() {
         return this.picture;

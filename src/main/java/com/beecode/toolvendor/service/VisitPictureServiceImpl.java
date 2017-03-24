@@ -37,15 +37,15 @@ public class VisitPictureServiceImpl implements VisitPictureService {
         String message="";
         if ( obj==null ) {
             message="Se espero un objeto VisitPicture en formato JSON";
-        } else if ( obj.getVisit()==null ) {
+        } else if ( obj.getVisitId()==null ) {
             message="El campo VisitId no puede ser null";
         } else if ( obj.getPicture()==null ) {
             message="El campo Picture no puede ser null";
-        } else if ( obj.getVisit().getId()==0 ) {
+        } else if ( obj.getVisitId()==0 ) {
             message="El campo VisitId no puede ser igual a 0";
         } else if ( obj.getPicture().length()==0 ) {
             message="Debe indicar un nombre para la imagen con la extension .jpg o .png";    
-        } else if ( obj.getVisit().getId()!=null && !visitserv.findId(obj.getVisit().getId(), companyId) ) {
+        } else if ( obj.getVisitId()!=null && !visitserv.findId(obj.getVisitId(), companyId) ) {
             message="El campo visitId no existe o es invalido.";    
         } else if ( findPicture(obj.getPicture()) ) {
             message="Ya existe una imagen usando este nombre en el servidor";
@@ -76,7 +76,7 @@ public class VisitPictureServiceImpl implements VisitPictureService {
             message="Se espero un objeto Group en formato JSON";
         } else if ( obj.getId()==0 ) {
             message="El campo Id no puede estar vacio";
-        } else if ( obj.getVisit().getId()!=null && !findId(obj.getVisit().getId()) ) {
+        } else if ( obj.getVisitId()!=null && !findId(obj.getVisitId()) ) {
             message="No existe un registro con este visitId.";
         } else {
             //--- obtiene el registro con toda su info para luego editar --- 

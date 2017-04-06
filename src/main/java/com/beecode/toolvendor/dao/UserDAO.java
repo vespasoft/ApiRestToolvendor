@@ -92,6 +92,24 @@ public class UserDAO {
         return rowCount;
     }*/
     
+    public List getAllByCompanyV2(Integer companyId) {
+        Session session = SessionUtil.getSession();
+        List result = null;
+        try{
+            Query query = session.createQuery("from id, createdAt, email, name, phone, photo where companyId = :companyId ");
+            query.setParameter("companyId", companyId);
+            result = query.list();
+            if ( result!=null )
+                System.out.print("filas obtenidas: " + result.size()); 
+        }catch (HibernateException e) {
+            if ( e != null )
+                System.out.print("Error DAO: " + e.getMessage());
+        }finally {
+           session.close(); 
+        }
+        return result;
+    }
+    
     public List getAllByCompany(Integer companyId) {
         Session session = SessionUtil.getSession();
         List result = null;

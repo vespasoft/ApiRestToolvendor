@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            user = dao.findByIdV2(id);
+            user = dao.findById(id);
         } catch ( Exception e ) {
             System.out.println("Error in user findById: " + e.getMessage());
         }
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            user = dao.findByIdV2(id, companyId);
+            user = dao.findById(id, companyId);
         } catch ( Exception e ) {
             System.out.println("Error in user findById: " + e.getMessage());
         }
@@ -213,7 +213,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Email.
-            user = dao.findByEmailV2(email);
+            user = dao.findByEmail(email);
         } catch ( Exception e ) {
             System.out.println("Error in user findByEmail: " + e.getMessage());
         }
@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Este método consulta los datos del usuario verificando coincidencias de email y password
-            user = dao.authenticationV2(email, password);
+            user = dao.authentication(email, password);
         } catch ( Exception e ) {
             System.out.println("Error in user findByAuth: " + e.getMessage());
         }
@@ -238,14 +238,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean findId(int id) {
         // se consulta en la BD si el id del usuario existe y es valido
-        return dao.findByIdV2(id)!=null;
+        return dao.findById(id)!=null;
     }
     
     //--------------------- FIND BY ID BOOLEAN ---------------------------------
     @Override
     public boolean findId(int id, int companyId) {
         // se consulta en la BD si el id del usuario existe y es valido
-        return dao.findByIdV2(id, companyId)!=null;
+        return dao.findById(id, companyId)!=null;
     }
 
     //--------------------- FIND BY EMAIL BOOLEAN ------------------------------
@@ -261,7 +261,7 @@ public class UserServiceImpl implements UserService {
         List<User> list = null;
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.
-            list = dao.getAllByCompanyV2(companyId);
+            list = dao.getAllByCompany(companyId);
             
         } catch ( Exception e ) {
             System.out.println("Error in user getAllByCompany: " + e.getMessage());

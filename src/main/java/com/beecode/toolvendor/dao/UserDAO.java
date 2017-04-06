@@ -96,11 +96,54 @@ public class UserDAO {
         Session session = SessionUtil.getSession();
         List result = null;
         try{
-            Query query = session.createQuery("from id, createdAt, email, name, phone, photo where companyId = :companyId ");
-            query.setParameter("companyId", companyId);
+            Query query = session.createQuery("from User where companyId = :companyId ");
+            query.setInteger("companyId", companyId);
             result = query.list();
             if ( result!=null )
                 System.out.print("filas obtenidas: " + result.size()); 
+        }catch (HibernateException e) {
+            if ( e != null )
+                System.out.print("Error DAO: " + e.getMessage());
+        }finally {
+           session.close(); 
+        }
+        return result;
+    }
+    
+    public User findByIdV2(int id) {
+        
+        Session session = SessionUtil.getSession();
+        User result = null;
+        try{
+           //session.refresh(User.class); 
+           Query query = session.createQuery("select u.id, u.email, u.name, u.phone, u.photo from User u where u.id = :id ");
+           query.setMaxResults(1);
+           query.setInteger("id", id);
+           result = (User) query.uniqueResult();
+           if ( result!=null )
+                System.out.print("User Name sin Transaction: " + result.getName()); 
+        }catch (HibernateException e) {
+            if ( e != null )
+                System.out.print("Error DAO: " + e.getMessage());
+        }finally {
+           session.close(); 
+        }
+        return result;
+    }
+    
+    public User findByIdV2(int id, int companyId) {
+        
+        Session session = SessionUtil.getSession();
+        User result = null;
+        try{
+           //session.refresh(User.class); 
+           Query query = session.createQuery("select u.id, u.email, u.name, u.phone, u.photo from User u where u.id = :id and u.companyId = :companyId");
+           query.setMaxResults(1);
+           query.setInteger("id", id);
+           query.setInteger("companyId", companyId);
+           result = (User) query.uniqueResult();
+           if ( result!=null )
+                System.out.print("User Name sin Transaction: " + result.getName()); 
         }catch (HibernateException e) {
             if ( e != null )
                 System.out.print("Error DAO: " + e.getMessage());

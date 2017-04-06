@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            user = dao.findById(id);
+            user = dao.findByIdV2(id);
         } catch ( Exception e ) {
             System.out.println("Error in user findById: " + e.getMessage());
         }
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            user = dao.findById(id, companyId);
+            user = dao.findByIdV2(id, companyId);
         } catch ( Exception e ) {
             System.out.println("Error in user findById: " + e.getMessage());
         }
@@ -238,14 +238,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean findId(int id) {
         // se consulta en la BD si el id del usuario existe y es valido
-        return dao.findById(id)!=null;
+        return dao.findByIdV2(id)!=null;
     }
     
     //--------------------- FIND BY ID BOOLEAN ---------------------------------
     @Override
     public boolean findId(int id, int companyId) {
         // se consulta en la BD si el id del usuario existe y es valido
-        return dao.findById(id, companyId)!=null;
+        return dao.findByIdV2(id, companyId)!=null;
     }
 
     //--------------------- FIND BY EMAIL BOOLEAN ------------------------------

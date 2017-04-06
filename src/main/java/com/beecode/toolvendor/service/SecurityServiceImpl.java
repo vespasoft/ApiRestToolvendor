@@ -58,7 +58,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     @Override
     public User authentication(String email, String password) {
         // Este método consulta los datos del usuario verificando coincidencias de email y password
-        return udao.authentication(email, password);
+        return udao.authenticationV2(email, password);
     }
     
     /* 
@@ -111,7 +111,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     public User hasAccessUser(Integer userId) {
         // Se obtiene los datos del customer si pertenece a la compañia del usuario logueado
         udao = new UserDAO();
-        User result = udao.findById(userId, user.getCompanyId());
+        User result = udao.findByIdV2(userId, user.getCompanyId());
         if ( result != null ) {
             // se verifica que el usuario autenticado tenga permisos..
             if ( isAdmin() || equalsUser(result.getId()) ) {

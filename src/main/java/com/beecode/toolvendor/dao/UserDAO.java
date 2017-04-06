@@ -96,7 +96,7 @@ public class UserDAO {
         Session session = SessionUtil.getSession();
         List result = null;
         try{
-            Query query = session.createQuery("from User where companyId = :companyId ");
+            Query query = session.createQuery("select u.id, u.email, u.name, u.phone, u.photo from User u where u.companyId = :companyId ");
             query.setInteger("companyId", companyId);
             result = query.list();
             if ( result!=null )

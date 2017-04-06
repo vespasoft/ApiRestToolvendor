@@ -213,7 +213,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Email.
-            user = dao.findByEmail(email);
+            user = dao.findByEmailV2(email);
         } catch ( Exception e ) {
             System.out.println("Error in user findByEmail: " + e.getMessage());
         }
@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             // Este método consulta los datos del usuario verificando coincidencias de email y password
-            user = dao.authentication(email, password);
+            user = dao.authenticationV2(email, password);
         } catch ( Exception e ) {
             System.out.println("Error in user findByAuth: " + e.getMessage());
         }

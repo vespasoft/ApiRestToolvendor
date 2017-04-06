@@ -153,6 +153,49 @@ public class UserDAO {
         return result;
     }
     
+    public User findByEmailV2(String email) {
+        Session session = SessionUtil.getSession();
+        User result = null;
+        try{
+           //session.refresh(User.class); 
+           Query query = session.createQuery("select u.id, u.email, u.name, u.phone, u.photo from User u where u.id = :id and u.companyId = :companyId");
+           query.setMaxResults(1);
+           query.setParameter("email", email);
+           result = (User) query.uniqueResult();
+
+           if ( result!=null )
+                System.out.print("User Email: " + result.getEmail());  
+        }catch (HibernateException e) {
+            if ( e != null )
+                System.out.print("Error DAO: " + e.getMessage());
+        }finally {
+           session.close(); 
+        }
+            
+        return result;
+    }
+    
+    public User authenticationV2(String email, String password) {
+        User result = null;
+        Session session = SessionUtil.getSession();
+        try{
+            Query query = session.createQuery("select u.id, u.email, u.name, u.phone, u.photo from User u where u.id = :id and u.companyId = :companyId");
+            query.setMaxResults(1);
+            query.setParameter("email", email);
+            query.setParameter("password", password);
+            result = (User) query.uniqueResult();
+            
+            if (result!=null)
+                System.out.println(TAG+". Usuario autenticado: " + result.getName());
+        }catch (HibernateException e) {
+            if ( e != null )
+                System.out.print("Error DAO: " + e.getMessage());
+        }finally {
+           session.close(); 
+        }
+        return result;
+    }
+    
     public List getAllByCompany(Integer companyId) {
         Session session = SessionUtil.getSession();
         List result = null;

@@ -45,7 +45,7 @@ public class ContactServiceImpl implements ContactService {
             } else if ( obj.getUserId()==0 ) {
                 message="El campo UserId no puede ser igual a 0";
             } else if ( findPhone(obj.getUserId(), obj.getPhone() ) ) {
-                message="Ya existe un contacto con el mismo nombre";
+                message="Ya existe un contacto con el mismo telefono";
             } else {
                 //--- obtiene el usuario a partir del userId ---
                 User user = userserv.findById(obj.getUserId(), companyId);

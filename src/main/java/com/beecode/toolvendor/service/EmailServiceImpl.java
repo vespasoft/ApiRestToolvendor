@@ -463,7 +463,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void SendEmailProgramVisit(User user, Visit visit) {
         String toEmail = user.getEmail();
-        String emailSubject = "Bienvenido a Toolvendor App";
+        String emailSubject = "Tienes una nueva visita programada";
         String emailBody = "<html>\n" +
                         "    <head>\n" +
                         "        <title>Toolvendor App</title>\n" +

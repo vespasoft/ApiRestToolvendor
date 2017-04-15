@@ -10,8 +10,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -147,7 +145,6 @@ public class User implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
     
     @Column(name="phone", length=45)
     public String getPhone() {

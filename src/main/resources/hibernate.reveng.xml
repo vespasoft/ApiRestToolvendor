@@ -3,6 +3,7 @@
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="toolvendor"/>
   <table-filter match-name="brand"/>
+  <table-filter match-name="config_email"/>
   <table-filter match-name="modules"/>
   <table-filter match-name="order_detail"/>
   <table-filter match-name="presentation"/>

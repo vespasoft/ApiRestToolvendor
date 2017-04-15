@@ -8,6 +8,7 @@ package com.beecode.toolvendor.service;
 import com.beecode.toolvendor.dao.StockDAO;
 import com.beecode.toolvendor.interfaces.StockService;
 import com.beecode.toolvendor.model.Stock;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -20,17 +21,23 @@ public class StockServiceImpl implements StockService {
     private static final AtomicLong counter = new AtomicLong();
      
     //------------------------------- SERVICES -----------------------------------------
-    private final ProductServiceImpl productserv = new ProductServiceImpl();
-    private final CellarServiceImpl cellarserv = new CellarServiceImpl();
+    private ProductServiceImpl productserv;
+    private CellarServiceImpl cellarserv;
     
     //------------------------------- DAO -----------------------------------------
-    private final StockDAO dao = new StockDAO();
+    private StockDAO dao;
 
     public StockServiceImpl() {
+        productserv = new ProductServiceImpl();
+        cellarserv = new CellarServiceImpl();
+        dao = new StockDAO();
     }
     
     //----------------------- Agregar nuevo registro ---------------------------------
     public String save(Stock obj, Integer companyId) {
+        productserv = new ProductServiceImpl();
+        cellarserv = new CellarServiceImpl();
+        dao = new StockDAO();
         Stock current = null;
         String message="";
         if ( obj==null ) {
@@ -39,16 +46,17 @@ public class StockServiceImpl implements StockService {
             message="El campo productId no puede ser nullo";
         } else if ( obj.getProductId()==0 ) {
             message="El campo productId no puede ser igual a 0";
-        } else if ( obj.getCellarId()==null ) {
+        } else if ( obj.getCellar().getId()==null ) {
             message="El campo cellarId no puede estar vacio";
-        } else if ( obj.getCellarId()==0 ) {
+        } else if ( obj.getCellar().getId()==0 ) {
             message="El campo cellarId no puede ser igual a 0";    
         } else if ( productserv.findById(obj.getProductId(), companyId) == null ) {
             message="No existe ningun registro con este productId";
-        } else if ( !cellarserv.findId(obj.getCellarId(), companyId) ) {
+        } else if ( !cellarserv.findId(obj.getCellar().getId(), companyId) ) {
             message="No existe ningun registro con este cellarId";    
         } else {
             //--- AtCreated fecha de creación del registro
+            obj.setCreatedAt(new Date());
             dao.add(obj);
         }
         //-------------- si ocurrio un error la variable contiene el mensaje de error ---------------
@@ -58,6 +66,9 @@ public class StockServiceImpl implements StockService {
  
     //------------------- Actualizar los datos de un registro existente --------------------------
     public String update(Stock obj, Integer companyId) {
+        productserv = new ProductServiceImpl();
+        cellarserv = new CellarServiceImpl();
+        dao = new StockDAO();
         Stock current = null;
         String message="";
         
@@ -72,7 +83,7 @@ public class StockServiceImpl implements StockService {
             current = findById(obj.getId());
             if (current!=null) {
                 //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
-                if (obj.getCellarId()!=null) current.setCellarId(obj.getCellarId());
+                if (obj.getCellar().getId()!=null) current.setCellar(obj.getCellar());
                 if (obj.getId()!=null) current.setId(obj.getId());
                 if (obj.getProductId()!=null) current.setProductId(obj.getProductId());
                 if (obj.getCost()!=null) current.setCost(obj.getCost());
@@ -80,7 +91,7 @@ public class StockServiceImpl implements StockService {
                 //--- se verifica que el productId sea valido y exista ---
                 if ( !productserv.findId(obj.getProductId(), companyId) ) {
                     message="El campo productId no existe o es invalido";
-                } else if ( cellarserv.findId(obj.getCellarId(), companyId) ) {
+                } else if ( !cellarserv.findId(obj.getCellar().getId(), companyId) ) {
                     message="El campo cellarId no existe o es invalido";
                 } else {
                     //--- se ejecuta el update en la capa de datos ---
@@ -97,6 +108,7 @@ public class StockServiceImpl implements StockService {
     //----- eliminar un registro por id -----
     @Override
     public boolean delete(int id) {
+        dao = new StockDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -111,6 +123,7 @@ public class StockServiceImpl implements StockService {
     //----- encontrar un registro por id -----
     @Override
     public Stock findById(int id) {
+        dao = new StockDAO();
         Stock result = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
@@ -125,6 +138,7 @@ public class StockServiceImpl implements StockService {
     //----- encontrar un registro por id -----
     @Override
     public boolean findId(int id) {
+        dao = new StockDAO();
          // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id)!=null;
     }
@@ -132,6 +146,7 @@ public class StockServiceImpl implements StockService {
     //----- retorna un listado registro por productId -----
     @Override
     public List getAllByProduct(Integer productId) {
+        dao = new StockDAO();
         List<Stock> list = null;
         try {
             // Se consulta en la bd las marcas registradas de una compañia.

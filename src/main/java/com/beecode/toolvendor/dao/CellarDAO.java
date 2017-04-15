@@ -56,7 +56,7 @@ public class CellarDAO {
         List result = null;
         try{
            Criteria cr = session.createCriteria(Cellar.class);
-           cr.add(Restrictions.eq("company_id", companyId));
+           cr.add(Restrictions.eq("companyId", companyId));
            result = cr.list();
            if ( result!=null )
                 System.out.print("filas obtenidas: " + result.size()); 

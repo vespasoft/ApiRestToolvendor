@@ -20,14 +20,16 @@ public class CellarServiceImpl implements CellarService {
     private static final AtomicLong counter = new AtomicLong();
      
     //------------------------------- DAO --------------------------------------------
-    private final CellarDAO dao = new CellarDAO();
+    private CellarDAO dao;
 
     public CellarServiceImpl() {
+        dao = new CellarDAO();
     }
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
     public String save(Cellar obj) {
+        dao = new CellarDAO();
         Cellar current = null;
         String message="";
         if ( obj==null ) {
@@ -55,6 +57,7 @@ public class CellarServiceImpl implements CellarService {
     //------------------- Actualizar los datos de un registro existente --------------------------
     @Override
     public String update(Cellar obj) {
+        dao = new CellarDAO();
         Cellar current = null;
         String message="";
         
@@ -86,6 +89,7 @@ public class CellarServiceImpl implements CellarService {
     //--------------------- FIND BY ID BOOLEAN --------------------------
     @Override
     public boolean findId(int id, int companyId) {
+        dao = new CellarDAO();
         // se consulta en la BD si el id del usuario existe y es valido
         return dao.findById(id, companyId)!=null;
     }
@@ -93,6 +97,7 @@ public class CellarServiceImpl implements CellarService {
     //--------------------- FIND BY NAME BOOLEAN --------------------------
     @Override
     public boolean findName(String name, int companyId) {
+        dao = new CellarDAO();
         // se consulta en la BD si el name del usuario existe y es valido
         return dao.findByName(name, companyId)!=null;
     }
@@ -100,6 +105,7 @@ public class CellarServiceImpl implements CellarService {
     //--------------------- FIND BY ID OBJECT BRAND --------------------------
     @Override
     public Cellar findById(int id, int companyId) {
+        dao = new CellarDAO();
         Cellar result = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
@@ -114,6 +120,7 @@ public class CellarServiceImpl implements CellarService {
     //--------------------- FIND BY NAME OBJECT BRAND --------------------------
     @Override
     public Cellar findByName(String name, int companyId) {
+        dao = new CellarDAO();
         Cellar result = null;
         try {
             // Se busca en la bd los datos del usuario por Email.
@@ -127,6 +134,7 @@ public class CellarServiceImpl implements CellarService {
 
     @Override
     public boolean delete(int id) {
+        dao = new CellarDAO();
         boolean result = false;
         try {
             int i = dao.delete(id);
@@ -140,6 +148,7 @@ public class CellarServiceImpl implements CellarService {
 
     @Override
     public List getAllByCompany(Integer companyId) {
+        dao = new CellarDAO();
         List<Cellar> list = null;
         try {
             // Se consulta en la bd las marcas registradas de una compañia.

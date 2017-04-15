@@ -18,7 +18,7 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
 
-    public static final String CATALOG = "toolvendor";
+    public static final String CATALOG = "toolvendorv1";
     
     private static SessionFactory sessionFactory;
     

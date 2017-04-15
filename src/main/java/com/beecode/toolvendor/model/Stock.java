@@ -6,7 +6,6 @@ import com.beecode.toolvendor.util.HibernateUtil;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -23,11 +22,11 @@ import javax.persistence.TemporalType;
 @Table(name="stock"
     , catalog= HibernateUtil.CATALOG
 )
-public class Stock  implements java.io.Serializable {
+public class Stock implements java.io.Serializable {
 
 
      private Integer id;
-     private Integer cellarId;
+     private Cellar cellar;
      private Integer productId;
      private Date createdAt;
      private Integer quantity;
@@ -37,9 +36,9 @@ public class Stock  implements java.io.Serializable {
     }
 
 	
-    public Stock(Integer cellarId, Integer productId, Date createdAt, Integer quantity, Double cost) {
-       this.cellarId = cellarId;
-       this.productId = productId;
+    public Stock(Cellar cellar, Integer productId, Date createdAt, Integer quantity, Double cost) {
+        this.cellar = cellar;
+        this.productId = productId;
        this.createdAt = createdAt;
        this.quantity = quantity;
        this.cost = cost;
@@ -56,14 +55,15 @@ public class Stock  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    @Column(name="cellar_id", nullable=false)
-    public Integer getCellarId() {
-        return this.cellarId;
-    }
     
-    public void setCellarId(Integer cellarId) {
-        this.cellarId = cellarId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="cellar_id")
+    public Cellar getCellar() {
+        return cellar;
+    }
+
+    public void setCellar(Cellar cellar) {
+        this.cellar = cellar;
     }
 
 @Column(name="product_id", nullable=false)

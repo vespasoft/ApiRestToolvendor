@@ -1,8 +1,8 @@
 {
-  "name"        : "apidoc motoflash",
+  "name"        : "apidoc toolvendor",
   "version"     : "1.0.0",
-  "description" : "Documentacion de los web services para la implementacion de la API Rest en FlashMoto Project",
-  "title"       : "Documentacion API Rest MotoFlash",
-  "url"         : "/api"
+  "description" : "Documentacion de los web services para la implementacion de la API Rest en Toolvendor Project",
+  "title"       : "Documentacion API Rest ToolVendor",
+  "url"         : "/rest"
 
 }

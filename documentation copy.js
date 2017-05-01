@@ -157,59 +157,49 @@
 
 
  // ------------------------------------------------------------------------------------------
- // A U T H E N T I C A T I O N .
+ // C R E A T E  C O M P A N Y.
  // ------------------------------------------------------------------------------------------
  /**
-  * @api        {post}         /user/auth      Crear
+  * @api      {post}         /company      Crear
   * @apiVersion 1.0.0
-  * @apiName  UserAuthentication
-  * @apiGroup Authentication
+  * @apiName  CreateCompany
+  * @apiGroup Empresas
   *
   * @apiExample {post} Ejemplo de Solicitud:
-  *                      http://toolvendor-beecode.rhcloud.com/rest/user/auth
+  *                      http://toolvendor-beecode.rhcloud.com/rest/company
   *
-  * @apiDescription   Este método se utiliza para autenticar a un usuario. Las columnas requeridas son <code> email, password</code>.
+  * @apiDescription  Crea un nuevo objeto Company. Las columnas guardar son <code> company, contactName, email, phone, address, building, city, postalCode</code>.
   *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
   *                   de lo contrario devuelve <code>status 400</code>. Para mas informacion vease los ejemplos a continuación.
   *
-  * @apiParam    {String}     email         Email del usuario.
-  * @apiParam    {String}     password      Password del usuario.
+  * @apiParam    {String}     company         Id de la compañia del usuario.
+  * @apiParam    {String}     contactName     La descripción de la Categoria que se va a mostrar al usuario.
+  * @apiParam    {String}     email           Email de la empresa y/o usuario
+  * @apiParam    {String}     phone           Número de telefono
+  * @apiParam    {String}     address         Dirección básica de la empresa
+  * @apiParam    {String}     building        Dirección del edificio u oficina
+  * @apiParam    {String}     city            Object[City] con los datos de la ciudad y el pais.
+  * @apiParam    {String}     postalCode      Codigo Postal de la empresa.
   *
-  *
-  * @apiUse  RespuestaSuccessLogin
-  *
-  * @apiUse  RespuestaFallidaLogin
-  *
+  * @apiUse  RespuestaSuccessInsertarEditar
   */
 
+ /**
+  * @api      {get}          /company/:id   Leer
+  * @apiDescription  Recupera los detalles de la Compañia del usuario. Suministrar el <code>id</code> de la Compañia para retornar la
+  *                  información de la misma. La respuesta devuelve un conjunto de variables, la variable
+  *                  <code>result</code> contiene JSON con las siguientes columnas: <code> company, contactName, email, phone, address, building, city, postalCode</code>.
+  * @apiVersion 1.0.0
+  * @apiParam {Number}       id              un numero entero (unique ID - PrimaryKey) para leer en la tabla
+  * @apiName  GetCompany
+  * @apiGroup Empresas
+  *
+  * @apiExample {get} Ejemplo de Solicitud:
+  *                      http://toolvendor-beecode.rhcloud.com/rest/company/5
+  *
+  * @apiUse  RespuestaSuccessListar
+  */
 
-  // ------------------------------------------------------------------------------------------
-  // C R E A T E  C O M P A N Y.
-  // ------------------------------------------------------------------------------------------
-  /**
-   * @api      {post}         /company      Crear
-   * @apiVersion 1.0.0
-   * @apiName  CreateCompany
-   * @apiGroup Empresas
-   *
-   * @apiExample {post} Ejemplo de Solicitud:
-   *                      http://toolvendor-beecode.rhcloud.com/rest/company
-   *
-   * @apiDescription  Crea un nuevo objeto Company. Las columnas guardar son <code> company, contactName, email, phone, address, building, city, postalCode</code>.
-   *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
-   *                   de lo contrario devuelve <code>status 400</code>. Para mas informacion vease los ejemplos a continuación.
-   *
-   * @apiParam    {String}     company         Id de la compañia del usuario.
-   * @apiParam    {String}     contactName     La descripción de la Categoria que se va a mostrar al usuario.
-   * @apiParam    {String}     email           Email de la empresa y/o usuario
-   * @apiParam    {String}     phone           Número de telefono
-   * @apiParam    {String}     address         Dirección básica de la empresa
-   * @apiParam    {String}     building        Dirección del edificio u oficina
-   * @apiParam    {String}     city            Object[City] con los datos de la ciudad y el pais.
-   * @apiParam    {String}     postalCode      Codigo Postal de la empresa.
-   *
-   * @apiUse  RespuestaSuccessInsertarEditar
-   */
 
   // ------------------------------------------------------------------------------------------
   // U S U A R I O S.
@@ -473,7 +463,7 @@
  *                  los Departamentos más recientemente creados aparecen en primer lugar. Las columnas disponibles a mostrar son
  *                  <code>id, name, phone, fax, address, lat, lng, photo, website</code>
  * @apiName  GetAll
- * @apiGroup Tipos de Usuario
+ * @apiGroup Departamento
  *
  * @apiUse  RespuestaSuccessListar
  */
@@ -691,11 +681,11 @@
  * @apiGroup Cliente
  *
  * @apiExample {put} Ejemplo de Solicitud:
- *                      http://toolvendor-beecode.rhcloud.com/rest/customer/
+ *                      https://apirestfm.herokuapp.com/api/customer/
  *
- * @apiDescription  Retorna una lista de todos los Clientes asignados al usuario. Los Clientes se devuelven ordenados por fecha de creación,
+ * @apiDescription  Devuelve una lista de todos los Clientes. Los Clientes se devuelven ordenados por fecha de creación,
  *                  los Clientes más recientemente creados aparecen en primer lugar. Las columnas disponibles a mostrar son
-     *                  <code>userId, createdAt, companyName, contactName, contactPhone, contactEmail, active, building, street, postalCode, reference, latitud, longitude, companyId, city, country</code>
+     *                  <code>id, first_name, last_name, email, photo, phone, security_question, answer</code>
  * @apiName  GetAll
  * @apiGroup Cliente
  *
@@ -708,27 +698,21 @@
  * @apiName  CreateCliente
  * @apiGroup Cliente
  *
- * @apiExample {post} Ejemplo de Solicitud:
- *                      http://toolvendor-beecode.rhcloud.com/rest/customer/
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/customer/
  *
- * @apiDescription   Crea un nuevo objeto Cliente. Las columnas guardar son <code>userId, createdAt, companyName, contactName, contactPhone, contactEmail, active, building, street, postalCode, reference, latitud, longitude, companyId, city, country</code>.
+ * @apiDescription  Crea un nuevo objeto Cliente. Las columnas guardar son <code>first_name, last_name, email, password, photo, phone, security_question, answer</code>.
  *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
  *                   de lo contrario devuelve <code>status 400</code>. Para mas información vease los ejemplos a continuación.
  *
- * @apiParam    {String}    userId            Id del usuario a asignar el cliente.
- * @apiParam    {String}    companyName       Nombre de la empresa cliente.
- * @apiParam    {String}    contactName       Nombre completo del representante de la empresa.
- * @apiParam    {String}    contactPhone      Número de telefono del representante de la empresa.
- * @apiParam    {String}    contactEmail      Direccion de correo electronico del representante.
- * @apiParam    {String}    [active]          Active es una variable tipo Bandera que indica si el cliente está activo o inactivo en el sistema.
- * @apiParam    {String}    [building]        En esta columna se almacena el nombre de eficio, casa u oficina de la empresa.
- * @apiParam    {String}    street            En esta columna se almacena la direccion de las calles de la empresa.
- * @apiParam    {String}    reference         Una referencia de la direccion de la empresa.
- * @apiParam    {String}    latitud           Latitud de la ubicación del cliente.
- * @apiParam    {String}    longitude         En esta columna se almacena la direccion de las calles de la empresa.
- * @apiParam    {String}    companyId         Numero telefonico de contacto al cliente.
- * @apiParam    {String}    city              Objeto City con los datos de la ciudad del cliente.
- * @apiParam    {String}    [postalCode]      Codigo Postal del pais del cliente.
+ * @apiParam    {String}    first_name   Nombre completo del  Cliente.
+ * @apiParam    {String}    last_name            Apellidos del Cliente.
+ * @apiParam    {String}    email   Direccion de correo electronico, ademas se usa como login de acceso.
+ * @apiParam    {String}    password     Clave de acceso a la aplicacion.
+ * @apiParam    {String}    [photo]         En esta columna se almacena el path de ubicación de la imagen de perfil del cliente.
+ * @apiParam    {String}    phone         Numero telefonico de contacto al cliente.
+ * @apiParam    {String}    [security_question]     Pregunta de seguridad para recuperar clave de usuario.
+ * @apiParam    {String}    [answer]         Respuesta a la pregunta de seguridad para recuperar clave de usuario.
  *
  * @apiUse  RespuestaSuccessInsertarEditar
  */
@@ -738,14 +722,16 @@
  * @apiDescription  Recupera los detalles de un Cliente existente. Suministrar el <code>id</code> del Cliente para devolver la
  *                  información del Cliente correspondiente. La respuesta devuelve un conjunto de variables, la variable
  *                  <code>result</code> contiene JSON con las siguientes columnas: <br>
- *                      <code>userId, createdAt, companyName, contactName, contactPhone, contactEmail, active, building, street, postalCode, reference, latitud, longitude, companyId, city, country</code>.
+ *                      <code>id, first_name, last_name, email, password, photo, phone, security_question, answer</code>. <br>Tambien
+ *                      devuelve un array de las tarjetas (<code>cards</code>) y direcciones de entrega (<code>address</code>)
+ *                      asociadas al cliente.
  * @apiVersion 1.0.0
  * @apiParam {Number}       id              El <code>id</code> del Cliente que se está leyendo.
  * @apiName  GetCliente
  * @apiGroup Cliente
  *
- * @apiExample {get} Ejemplo de Solicitud:
- *                      http://toolvendor-beecode.rhcloud.com/rest/customer/105
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/customer/135e656e6cda8640820350816ab59f2d
  *
  * @apiUse  RespuestaSuccessListar
  */
@@ -757,7 +743,7 @@
  * @apiGroup    Cliente
  *
  * @apiExample {put} Ejemplo de Solicitud:
- *                      http://toolvendor-beecode.rhcloud.com/rest/customer/135e656e6cda8640820350816ab59f2d
+ *                      https://apirestfm.herokuapp.com/api/customer/135e656e6cda8640820350816ab59f2d
  *
  * @apiDescription  Actualiza los detalles del Cliente específico, mediante la identificación de los valores de los parámetros suministrados.
  *                  Cualquiera de los parámetros no previstos serán dejados sin cambios. Las columnas a actualizar son<br>
@@ -766,21 +752,14 @@
  *                  retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito, de lo contrario devuelve <code>status 400</code>.
  *                  Para mas información vease los ejemplos a continuación.
  *
- * @apiParam    {String}    id                  Id del cliente a modificar.
- * @apiParam    {String}    userId              Id del usuario a asignar el cliente.
- * @apiParam    {String}    [companyName]       Nombre de la empresa cliente.
- * @apiParam    {String}    [contactName]       Nombre completo del representante de la empresa.
- * @apiParam    {String}    [contactPhone]      Número de telefono del representante de la empresa.
- * @apiParam    {String}    [contactEmail]      Direccion de correo electronico del representante.
- * @apiParam    {String}    [active]            Active es una variable tipo Bandera que indica si el cliente está activo o inactivo en el sistema.
- * @apiParam    {String}    [building]          En esta columna se almacena el nombre de eficio, casa u oficina de la empresa.
- * @apiParam    {String}    [street]            En esta columna se almacena la direccion de las calles de la empresa.
- * @apiParam    {String}    [reference]         Una referencia de la direccion de la empresa.
- * @apiParam    {String}    [latitud]           Latitud de la ubicación del cliente.
- * @apiParam    {String}    [longitude]         En esta columna se almacena la direccion de las calles de la empresa.
- * @apiParam    {String}    [companyId]         Numero telefonico de contacto al cliente.
- * @apiParam    {String}    [city]              Objeto City con los datos de la ciudad del cliente.
- * @apiParam    {String}    [postalCode]        Codigo Postal del pais del cliente.
+ * @apiParam    {String}    first_name   Nombre completo del  Cliente.
+ * @apiParam    {String}    last_name            Apellidos del Cliente.
+ * @apiParam    {String}    email   Direccion de correo electronico, ademas se usa como login de acceso.
+ * @apiParam    {String}    password     Clave de acceso a la aplicacion.
+ * @apiParam    {String}    [photo]         En esta columna se almacena el path de ubicación de la imagen de perfil del cliente.
+ * @apiParam    {String}    phone         Numero telefonico de contacto al cliente.
+ * @apiParam    {String}    [security_question]     Pregunta de seguridad para recuperar clave de usuario.
+ * @apiParam    {String}    [answer]         Respuesta a la pregunta de seguridad para recuperar clave de usuario.
  *
  * @apiUse      RespuestaSuccessInsertarEditar
  * @apiUse      ErrorAlEditar
@@ -792,9 +771,9 @@
  * @apiGroup    Cliente
  *
  * @apiExample {delete} Ejemplo de Solicitud:
- *                      http://toolvendor-beecode.rhcloud.com/rest/customer/105
+ *                      https://apirestfm.herokuapp.com/api/product/135e656e6cda8640820350816ab59f2d
  *
- * @apiDescription  Permite borrar un Cliente. Solo es posible suprimir el Cliente, si éste no ha sido vinculado con un(a) <code>Usuario, Visita, Orden</code>.
+ * @apiDescription  Permite borrar un Cliente. Solo es posible suprimir el Cliente, si éste no ha sido vinculado con una <code>Orden</code>.
  *                  Para eliminarlo, debe indicar el <code>id</code> del Cliente a borrar. La solicitud devuelve un objeto con un
  *                  parámetro <code>success=true</code> en caso de éxito. De lo contrario, esta llamada devuelve un error ( <code>success=false</code> )
  . Para mas información vease los ejemplos a continuación.
@@ -802,6 +781,418 @@
  * @apiParam    {String}        id              El <code>id</code> del Cliente que se va a borrar.
  *
  * @apiName     BorraCliente
+ *
+ * @apiUse      SuccessAlBorrar
+ *
+ * @apiUse      ErrorAlBorrar
+ */
+
+/**
+ * @api      {post}         /customer/login/      Login
+ * @apiVersion 1.0.0
+ * @apiName  LoginCliente
+ * @apiGroup Cliente
+ *
+ * @apiExample {post} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/customer/login
+ *
+ * @apiDescription  Valida los datos suministrados para el inicio de sesion (<code>email</code> y <code>password</code>).
+ *                  La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
+ *                   de lo contrario devuelve <code>status 400</code>. Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    email       Direccion de correo electronico del cliente usada como usuario de acceso a la app.
+ * @apiParam    {String}    password    Clave de acceso del cliente usada para iniciar sesion en la app.
+ *
+ * @apiUse  RespuestaSuccessLogin
+ *
+ * @apiUse  RespuestaFallidaLogin
+ */
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------
+// D E L I V E R Y M A N ...... repartidores.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api      {get}          /deliveryman/      Listar
+ * @apiVersion 1.0.0
+ * @apiName  GetAll
+ * @apiGroup Repartidor
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/deliveryman/
+ *
+ * @apiDescription  Devuelve una lista de todos los Repartidores. Los Repartidores se devuelven ordenados por fecha de creación,
+ *                  los Repartidores más recientemente creados aparecen en primer lugar. Las columnas disponibles a mostrar son
+     *                  <code>id, first_name, last_name, email, photo, phone, security_question, answer</code>
+ * @apiName  GetAll
+ * @apiGroup Repartidor
+ *
+ * @apiUse  RespuestaSuccessListar
+ */
+
+/**
+ * @api      {post}         /deliveryman/      Crear
+ * @apiVersion 1.0.0
+ * @apiName  CreateRepartidor
+ * @apiGroup Repartidor
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/deliveryman/
+ *
+ * @apiDescription  Crea un nuevo objeto Repartidor. Las columnas guardar son <code>first_name, last_name, email, password, photo, phone, security_question, answer</code>.
+ *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
+ *                   de lo contrario devuelve <code>status 400</code>. Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    first_name  Nombres del  Repartidor.
+ * @apiParam    {String}    last_name   Apellidos del Repartidor.
+ * @apiParam    {String}    email       Direccion de correo electronico, ésta columna es obligatoria para iniciar sesión.
+ * @apiParam    {String}    password    Clave de acceso, ésta columna es obligatoria para iniciar sesión.
+ * @apiParam    {String}    [photo]     En esta columna se almacena el path de ubicación de la imagen de perfil del repartidor.
+ * @apiParam    {String}    phone       Numero telefonico de contacto al cliente.
+ * @apiParam    {String}    [security_question] Pregunta de seguridad para recuperar clave de usuario.
+ * @apiParam    {String}    [answer]    Respuesta a la pregunta de seguridad para recuperar clave de usuario.
+ *
+ * @apiUse  RespuestaSuccessInsertarEditar
+ */
+
+/**
+ * @api      {get}          /deliveryman/:id   Leer
+ * @apiDescription  Recupera los detalles de un Repartidor existente. Suministrar el <code>id</code> del Repartidor para devolver la
+ *                  información del Repartidor correspondiente. La respuesta devuelve un conjunto de variables, la variable
+ *                  <code>result</code> contiene JSON con las siguientes columnas: <br>
+ *                      <code>id, first_name, last_name, email, password, photo, phone, security_question, answer</code>. <br>Tambien
+ *                      devuelve un array de las tarjetas (<code>cards</code>) y direcciones de entrega (<code>address</code>)
+ *                      asociadas al cliente.
+ * @apiVersion 1.0.0
+ * @apiParam {Number}       id              El <code>id</code> del Repartidor que se está leyendo.
+ * @apiName  GetRepartidor
+ * @apiGroup Repartidor
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/deliveryman/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiUse  RespuestaSuccessListar
+ */
+
+/**
+ * @api         {put}           /deliveryman/:id   Editar
+ * @apiVersion 1.0.0
+ * @apiName     EditRepartidor
+ * @apiGroup    Repartidor
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/deliveryman/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiDescription  Actualiza los detalles del Repartidor específico, mediante la identificación de los valores de los parámetros suministrados.
+ *                  Cualquiera de los parámetros no previstos serán dejados sin cambios. Las columnas a actualizar son<br>
+ *                  <code>first_name, last_name, email, password, photo, phone, security_question, answer</code>.<br>
+ *                  Tenga en cuenta que el atributo <code>id</code> no es editable. La solicitud
+ *                  retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito, de lo contrario devuelve <code>status 400</code>.
+ *                  Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    first_name  Nombres del  Repartidor.
+ * @apiParam    {String}    last_name   Apellidos del Repartidor.
+ * @apiParam    {String}    email       Direccion de correo electronico, ésta columna es obligatoria para iniciar sesión.
+ * @apiParam    {String}    password    Clave de acceso, ésta columna es obligatoria para iniciar sesión.
+ * @apiParam    {String}    [photo]     En esta columna se almacena el path de ubicación de la imagen de perfil del repartidor.
+ * @apiParam    {String}    phone       Numero telefonico de contacto al cliente.
+ * @apiParam    {String}    [security_question] Pregunta de seguridad para recuperar clave de usuario.
+ * @apiParam    {String}    [answer]    Respuesta a la pregunta de seguridad para recuperar clave de usuario.
+ *
+ * @apiUse      RespuestaSuccessInsertarEditar
+ * @apiUse      ErrorAlEditar
+ */
+
+/**
+ * @api         {delete}        /deliveryman/:id   Borrar
+ * @apiVersion 1.0.0
+ * @apiGroup    Repartidor
+ *
+ * @apiExample {delete} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/product/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiDescription  Permite borrar un Repartidor. Solo es posible suprimir el Repartidor, si éste no ha sido vinculado con una <code>Orden</code>.
+ *                  Para eliminarlo, debe indicar el <code>id</code> del Repartidor a borrar. La solicitud devuelve un objeto con un
+ *                  parámetro <code>success=true</code> en caso de éxito. De lo contrario, esta llamada devuelve un error ( <code>success=false</code> )
+ . Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}        id              El <code>id</code> del Repartidor que se va a borrar.
+ *
+ * @apiName     BorraRepartidor
+ *
+ * @apiUse      SuccessAlBorrar
+ *
+ * @apiUse      ErrorAlBorrar
+ *
+ */
+
+
+/**
+ * @api      {post}         /deliveryman/login/      Login
+ * @apiVersion 1.0.0
+ * @apiName  LoginRepartidor
+ * @apiGroup Repartidor
+ *
+ * @apiExample {post} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/deliveryman/login
+ *
+ * @apiDescription  Valida los datos suministrados para el inicio de sesion (<code>email</code> y <code>password</code>).
+ *                  La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
+ *                   de lo contrario devuelve <code>status 400</code>. Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    email       Direccion de correo electronico del repartidor usada como usuario de acceso a la app.
+ * @apiParam    {String}    password    Clave de acceso del repartidor usada para iniciar sesion en la app.
+ *
+ * @apiUse  RespuestaSuccessLogin
+ *
+ * @apiUse  RespuestaFallidaLogin
+ */
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------
+// C A R D S.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api      {get}          /card/      Listar
+ * @apiVersion 1.0.0
+ * @apiName  GetAll
+ * @apiGroup Tarjeta
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/department/
+ *
+ * @apiDescription  Devuelve una lista de todas las Tarjetas. Las Tarjetas se devuelven ordenadas por fecha de creación,
+ *                  las Tarjetas más recientemente creados aparecen en primer lugar. Las columnas disponibles a mostrar son
+ *                  <code>id, customer_id, card_number, name_on_card, exp_date, ccv, type</code>
+ * @apiName  GetAll
+ * @apiGroup Tarjeta
+ *
+ * @apiUse  RespuestaSuccessListar
+ */
+
+/**
+ * @api      {post}         /card/      Crear
+ * @apiVersion 1.0.0
+ * @apiName  CreateTarjeta
+ * @apiGroup Tarjeta
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/card/
+ *
+ * @apiDescription  Crea un nuevo objeto Tarjeta. Las columnas guardar son <code>customer_id, card_number, name_on_card, exp_date, ccv, type</code>.
+ *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
+ *                   de lo contrario devuelve <code>status 400</code>. Para mas informacion vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    customer_id el valor <code>id</code> del Cliente al cual pertenece la Tarjeta. <br>
+ *                                      Ej. <code>customer_id</code>=135e656e6cda8640820350816ab59f2d.
+ * @apiParam    {String}    card_number Numero que aparece en la parte frontal de la Tarjeta. Compuesto por 16 numeros en grupos de 4 numeros, separados
+ *                          por guion. Ej 1234-5678-9012-3456.
+ * @apiParam    {String}    name_on_card    Nombre impreso en la tarjeta. Ej. JOHN A DOE.
+ * @apiParam    {String}    exp_date        Fecha de vencimiento de la tarjeta. Ej. <code>05-19</code>  o  <code>05/19</code>.
+ * @apiParam    {String}    ccv             Numeros del ultimo bloque de 3 digitos impresos por el reverso de la tarjeta. Ej. 1234-5678-9012-3456
+ *                                          <span class='label label-alert'>789</span>.
+ * @apiParam    {String}    [type]          Tipo de tarjeta: <code>VISA, MASTER, DINERS, AMERICAN EXPRESS   </code>
+ *
+ * @apiUse  RespuestaSuccessInsertarEditar
+ */
+
+/**
+ * @api      {get}          /card/:id   Leer
+ * @apiDescription  Recupera los detalles de una Tarjeta existente. Suministrar el <code>id</code> de la Tarjeta para devolver la
+ *                  información de correspondiente. La respuesta devuelve un conjunto de variables, la variable
+ *                  <code>result</code> contiene JSON con las siguientes columnas: <code>id, customer_id, card_number, name_on_card, exp_date, ccv, type</code>
+ *                  y una columna con la información del Cliente (<code>customer</code>).
+ * @apiVersion 1.0.0
+ * @apiParam {Number}       id              El <code>id</code> de la Tarjeta que se está leyendo.
+ * @apiName  GetTarjeta
+ * @apiGroup Tarjeta
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/card/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiUse  RespuestaSuccessListar
+ */
+
+/**
+ * @api         {put}           /card/:id   Editar
+ * @apiVersion 1.0.0
+ * @apiName     EditTarjeta
+ * @apiGroup    Tarjeta
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/card/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiDescription  Actualiza los detalles de la Tarjeta específica, mediante el identificación de los valores de los parámetros pasados.
+ *                  Cualquiera de los parámetros no previstos serán dejados sin cambios. Las columnas a actualizar son
+ *                  <code>id, customer_id, card_number, name_on_card, exp_date, ccv, type</code>.
+ *                  Tenga en cuenta que el atributo <code>id</code> no es editable. La solicitud
+ *                  retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito, de lo contrario devuelve <code>status 400</code>.
+ *                  Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    customer_id el valor <code>id</code> del Cliente al cual pertenece la Tarjeta.<br>
+ *                                      Ej. <code>customer_id</code>=135e656e6cda8640820350816ab59f2d.
+ * @apiParam    {String}    card_number Numero que aparece en la parte frontal de la Tarjeta. Compuesto por 16 numeros en grupos de 4 numeros, separados
+ *                          por guion. Ej 1234-5678-9012-3456.
+ * @apiParam    {String}    name_on_card    Nombre impreso en la tarjeta. Ej. JOHN A DOE.
+ * @apiParam    {String}    exp_date        Fecha de vencimiento de la tarjeta. Ej. <code>05-19</code>  o  <code>05/19</code>.
+ * @apiParam    {String}    ccv             Numeros del ultimo bloque de 3 digitos impresos por el reverso de la tarjeta. Ej. 1234-5678-9012-3456
+ *                                          <span class='label label-alert'>789</span>.
+ * @apiParam    {String}    [type]          Tipo de tarjeta: <code>VISA, MASTER, DINERS, AMERICAN EXPRESS   </code>
+ *
+ * @apiUse      RespuestaSuccessInsertarEditar
+ * @apiUse      ErrorAlEditar
+ */
+
+/**
+ * @api         {delete}        /card/:id   Borrar
+ * @apiVersion 1.0.0
+ * @apiGroup    Tarjeta
+ *
+ * @apiExample {delete} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/card/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiDescription  Permite borrar una Tarjeta. Solo es posible suprimir la Tarjeta, si ésta no ha sido vinculada con una <code>Orden</code>.
+ *                  Para eliminarla, debe indicar el <code>id</code> de la Tarjeta a borrar. La solicitud devuelve un objeto con un
+ *                  parámetro <code>success=true</code> en caso de éxito. De lo contrario, esta llamada devuelve un error ( <code>success=false</code> )
+ . Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}        id              El <code>id</code> de la Tarjeta que se va a borrar.
+ *
+ * @apiName     BorraTarjeta
+ *
+ * @apiUse      SuccessAlBorrar
+ *
+ * @apiUse      ErrorAlBorrar
+ */
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------
+// A D D R E S S.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api      {get}          /address/      Listar
+ * @apiVersion 1.0.0
+ * @apiName  GetAll
+ * @apiGroup Direccion
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/department/
+ *
+ * @apiDescription  Devuelve una lista de todas las Direcciones. Las Direcciones se devuelven ordenadas por fecha de creación,
+ *                  las Direcciones más recientemente creados aparecen en primer lugar. Las columnas disponibles a mostrar son
+ *                  <code>id, customer_id, address, address2, lat, lng</code>
+ * @apiName  GetAll
+ * @apiGroup Direccion
+ *
+ * @apiUse  RespuestaSuccessListar
+ */
+
+/**
+ * @api      {post}         /address/      Crear
+ * @apiVersion 1.0.0
+ * @apiName  CreateDireccion
+ * @apiGroup Direccion
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/address/
+ *
+ * @apiDescription  Crea un nuevo objeto Direccion de entrega de Pedidos. Las columnas guardar son <code>customer_id, address, address2, lat, lng</code>.
+ *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
+ *                   de lo contrario devuelve <code>status 400</code>. Para mas informacion vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    customer_id el valor <code>id</code> del Cliente al cual pertenece la Dirección de entrega. <br>
+ *                                          Ej. <code>customer_id</code>=135e656e6cda8640820350816ab59f2d.
+ * @apiParam    {String}    address     Descripcion de la dirección de entrega. Ej. Brisas a282,Corredor Nte.,Panama City
+ * @apiParam    {String}    [address2]  Continuacion de la descripcion de la dirección de entrega.(Opcional)
+ * @apiParam    {Float}     [lat]       coordenada latitud de la direccion de entrega del pedido, expresada en medida angular que varía entre los 0° del ecuador
+ *                                          hasta los 90°. Ej. 8.97737
+ * @apiParam    {Float}     [lng]       coordenada longitud de la direccion de entrega del pedido, expresada en medida angular que varía entre los 0° del ecuador
+ *                                          hasta los 180°. Ej. -79.51831
+ *
+ * @apiUse  RespuestaSuccessInsertarEditar
+ */
+
+/**
+ * @api      {get}          /address/:id   Leer
+ * @apiDescription  Recupera los detalles de una Direccion de entrega de pedidos existente. Suministrar el <code>id</code> de la Direccion para devolver la
+ *                  información de correspondiente. La respuesta devuelve un conjunto de variables, la variable
+ *                  <code>result</code> contiene JSON con las siguientes columnas: <code>id, customer_id, address, address2, lat, lng</code>
+ *                  y una columna con la información del Cliente asociado a esta direccion (<code>customer</code>).
+ * @apiVersion 1.0.0
+ * @apiParam {Number}       id              El <code>id</code> de la Direccion que se está leyendo.
+ * @apiName  GetDireccion
+ * @apiGroup Direccion
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/address/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiUse  RespuestaSuccessListar
+ */
+
+/**
+ * @api         {put}           /address/:id   Editar
+ * @apiVersion 1.0.0
+ * @apiName     EditDireccion
+ * @apiGroup    Direccion
+ *
+ * @apiExample {put} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/address/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiDescription  Actualiza los detalles de la Direccion de entrega específica, mediante el identificación de los valores de los parámetros pasados.
+ *                  Cualquiera de los parámetros no previstos serán dejados sin cambios. Las columnas a actualizar son
+ *                  <code>customer_id, address, address2, lat, lng</code>. Tenga en cuenta que el atributo <code>id</code> no es editable. La solicitud
+ *                  retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito, de lo contrario devuelve <code>status 400</code>.
+ *                  Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}    customer_id el valor <code>id</code> del Cliente al cual pertenece la Dirección de entrega. <br>
+ *                                          Ej. <code>customer_id</code>=135e656e6cda8640820350816ab59f2d.
+ * @apiParam    {String}    address     Descripcion de la dirección de entrega. Ej. Brisas a282,Corredor Nte.,Panama City
+ * @apiParam    {String}    [address2]  Continuacion de la descripcion de la dirección de entrega.(Opcional)
+ * @apiParam    {Float}     [lat]       coordenada latitud de la direccion de entrega del pedido, expresada en medida angular que varía entre los 0° del ecuador
+ *                                          hasta los 90°. Ej. 8.97737
+ * @apiParam    {Float}     [lng]       coordenada longitud de la direccion de entrega del pedido, expresada en medida angular que varía entre los 0° del ecuador
+ *                                          hasta los 180°. Ej. -79.51831
+ *
+ * @apiUse      RespuestaSuccessInsertarEditar
+ * @apiUse      ErrorAlEditar
+ */
+
+/**
+ * @api         {delete}        /address/:id   Borrar
+ * @apiVersion 1.0.0
+ * @apiGroup    Direccion
+ *
+ * @apiExample {delete} Ejemplo de Solicitud:
+ *                      https://apirestfm.herokuapp.com/api/address/135e656e6cda8640820350816ab59f2d
+ *
+ * @apiDescription  Permite borrar una Dirección de entrega. Solo es posible suprimir la Dirección de entrega, si ésta aun no ha sido asociada a una <code>Orden</code>.
+ *                  Para eliminarla, debe indicar el <code>id</code> de la Dirección a borrar. La solicitud devuelve un objeto con un
+ *                  parámetro <code>success=true</code> en caso de éxito. De lo contrario, esta llamada devuelve un error ( <code>success=false</code> )
+ . Para mas información vease los ejemplos a continuación.
+ *
+ * @apiParam    {String}        id              El <code>id</code> de la Dirección de entrega que se va a borrar.
+ *
+ * @apiName     BorraDireccion
  *
  * @apiUse      SuccessAlBorrar
  *

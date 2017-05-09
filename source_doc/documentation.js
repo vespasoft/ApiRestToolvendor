@@ -211,6 +211,31 @@
    * @apiUse  RespuestaSuccessInsertarEditar
    */
 
+   /**
+    * @api      {get}         /company/:id   Leer
+    * @apiVersion 1.0.0
+    * @apiName  GetCompany
+    * @apiGroup Empresas
+    *
+    * @apiDescription  Recupera los datos de la Empresa cliente. Suministrar el <code>id</code> de la Empresa.
+    *                  que se obtiene cuando el usuario se autentica. La respuesta devuelve un conjunto de variables, la variable
+    *                  <code>result</code> contiene JSON con las siguientes columnas: <code>id, company, contactName, email, phone,
+    *                  address, active, building, postalCode, country, city</code>.
+    * @apiVersion 1.0.0
+    * @apiParam {Number}       id              un numero entero (unique ID - PrimaryKey) para leer en la tabla
+    * @apiName  GetCategoria
+    * @apiGroup Categoria
+    *
+    * @apiExample {get} Ejemplo de Solicitud:
+    *                      http://toolvendor-beecode.rhcloud.com/rest/company/1
+    *
+    * @apiParam    {String}        Access-Token  El método requiere Token en el Header de la petición
+    *
+    * @apiUse  RespuestaSuccessListar
+    */
+
+
+
   // ------------------------------------------------------------------------------------------
   // U S U A R I O S.
   // ------------------------------------------------------------------------------------------
@@ -332,14 +357,95 @@
        *
        * @apiParam    {String}        id              El <code>ID</code> de la Categoria a borrar.
        *
-       * @apiName     BorraCategoria
+       * @apiName     BorraUsuario
        *
        * @apiUse      SuccessAlBorrar
        *
        * @apiUse      ErrorAlBorrar
        */
 
+       /**
+        * @api      {get}          /user/:id/contact      Contactos
+        * @apiVersion 1.0.0
+        * @apiName  ContactByUser
+        * @apiGroup Usuarios
+        *
+        * @apiExample {get} Ejemplo de Solicitud:
+        *                      http://toolvendor-beecode.rhcloud.com/rest/user/1/contact
+        *
+        * @apiDescription  Devuelve una lista de todas los contactos del usuario.
+        *                  los contactos están ordenados por el mismo orden en que estan guardados en el celular.
+        *                  Las columnas disponibles a mostrar son <code>id, userId, name, phone, phone2, email</code>
+        *
+        * @apiParam {String}       Access-Token  El método requiere Token en el Header de la petición
+        *
+        * @apiParam    {String}        id              El <code>ID</code> del usuario.
+        *
+        * @apiUse  RespuestaSuccessListar
+        */
 
+        /**
+         * @api      {get}          /user/:id/calls      Llamadas
+         * @apiVersion 1.0.0
+         * @apiName  CallsByUser
+         * @apiGroup Usuarios
+         *
+         * @apiExample {get} Ejemplo de Solicitud:
+         *                      http://toolvendor-beecode.rhcloud.com/rest/user/1/calls
+         *
+         * @apiDescription  Devuelve una lista de todas las llamadas del usuario.
+         *                  las llamadas de los usuarios estan ordenadas de forma descendiente.
+         *                  Las columnas disponibles a mostrar son <code>id, userId, name, phone </code>
+         *
+         * @apiParam {String}       Access-Token  El método requiere Token en el Header de la petición
+         *
+         * @apiParam    {String}        id              El <code>ID</code> del usuario.
+         *
+         * @apiUse  RespuestaSuccessListar
+         */
+
+         /**
+          * @api      {get}          /user/:id/customer      Clientes por Usuario
+          * @apiVersion 1.0.0
+          * @apiName  CustomerByUser
+          * @apiGroup Usuarios
+          *
+          * @apiExample {get} Ejemplo de Solicitud:
+          *                      http://toolvendor-beecode.rhcloud.com/rest/user/1/customer
+          *
+          * @apiDescription  Devuelve una lista de todos los clientes del usuario.
+          *                  los clientes del usuario estan ordenados de forma alfabetica.
+          *                  Las columnas disponibles a mostrar son <code>id, createdAt, companyName,
+          *                  contactName, contactPhone, contactEmail, building, street, postalCode, reference, latitud, longitud, userId, name, phone, companyId, city, country </code>
+          *
+          * @apiParam {String}       Access-Token  El método requiere Token en el Header de la petición
+          *
+          * @apiParam    {String}        id              El <code>ID</code> del usuario.
+          *
+          * @apiUse  RespuestaSuccessListar
+          */
+
+          /**
+           * @api      {get}          /user/:id/visit      Vistas por Usuario
+           * @apiVersion 1.0.0
+           * @apiGroup Usuarios
+           *
+           * @apiExample {get} Ejemplo de Solicitud:
+           *                      http://toolvendor-beecode.rhcloud.com/rest/user/1/visit
+           *
+           * @apiDescription  Devuelve una lista de todas las visitas del usuario.
+           *                  las visitas del usuario estan ordenados de forma descendente.
+           *                  Las columnas disponibles a mostrar son <code>id, userId, customer,
+           *                  companyId, visitType, createdAt, scheduledDate, checkin, checkout, firm, comment, reason </code>
+           * @apiName  VisitByUser
+           * @apiGroup Usuarios
+           *
+           * @apiParam {String}       Access-Token  El método requiere Token en el Header de la petición
+           *
+           * @apiParam    {String}        id              El <code>ID</code> del usuario.
+           *
+           * @apiUse  RespuestaSuccessListar
+           */
 
 
 // ------------------------------------------------------------------------------------------

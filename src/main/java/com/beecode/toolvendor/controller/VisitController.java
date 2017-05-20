@@ -88,7 +88,7 @@ public class VisitController extends AppPreferences {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Visit with id " + id);
-            Visit object = service.findById(id, session.getCompanyId());
+            Visit object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -116,7 +116,7 @@ public class VisitController extends AppPreferences {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            visit.setCompanyId(session.getCompanyId());
+            visit.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(visit);
             if ( message.isEmpty() ) {
@@ -148,13 +148,13 @@ public class VisitController extends AppPreferences {
         } else {
             System.out.println("Updating visit " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 //------ Se forza a guardar el registro relacionado con el Token
-                visit.setCompanyId(session.getCompanyId());
+                visit.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(visit);
                 if ( message.isEmpty() ) {
-                    Visit object = service.findById(id, session.getCompanyId());
+                    Visit object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", MESSAGE_HTTP_ID_FAILED);
@@ -195,8 +195,8 @@ public class VisitController extends AppPreferences {
         } else {
             System.out.println("Updating visit " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
-                String message = service.sendEmailServicePage(id, session.getCompanyId());
+            if ( service.findId(id, session.getCompany().getId()) ) {
+                String message = service.sendEmailServicePage(id, session.getCompany().getId());
                 
                 if ( message.isEmpty() ) {
                     result.put("success", Boolean.TRUE);
@@ -234,7 +234,7 @@ public class VisitController extends AppPreferences {
         } else {
             System.out.println("Fetching & Deleting Visit with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            Visit object = service.findById(id, session.getCompanyId());
+            Visit object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);
@@ -273,7 +273,7 @@ public class VisitController extends AppPreferences {
         } else {
             System.out.println("List all visitpicture with visitId " + id);
             // se verifica que el id de la visita se valido
-            Visit object = service.findById(id, session.getCompanyId());
+            Visit object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //---- Obtiene todas las pictures de la visita -----
                 List list = pictureserv.getAllByVisit(id);

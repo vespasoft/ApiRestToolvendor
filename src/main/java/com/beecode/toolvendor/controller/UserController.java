@@ -64,11 +64,11 @@ public class UserController extends AppPreferences {
             result.put("message", MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
-            System.out.println("Get all user by company with id " + session.getCompanyId());
+            System.out.println("Get all user by company with id " + session.getCompany().getId());
             // se verifica que el usuario autenticado tenga permisos..
             if ( security.isAdmin() ) {
                 // Obtenemos el listado de usuarios de la compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -397,7 +397,7 @@ public class UserController extends AppPreferences {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            user.setCompanyId(session.getCompanyId());
+            user.setCompany(session.getCompany());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(user);
             if ( message.isEmpty() ) {
@@ -442,7 +442,7 @@ public class UserController extends AppPreferences {
             User object = security.hasAccessUser(id);
             if ( object!=null ) {
                 // Se forza a guardar el registro relacionado con el Token
-                user.setCompanyId(session.getCompanyId());
+                user.setCompany(session.getCompany());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(user);
                 if ( message.isEmpty() ) {

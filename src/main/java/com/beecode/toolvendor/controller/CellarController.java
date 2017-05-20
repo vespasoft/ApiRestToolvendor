@@ -52,11 +52,11 @@ public class CellarController {
             result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else  {
-            System.out.println("Get all groups by company with id " + session.getCompanyId());
+            System.out.println("Get all groups by company with id " + session.getCompany().getId());
             // Obtenemos el objeto Company del usuario autorizado
-            if ( session.getCompanyId()!=0 ) {
+            if ( session.getCompany().getId()!=0 ) {
                 // Obtenemos el listado de groups de la compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -86,7 +86,7 @@ public class CellarController {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Fetching Cellar with id " + id);
-            Cellar object = service.findById(id, session.getCompanyId());
+            Cellar object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -115,11 +115,11 @@ public class CellarController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            cellar.setCompanyId(session.getCompanyId());
+            cellar.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(cellar);
             if ( message.isEmpty() ) {
-                Cellar object = service.findByName(cellar.getCellar(), session.getCompanyId());
+                Cellar object = service.findByName(cellar.getCellar(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -155,13 +155,13 @@ public class CellarController {
         } else {
             System.out.println("Updating Cellar " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                cellar.setCompanyId(session.getCompanyId());
+                cellar.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(cellar);
                 if ( message.isEmpty() ) {
-                    Cellar object = service.findById(id, session.getCompanyId());
+                    Cellar object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -204,7 +204,7 @@ public class CellarController {
         } else {
             System.out.println("Fetching & Deleting Cellar with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            Cellar object = service.findById(id, session.getCompanyId());
+            Cellar object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);

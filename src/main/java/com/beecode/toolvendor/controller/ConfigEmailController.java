@@ -55,8 +55,8 @@ public class ConfigEmailController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             //Use headers to get the information about all the request headers
-            System.out.println("Fetching ConfigEmail with id " + session.getCompanyId());
-            ConfigEmail object = service.findByCompanyId(session.getCompanyId());
+            System.out.println("Fetching ConfigEmail with id " + session.getCompany().getId());
+            ConfigEmail object = service.findByCompanyId(session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -89,11 +89,11 @@ public class ConfigEmailController {
                 return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
             } else {
                 // Se forza a guardar el registro relacionado con el Token
-                configemail.setCompanyId(session.getCompanyId());
+                configemail.setCompanyId(session.getCompany().getId());
                 //----------------------------- crea un nuevo registro -------------------------------
                 String message = service.save(configemail);
                 if ( message.isEmpty() ) {
-                    ConfigEmail object = service.findByCompanyId(session.getCompanyId());
+                    ConfigEmail object = service.findByCompanyId(session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -133,13 +133,13 @@ public class ConfigEmailController {
             } else {
                 System.out.println("Updating ConfigEmail " + id);
                 //------ se verifica que el Id existe y pertenece a la misma empresa ----
-                if ( service.findCompanyId(session.getCompanyId()) ) {
+                if ( service.findCompanyId(session.getCompany().getId()) ) {
                     // Se forza a guardar el registro relacionado con el Token
-                    configemail.setCompanyId(session.getCompanyId());
+                    configemail.setCompanyId(session.getCompany().getId());
                     //------ se actualiza el registro en la base de datos ----
                     String message = service.update(configemail);
                     if ( message.isEmpty() ) {
-                        ConfigEmail object = service.findByCompanyId(session.getCompanyId());
+                        ConfigEmail object = service.findByCompanyId(session.getCompany().getId());
                         if ( object==null ) {
                             result.put("success", Boolean.FALSE);
                             result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -185,7 +185,7 @@ public class ConfigEmailController {
             } else {
                 System.out.println("Fetching & Deleting ConfigEmail with id " + id);
                 //------ se obtiene el registro de la busqueda ----
-                ConfigEmail object = service.findByCompanyId(session.getCompanyId());
+                ConfigEmail object = service.findByCompanyId(session.getCompany().getId());
                 if ( object!=null ) {
                     //------ se elimina el registro en la base de datos ----
                     boolean success = service.delete(id);

@@ -113,7 +113,7 @@ public class CustomerController extends AppPreferences {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            cstmr.setCompanyId(session.getCompanyId());
+            cstmr.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(cstmr);
             if ( message.isEmpty() ) {
@@ -144,13 +144,13 @@ public class CustomerController extends AppPreferences {
         } else {
             System.out.println("Updating customer " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                cstmr.setCompanyId(session.getCompanyId());
+                cstmr.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(cstmr);
                 if ( message.isEmpty() ) {
-                    Customer object = service.findById(id, session.getCompanyId());
+                    Customer object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", MESSAGE_HTTP_ID_FAILED);

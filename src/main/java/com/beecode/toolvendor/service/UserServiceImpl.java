@@ -66,9 +66,9 @@ public class UserServiceImpl implements UserService {
                 message="El campo phone no puede estar vacio";
             } else if ( findEmail(user.getEmail()) ) {
                 message="Ya existe un usuario con el mismo email";
-            } else if ( !usertypeserv.findId(user.getUsertype().getId(), user.getCompanyId()) ) {
+            } else if ( !usertypeserv.findId(user.getUsertype().getId(), user.getCompany().getId()) ) {
                 message="No existe ningun tipo de usuario con este Id.";    
-            } else if ( !companyserv.findId(user.getCompanyId()) ) {
+            } else if ( !companyserv.findId(user.getCompany().getId()) ) {
                 message="No existe ninguna compañia con este Id.";    
             } else if ( !cityserv.findId(user.getCity().getId()) ) {
                 message="No existe ninguna ciudad con este Id.";
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
                 message="El campo UserId no puede estar vacio";
             } else {
                 //--- obtiene el registro con toda su info para luego editar ---
-                currentUser = dao.findById(user.getId(), user.getCompanyId());
+                currentUser = dao.findById(user.getId(), user.getCompany().getId());
                 if (currentUser!=null) {
                     //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
                     if (user.getId()!=null) currentUser.setId(user.getId());
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
                     if (user.getEnabled()!=null) currentUser.setEnabled(user.getEnabled());
                     if (user.getUsertype()!=null) currentUser.setUsertype(user.getUsertype());
                     if (user.getCity()!=null) currentUser.setCity(user.getCity());
-                    if (user.getCompanyId()!=null) currentUser.setCompanyId(user.getCompanyId());
+                    if (user.getCompany()!=null) currentUser.setCompany(user.getCompany());
                     if (user.getLatitud()!=null) currentUser.setLatitud(user.getLatitud());
                     if (user.getLongitude()!=null) currentUser.setLongitude(user.getLongitude());
                     if (user.getPhoto()!=null) currentUser.setPhoto(user.getPhoto());

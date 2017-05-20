@@ -53,11 +53,11 @@ public class UserTypeController {
             result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else  {
-            System.out.println("Get all usertype by company with id " + session.getCompanyId());
+            System.out.println("Get all usertype by company with id " + session.getCompany().getId());
             // Obtenemos el objeto Company del usuario autorizado
-            if ( session.getCompanyId()!=0 ) {
+            if ( session.getCompany().getId()!=0 ) {
                 // Obtenemos el listado de customer de una compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -90,7 +90,7 @@ public class UserTypeController {
             System.out.println("Fetching UserType with id " + id);
             
             //------ se obtiene el registro de la busqueda ----
-            UserType object = service.findById(id, session.getCompanyId());
+            UserType object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -119,11 +119,11 @@ public class UserTypeController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            usertype.setCompanyId(session.getCompanyId());
+            usertype.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(usertype);
             if ( message.isEmpty() ) {
-                UserType object = service.findByName(usertype.getDescription(), session.getCompanyId());
+                UserType object = service.findByName(usertype.getDescription(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -163,13 +163,13 @@ public class UserTypeController {
         } else {
             System.out.println("Updating Usertype " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                usertype.setCompanyId(session.getCompanyId());
+                usertype.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(usertype);
                 if ( message.isEmpty() ) {
-                    UserType object = service.findById(id, session.getCompanyId());
+                    UserType object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -213,7 +213,7 @@ public class UserTypeController {
         } else {
             System.out.println("Fetching & Deleting Usertype with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            UserType object = service.findById(id, session.getCompanyId());
+            UserType object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);

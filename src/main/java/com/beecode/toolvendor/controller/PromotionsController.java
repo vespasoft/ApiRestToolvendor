@@ -53,8 +53,8 @@ public class PromotionsController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             //---- Obtiene todos los promotions registrados de un usuario -----
-            System.out.println("List all promotions by company " + session.getCompanyId());
-            List list = service.getAllByCompany(session.getCompanyId());
+            System.out.println("List all promotions by company " + session.getCompany().getId());
+            List list = service.getAllByCompany(session.getCompany().getId());
             if ( list==null ) {
                 result.put("success", Boolean.FALSE);
                 result.put("message", AppPreferences.MESSAGE_HTTP_IS_EMPTY);
@@ -83,9 +83,9 @@ public class PromotionsController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            //promo.setCompanyId(session.getCompanyId());
+            //promo.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(promo, session.getCompanyId());
+            String message = service.save(promo, session.getCompany().getId());
             if ( message.isEmpty() ) {
                 result.put("success", Boolean.TRUE);
                 result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_OK);
@@ -117,7 +117,7 @@ public class PromotionsController {
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
             if ( service.findId(id) ) {
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(promo, session.getCompanyId());
+                String message = service.update(promo, session.getCompany().getId());
                 if ( message.isEmpty() ) {
                     Promotions object = service.findById(id);
                     if ( object==null ) {

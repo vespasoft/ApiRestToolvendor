@@ -53,11 +53,11 @@ public class VisitTypeController {
             result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else  {
-            System.out.println("Get all visittype by company with id " + session.getCompanyId());
+            System.out.println("Get all visittype by company with id " + session.getCompany().getId());
             // Obtenemos el objeto Company del usuario autorizado
-            if ( session.getCompanyId()!=0 ) {
+            if ( session.getCompany().getId()!=0 ) {
                 // Obtenemos el listado de customer de una compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -88,7 +88,7 @@ public class VisitTypeController {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Fetching VisitType with id " + id);
-            VisitType object = service.findById(id, session.getCompanyId());
+            VisitType object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -118,11 +118,11 @@ public class VisitTypeController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            visittype.setCompanyId(session.getCompanyId());
+            visittype.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(visittype);
             if ( message.isEmpty() ) {
-                VisitType object = service.findByName(visittype.getName(), session.getCompanyId());
+                VisitType object = service.findByName(visittype.getName(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -159,13 +159,13 @@ public class VisitTypeController {
         } else {
             System.out.println("Updating VisitType " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                visittype.setCompanyId(session.getCompanyId());
+                visittype.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(visittype);
                 if ( message.isEmpty() ) {
-                    VisitType object = service.findById(id, session.getCompanyId());
+                    VisitType object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -209,7 +209,7 @@ public class VisitTypeController {
         } else {
             System.out.println("Fetching & Deleting VisitType with id " + id);
              //------ se obtiene el registro de la busqueda ----
-            VisitType object = service.findById(id, session.getCompanyId());
+            VisitType object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);

@@ -170,13 +170,14 @@ public class CustomerDAO {
         return result;
     }
     
-    public Customer findByEmail(String email) {
+    public Customer findByEmail(String email, int companyId) {
         Session session = SessionUtil.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
            // Add restriction.
            cr.add(Restrictions.eq("contactEmail", email));
+           cr.add(Restrictions.eq("companyId", companyId));
            //crit.add(Restrictions.like("id", id+"%"));
            cr.setMaxResults(1);
            result = (Customer) cr.uniqueResult();

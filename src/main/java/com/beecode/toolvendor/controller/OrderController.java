@@ -53,8 +53,8 @@ public class OrderController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
              //---- Obtiene todos los customer registrados en el sistema -----
-            System.out.println("List all order by company " + session.getCompanyId());
-            List list = service.getAllByCompany(session.getCompanyId());
+            System.out.println("List all order by company " + session.getCompany().getId());
+            List list = service.getAllByCompany(session.getCompany().getId());
             if ( list==null ) {
                 result.put("success", Boolean.FALSE);
                 result.put("message", AppPreferences.MESSAGE_HTTP_IS_EMPTY);
@@ -84,7 +84,7 @@ public class OrderController {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Order with id " + id);
-            Order object = service.findById(id, session.getCompanyId());
+            Order object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -110,7 +110,7 @@ public class OrderController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            order.setCompanyId(session.getCompanyId());
+            order.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(order);
             if ( message.isEmpty() ) {
@@ -139,13 +139,13 @@ public class OrderController {
         } else {
             System.out.println("Updating order " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                order.setCompanyId(session.getCompanyId());
+                order.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(order);
                 if ( message.isEmpty() ) {
-                    Order object = service.findById(id, session.getCompanyId());
+                    Order object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -184,7 +184,7 @@ public class OrderController {
         } else {
             System.out.println("Fetching & Deleting Order with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            Order object = service.findById(id, session.getCompanyId());
+            Order object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);
@@ -220,7 +220,7 @@ public class OrderController {
         } else {
             System.out.println("List all orderpicture with orderId " + id);
             // se verifica que el id de la ordera se valido
-            Order object = service.findById(id, session.getCompanyId());
+            Order object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //---- Obtiene todas las pictures de la ordera -----
                 List list = orderserv.getAllByOrder(id);

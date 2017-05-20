@@ -50,7 +50,7 @@ public class JWTUtil implements JWT {
                 //Let's set the JWT Claims
                 JwtBuilder builder = Jwts.builder().setId(user.getId().toString())
                                             .setIssuedAt(now)
-                                            .setSubject(user.getCompanyId().toString())
+                                            .setSubject(user.getCompany().getId().toString())
                                             .setIssuer(user.getName())
                                             .signWith(signatureAlgorithm, signingKey);
                 

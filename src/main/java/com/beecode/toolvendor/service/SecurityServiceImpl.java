@@ -78,7 +78,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
                 // Obtenemos el objeto User del usuario relacionado con el TokenId
                 user = parseJWT(TokenId);
                 // Obtenemos el objeto Company del usuario
-                company = cdao.findById(user.getCompanyId());
+                company = user.getCompany();
             } else {
                 user = null;
                 company = null;
@@ -111,7 +111,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     public User hasAccessUser(Integer userId) {
         // Se obtiene los datos del customer si pertenece a la compañia del usuario logueado
         udao = new UserDAO();
-        User result = udao.findById(userId, user.getCompanyId());
+        User result = udao.findById(userId, user.getCompany().getId());
         if ( result != null ) {
             // se verifica que el usuario autenticado tenga permisos..
             if ( isAdmin() || equalsUser(result.getId()) ) {
@@ -128,10 +128,10 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     public Customer hasAccessCustomer(Integer cstmrId) {
         // Se obtiene los datos del customer si pertenece a la compañia del usuario logueado
         cstmrdao = new CustomerDAO();
-        Customer result = cstmrdao.findById(cstmrId, user.getCompanyId());
+        Customer result = cstmrdao.findById(cstmrId, user.getCompany().getId());
         if ( result != null ) {
             // se verifica que el usuario autenticado tenga permisos..
-            if ( isAdmin() || equalsUser(result.getUserId()) ) {
+            if ( isAdmin() || equalsUser(result.getUser().getId()) ) {
                 return result;
             } else {
                 return null;
@@ -145,7 +145,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     public Product hasAccessProduct(Integer productId) {
         // Se obtiene los datos del customer si pertenece a la compañia del usuario logueado
         productdao = new ProductDAO();
-        Product result = productdao.findById(productId, user.getCompanyId());
+        Product result = productdao.findById(productId, user.getCompany().getId());
         if ( result != null ) {
             // se verifica que el usuario autenticado tenga permisos..
             if ( equalsCompany(result.getCompanyId()) ) {
@@ -226,7 +226,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     
     @Override
     public boolean equalsCompany(Integer companyId) {
-        return Objects.equals(user.getCompanyId(), companyId);
+        return Objects.equals(user.getCompany().getId(), companyId);
     }
     
     

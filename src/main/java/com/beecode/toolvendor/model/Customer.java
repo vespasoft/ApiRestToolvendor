@@ -29,7 +29,7 @@ public class Customer  implements java.io.Serializable {
      private City city;
      private Integer companyId;
      private Country country;
-     private Integer userId;
+     private User user;
      private Date createdAt;
      private Date lastUpdate;
      private String companyName;
@@ -47,12 +47,12 @@ public class Customer  implements java.io.Serializable {
     public Customer() {
     }
 
-    public Customer(Integer companyId, Integer userId) {
+    public Customer(Integer companyId, User user) {
         this.companyId = companyId;
-        this.userId = userId;
+        this.user = user;
     }
 	
-    public Customer(Date createdAt, Date lastUpdate, String companyName, String contactName, String contactPhone, String contactEmail, Boolean active, String building, String street, String postalCode, String reference, Float latitud, Float longitude, Integer companyId, Integer userId) {
+    public Customer(Date createdAt, Date lastUpdate, String companyName, String contactName, String contactPhone, String contactEmail, Boolean active, String building, String street, String postalCode, String reference, Float latitud, Float longitude, Integer companyId, User user) {
        this.createdAt = createdAt;
        this.lastUpdate = lastUpdate;
        this.companyName = companyName;
@@ -67,10 +67,10 @@ public class Customer  implements java.io.Serializable {
        this.latitud = latitud;
        this.longitude = longitude;
        this.companyId = companyId;
-       this.userId = userId;
+       this.user = user;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
+    @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
@@ -111,13 +111,14 @@ public class Customer  implements java.io.Serializable {
         this.country = country;
     }
 
-    @Column(name="user_id", nullable=false)
-    public Integer getUserId() {
-        return this.userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="user_id", nullable=false)
+    public User getUser() {
+        return this.user;
     }
     
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

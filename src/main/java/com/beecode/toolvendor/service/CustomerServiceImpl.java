@@ -53,11 +53,13 @@ public class CustomerServiceImpl implements CustomerService {
                 message="El campo contactEmail no puede estar vacio";
             } else if ( cstmr.getCity().getId()==0 ) {
                 message="El campo CityId no puede ser igual a 0";
-            } else if ( cstmr.getUserId()==0 ) {
+            } else if ( cstmr.getUser().getId()==0 ) {
                 message="El campo UserId no puede ser igual a 0";
-            } else if ( findEmail(cstmr.getContactEmail()) ) {
+            } else if ( findName(cstmr.getCompanyName(), cstmr.getCompanyId()) ) {
+                message="Ya existe un cliente con el mismo nombre";
+            } else if ( findEmail(cstmr.getContactEmail(), cstmr.getCompanyId()) ) {
                 message="Ya existe un cliente con el mismo email";
-            } else if ( !userserv.findId(cstmr.getUserId(), cstmr.getCompanyId()) ) {
+            } else if ( !userserv.findId(cstmr.getUser().getId(), cstmr.getCompanyId()) ) {
                 message="No existe ningun usuario con este Id.";
             } else if ( !cityserv.findId(cstmr.getCity().getId()) ) {
                 message="No existe una ciudad con este cityId.";        
@@ -86,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
                 message="El campo Id no puede ser nullo";
             } else if ( cstmr.getId()==0 ) {
                 message="El campo Id no puede ser 0";
-            } else if ( cstmr.getUserId()!=null && !userserv.findId(cstmr.getUserId(), cstmr.getCompanyId()) ) {
+            } else if ( cstmr.getUser().getId()!=null && !userserv.findId(cstmr.getUser().getId(), cstmr.getCompanyId()) ) {
                 message="No existe un registro con este userId.";
             } else if ( cstmr.getCity()!=null && !cityserv.findId(cstmr.getCity().getId()) ) {
                 message="No existe un registro con este cityId.";    
@@ -103,7 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
                     if (cstmr.getLatitud()!=null) currentCustomer.setLatitud(cstmr.getLatitud());
                     if (cstmr.getLongitude()!=null) currentCustomer.setLongitude(cstmr.getLongitude());
                     if (cstmr.getCity()!=null) currentCustomer.setCity(cstmr.getCity());
-                    if (cstmr.getUserId()!=null) currentCustomer.setUserId(cstmr.getUserId());
+                    if (cstmr.getUser().getId()!=null) currentCustomer.setUser(cstmr.getUser());
                     if (cstmr.getBuilding()!=null) currentCustomer.setBuilding(cstmr.getBuilding());
                     if (cstmr.getStreet()!=null) currentCustomer.setStreet(cstmr.getStreet());
                     if (cstmr.getPostalCode()!=null) currentCustomer.setPostalCode(cstmr.getPostalCode());
@@ -147,10 +149,18 @@ public class CustomerServiceImpl implements CustomerService {
     
     //--------------------- FIND BY EMAIL BOOLEAN --------------------------
     @Override
-    public boolean findEmail(String email) {
+    public boolean findEmail(String email, int companyId) {
         // se consulta en la BD si el email del usuario existe y es valido
-        return dao.findByEmail(email)!=null;
+        return dao.findByEmail(email, companyId)!=null;
     }
+    
+    //--------------------- FIND BY NAME BOOLEAN --------------------------
+    @Override
+    public boolean findName(String name, int companyId) {
+        // se consulta en la BD si el email del usuario existe y es valido
+        return dao.findByCompanyName(name, companyId)!=null;
+    }
+    
     
     //--------------------- FIND BY ID OBJECT CUSTOMER --------------------------
     @Override
@@ -167,11 +177,11 @@ public class CustomerServiceImpl implements CustomerService {
     
     //--------------------- FIND BY EMAIL OBJECT CUSTOMER --------------------------
     @Override
-    public Customer findByEmail(String email) {
+    public Customer findByEmail(String email, int companyId) {
         Customer result = null;
         try {
             // Se busca en la bd los datos del customer por Email.
-            result = dao.findByEmail(email);
+            result = dao.findByEmail(email, companyId);
         } catch ( Exception e ) {
             System.out.println("Error in customer findByEmail: " + e.getMessage());
         }

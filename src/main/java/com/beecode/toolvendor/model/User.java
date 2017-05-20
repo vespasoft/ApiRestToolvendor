@@ -35,7 +35,7 @@ public class User implements java.io.Serializable {
      private String phone;
      private String photo;
      private UserType usertype;
-     private Integer companyId;
+     private Company company;
      private City city;
      private Country country;
      //private Set<Groups> groups = new HashSet<Groups>(0);
@@ -174,13 +174,14 @@ public class User implements java.io.Serializable {
         this.usertype = usertype;
     }
 
-    @Column(name="company_id", nullable=false)
-    public Integer getCompanyId() {
-        return this.companyId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="company_id")
+    public Company getCompany() {
+        return this.company;
     }
     
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
     
     @ManyToOne(optional = false)

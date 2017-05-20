@@ -83,7 +83,7 @@ public class VisitPictureController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(visitpicture, session.getCompanyId());
+            String message = service.save(visitpicture, session.getCompany().getId());
             if ( message.isEmpty() ) {
                 result.put("success", Boolean.TRUE);
                 result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_OK);
@@ -114,7 +114,7 @@ public class VisitPictureController {
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
             if ( service.findId(id) ) {
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(visitpicture, session.getCompanyId());
+                String message = service.update(visitpicture, session.getCompany().getId());
                 if ( message.isEmpty() ) {
                     VisitPicture object = service.findById(id);
                     if ( object==null ) {

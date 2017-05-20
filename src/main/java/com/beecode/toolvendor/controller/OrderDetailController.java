@@ -80,7 +80,7 @@ public class OrderDetailController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(orderdetail, session.getCompanyId());
+            String message = service.save(orderdetail, session.getCompany().getId());
             if ( message.isEmpty() ) {
                 result.put("success", Boolean.TRUE);
                 result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_OK);
@@ -109,7 +109,7 @@ public class OrderDetailController {
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
             if ( service.findId(id) ) {
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(orderdetail, session.getCompanyId());
+                String message = service.update(orderdetail, session.getCompany().getId());
                 if ( message.isEmpty() ) {
                     OrderDetail object = service.findById(id);
                     if ( object==null ) {

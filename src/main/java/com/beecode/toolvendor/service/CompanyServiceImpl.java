@@ -110,7 +110,7 @@ public class CompanyServiceImpl extends AppPreferences implements CompanyService
                         user.setCreatedAt( createAt );
                         user.setEnabled(Boolean.TRUE);
                         user.setUsertype(currentUsertype);
-                        user.setCompanyId(currentCompany.getId());
+                        user.setCompany(currentCompany);
                         user.setCountry(currentCompany.getCountry());
                         user.setCity(currentCompany.getCity());
                         // se crea el usuario administrador en la base de datos

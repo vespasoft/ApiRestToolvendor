@@ -22,11 +22,13 @@ public interface CustomerService {
     
     public Customer findById(int id, int companyId);
     
-    public Customer findByEmail(String email);
+    public Customer findByEmail(String email, int companyId);
     
     public boolean findId(int id, int companyId);
     
-    public boolean findEmail(String email);
+    public boolean findEmail(String email, int companyId);
+    
+    public boolean findName(String name, int companyId);
     
     public List getAllByCompany(Integer companyId);
     

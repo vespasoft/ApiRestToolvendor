@@ -49,11 +49,11 @@ public class CategoryController {
             result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else  {
-            System.out.println("Get all category by company with id " + session.getCompanyId());
+            System.out.println("Get all category by company with id " + session.getCompany().getId());
             // Obtenemos el objeto Company del usuario autorizado
-            if ( session.getCompanyId()!=0 ) {
+            if ( session.getCompany().getId()!=0 ) {
                 // Obtenemos el listado de groups de la compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -81,7 +81,7 @@ public class CategoryController {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Fetching Category with id " + id);
-            Category object = service.findById(id, session.getCompanyId());
+            Category object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -107,11 +107,11 @@ public class CategoryController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            category.setCompanyId(session.getCompanyId());
+            category.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(category);
             if ( message.isEmpty() ) {
-                Category object = service.findByName(category.getCategory(), session.getCompanyId());
+                Category object = service.findByName(category.getCategory(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -145,13 +145,13 @@ public class CategoryController {
         } else {
             System.out.println("Updating Category " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                category.setCompanyId(session.getCompanyId());
+                category.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(category);
                 if ( message.isEmpty() ) {
-                    Category object = service.findById(id, session.getCompanyId());
+                    Category object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -192,7 +192,7 @@ public class CategoryController {
         } else {
             System.out.println("Fetching & Deleting Category with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            Category object = service.findById(id, session.getCompanyId());
+            Category object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);

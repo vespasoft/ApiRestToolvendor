@@ -54,9 +54,9 @@ public class StockController {
                 result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
                 return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
             } else  {
-                System.out.println("Get all groups by company with id " + session.getCompanyId());
+                System.out.println("Get all groups by company with id " + session.getCompany().getId());
                 // Obtenemos el objeto Company del usuario autorizado
-                if ( session.getCompanyId()!=0 ) {
+                if ( session.getCompany().getId()!=0 ) {
                     // Obtenemos el listado de groups de la compañia
                     List list = service.getAllByProduct(productid);
                     result.put("success", Boolean.TRUE);
@@ -91,7 +91,7 @@ public class StockController {
                 return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
             } else {
                 //----------------------------- crea un nuevo registro -------------------------------
-                String message = service.save(stock, session.getCompanyId());
+                String message = service.save(stock, session.getCompany().getId());
                 if ( message.isEmpty() ) {
                         result.put("success", Boolean.TRUE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_OK);
@@ -128,7 +128,7 @@ public class StockController {
                 //------ se verifica que el Id existe y pertenece a la misma empresa ----
                 if ( service.findId(id) ) {
                     //------ se actualiza el registro en la base de datos ----
-                    String message = service.update(stock, session.getCompanyId());
+                    String message = service.update(stock, session.getCompany().getId());
                     if ( message.isEmpty() ) {
                         Stock object = service.findById(id);
                         if ( object==null ) {

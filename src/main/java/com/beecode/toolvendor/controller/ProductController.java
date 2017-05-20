@@ -54,8 +54,8 @@ public class ProductController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
              //---- Obtiene todos los customer registrados en el sistema -----
-            System.out.println("List all product by company " + session.getCompanyId());
-            List list = service.getAllByCompany(session.getCompanyId());
+            System.out.println("List all product by company " + session.getCompany().getId());
+            List list = service.getAllByCompany(session.getCompany().getId());
             if ( list==null ) {
                 result.put("success", Boolean.FALSE);
                 result.put("message", AppPreferences.MESSAGE_HTTP_IS_EMPTY);
@@ -114,11 +114,11 @@ public class ProductController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            prod.setCompanyId(session.getCompanyId());
+            prod.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(prod);
             if ( message.isEmpty() ) {
-                Product object = service.findByName(prod.getName(), session.getCompanyId());
+                Product object = service.findByName(prod.getName(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -153,13 +153,13 @@ public class ProductController {
         } else {
             System.out.println("Updating product " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                prod.setCompanyId(session.getCompanyId());
+                prod.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(prod);
                 if ( message.isEmpty() ) {
-                    Product object = service.findById(id, session.getCompanyId());
+                    Product object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);

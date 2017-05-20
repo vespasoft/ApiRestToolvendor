@@ -52,11 +52,11 @@ public class PresentationController {
             result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else  {
-            System.out.println("Get all groups by company with id " + session.getCompanyId());
+            System.out.println("Get all groups by company with id " + session.getCompany().getId());
             // Obtenemos el objeto Company del usuario autorizado
-            if ( session.getCompanyId()!=0 ) {
+            if ( session.getCompany().getId()!=0 ) {
                 // Obtenemos el listado de groups de la compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -86,7 +86,7 @@ public class PresentationController {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Fetching Presentation with id " + id);
-            Presentation object = service.findById(id, session.getCompanyId());
+            Presentation object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -115,11 +115,11 @@ public class PresentationController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            presentation.setCompanyId(session.getCompanyId());
+            presentation.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(presentation);
             if ( message.isEmpty() ) {
-                Presentation object = service.findByName(presentation.getPresentation(), session.getCompanyId());
+                Presentation object = service.findByName(presentation.getPresentation(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -155,13 +155,13 @@ public class PresentationController {
         } else {
             System.out.println("Updating Presentation " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                presentation.setCompanyId(session.getCompanyId());
+                presentation.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(presentation);
                 if ( message.isEmpty() ) {
-                    Presentation object = service.findById(id, session.getCompanyId());
+                    Presentation object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -204,7 +204,7 @@ public class PresentationController {
         } else {
             System.out.println("Fetching & Deleting Presentation with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            Presentation object = service.findById(id, session.getCompanyId());
+            Presentation object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);

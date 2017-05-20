@@ -113,7 +113,7 @@ public class ContactController {
             // Se forza a guardar el registro relacionado con el Token
             contact.setUserId(session.getId());
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(contact, session.getCompanyId());
+            String message = service.save(contact, session.getCompany().getId());
             if ( message.isEmpty() ) {
                 Contact object = service.findByPhone(session.getId(), contact.getPhone());
                 if ( object==null ) {
@@ -155,7 +155,7 @@ public class ContactController {
                 // Se forza a guardar el registro relacionado con el Token
                 contact.setUserId(session.getId());
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(contact, session.getCompanyId());
+                String message = service.update(contact, session.getCompany().getId());
                 if ( message.isEmpty() ) {
                     Contact object = service.findById(id);
                     if ( object==null ) {

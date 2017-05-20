@@ -50,11 +50,11 @@ public class ZoneController {
             result.put("message", AppPreferences.MESSAGE_USER_NOT_ACCESS);
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else  {
-            System.out.println("Get all zone by company with id " + session.getCompanyId());
+            System.out.println("Get all zone by company with id " + session.getCompany().getId());
             // Obtenemos el objeto Company del usuario autorizado
-            if ( session.getCompanyId()!=0 ) {
+            if ( session.getCompany().getId()!=0 ) {
                 // Obtenemos el listado de groups de la compañia
-                List list = service.getAllByCompany(session.getCompanyId());
+                List list = service.getAllByCompany(session.getCompany().getId());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -82,7 +82,7 @@ public class ZoneController {
         } else {
             //Use headers to get the information about all the request headers
             System.out.println("Fetching Zone with id " + id);
-            Zone object = service.findById(id, session.getCompanyId());
+            Zone object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 result.put("success", Boolean.TRUE);
                 result.put("result", object);
@@ -109,11 +109,11 @@ public class ZoneController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         } else {
             // Se forza a guardar el registro relacionado con el Token
-            zone.setCompanyId(session.getCompanyId());
+            zone.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(zone);
             if ( message.isEmpty() ) {
-                Zone object = service.findByName(zone.getDescription(), session.getCompanyId());
+                Zone object = service.findByName(zone.getDescription(), session.getCompany().getId());
                 if ( object==null ) {
                     result.put("success", Boolean.FALSE);
                     result.put("message", AppPreferences.MESSAGE_HTTP_SAVE_FAILED);
@@ -148,13 +148,13 @@ public class ZoneController {
         } else {
             System.out.println("Updating zone " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
-            if ( service.findId(id, session.getCompanyId()) ) {
+            if ( service.findId(id, session.getCompany().getId()) ) {
                 // Se forza a guardar el registro relacionado con el Token
-                zone.setCompanyId(session.getCompanyId());
+                zone.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
                 String message = service.update(zone);
                 if ( message.isEmpty() ) {
-                    Zone object = service.findById(id, session.getCompanyId());
+                    Zone object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {
                         result.put("success", Boolean.FALSE);
                         result.put("message", AppPreferences.MESSAGE_HTTP_ID_FAILED);
@@ -195,7 +195,7 @@ public class ZoneController {
         } else {
             System.out.println("Fetching & Deleting Zone with id " + id);
             //------ se obtiene el registro de la busqueda ----
-            Zone object = service.findById(id, session.getCompanyId());
+            Zone object = service.findById(id, session.getCompany().getId());
             if ( object!=null ) {
                 //------ se elimina el registro en la base de datos ----
                 boolean success = service.delete(id);

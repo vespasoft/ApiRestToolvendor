@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.ContactDAO;
 import com.beecode.toolvendor.interfaces.ContactService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Contact;
 import com.beecode.toolvendor.model.User;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ContactServiceImpl implements ContactService {
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
-    public String save(Contact obj, Integer companyId) {
+    public String save(Contact obj, Company companyId) {
         Contact current = null;
         String message="";
         try {
@@ -65,7 +66,7 @@ public class ContactServiceImpl implements ContactService {
  
     //------------------- Actualizar los datos de un registro existente --------------------------
     @Override
-    public String update(Contact obj, Integer companyId) {
+    public String update(Contact obj, Company companyId) {
         Contact current = null;
         String message="";
         try {

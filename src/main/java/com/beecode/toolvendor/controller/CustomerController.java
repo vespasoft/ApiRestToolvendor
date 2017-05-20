@@ -115,7 +115,7 @@ public class CustomerController extends AppPreferences {
             // Se forza a guardar el registro relacionado con el Token
             cstmr.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(cstmr);
+            String message = service.save(cstmr, session.getCompany());
             if ( message.isEmpty() ) {
                 result.put("success", Boolean.TRUE);
                 result.put("message", MESSAGE_HTTP_SAVE_OK);
@@ -148,7 +148,7 @@ public class CustomerController extends AppPreferences {
                 // Se forza a guardar el registro relacionado con el Token
                 cstmr.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(cstmr);
+                String message = service.update(cstmr, session.getCompany());
                 if ( message.isEmpty() ) {
                     Customer object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {

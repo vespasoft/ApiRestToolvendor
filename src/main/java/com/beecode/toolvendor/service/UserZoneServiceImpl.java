@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.UserZoneDAO;
 import com.beecode.toolvendor.interfaces.UserZoneService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.UserZone;
 import com.beecode.toolvendor.model.Zone;
@@ -32,7 +33,7 @@ public class UserZoneServiceImpl implements UserZoneService {
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
-    public String save(UserZone obj, Integer companyId) {
+    public String save(UserZone obj, Company company) {
         String message="";
         try {
             if ( obj==null ) {
@@ -47,9 +48,9 @@ public class UserZoneServiceImpl implements UserZoneService {
                 message="Este usuario ya tiene asignada esta zona";
             } else {
                 //--- obtiene el usuario a partir del userId ---
-                User user = userserv.findById(obj.getUserId(), companyId);
+                User user = userserv.findById(obj.getUserId(), company);
                 //--- obtiene el grupo a partir del groupId ---
-                Zone zone = zoneserv.findById(obj.getZoneId(), companyId);
+                Zone zone = zoneserv.findById(obj.getZoneId(), company.getId());
                 if (user==null) {
                     message="El campo userId no existe o es invalido";
                 } else if (zone==null) {
@@ -73,7 +74,7 @@ public class UserZoneServiceImpl implements UserZoneService {
  
     //------------------- Actualizar los datos de un registro existente --------------------------
     @Override
-    public String update(UserZone obj, Integer companyId) {
+    public String update(UserZone obj, Company company) {
         UserZone current = null;
         String message="";
         try {
@@ -89,9 +90,9 @@ public class UserZoneServiceImpl implements UserZoneService {
                     if (obj.getZoneId()!=0) current.setZoneId(obj.getZoneId());
                     if (obj.getUserId()!=0) current.setUserId(obj.getUserId());
                     //--- obtiene el usuario a partir del userId ---
-                    User user = userserv.findById(obj.getUserId(), companyId);
+                    User user = userserv.findById(obj.getUserId(), company);
                     //--- obtiene el grupo a partir del groupId ---
-                    Zone zone = zoneserv.findById(obj.getZoneId(), companyId);
+                    Zone zone = zoneserv.findById(obj.getZoneId(), company.getId());
                     if (user==null) {
                         message="El campo userId no existe o es invalido";
                     } else if (zone==null) {

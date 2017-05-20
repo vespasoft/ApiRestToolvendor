@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.dao;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.util.SessionUtil;
 import java.util.List;
@@ -196,12 +197,12 @@ public class UserDAO {
         return result;
     }
     
-    public List getAllByCompany(Integer companyId) {
+    public List getAllByCompany(Company company) {
         Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(User.class);
-           cr.add(Restrictions.eq("companyId", companyId));
+           cr.add(Restrictions.eq("company", company));
            result = cr.list();
            if ( result!=null )
                 System.out.print("filas obtenidas: " + result.size()); 
@@ -248,7 +249,7 @@ public class UserDAO {
         return result;
     }
     
-    public User findById(int id, int companyId) {
+    public User findById(int id, Company company) {
         Session session = SessionUtil.getSession();
         User result = null;
         try{
@@ -256,7 +257,7 @@ public class UserDAO {
            Criteria cr = session.createCriteria(User.class);
            // Add restriction.
            cr.add(Restrictions.eq("id", id));
-           cr.add(Restrictions.eq("companyId", companyId));
+           cr.add(Restrictions.eq("company", company));
            //crit.add(Restrictions.like("id", id+"%"));
            cr.setMaxResults(1);
            result = (User) cr.uniqueResult();

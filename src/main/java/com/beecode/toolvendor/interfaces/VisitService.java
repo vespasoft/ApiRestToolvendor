@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.interfaces;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Visit;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public interface VisitService {
     
-    public String save(Visit obj);
+    public String save(Visit obj, Company company);
     
-    public String update(Visit obj);
+    public String update(Visit obj, Company company);
     
     public boolean delete(int id);
     

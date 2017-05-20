@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.interfaces;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.User;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface UserService {
     
     public User findById(int id);
     
-    public User findById(int id, int companyId);
+    public User findById(int id, Company company);
     
     public User findByEmail(String email);
     
@@ -30,10 +31,10 @@ public interface UserService {
     
     public boolean findId(int id);
     
-    public boolean findId(int id, int companyId);
+    public boolean findId(int id, Company company);
     
     public boolean findEmail(String email);
     
-    public List getAllByCompany(Integer companyId);
+    public List getAllByCompany(Company company);
     
 }

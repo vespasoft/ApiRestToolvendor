@@ -5,8 +5,10 @@
  */
 package com.beecode.toolvendor.security;
 
+import com.beecode.toolvendor.dao.CompanyDAO;
 import com.beecode.toolvendor.dao.UserDAO;
 import com.beecode.toolvendor.interfaces.JWT;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -24,6 +26,7 @@ import javax.xml.bind.DatatypeConverter;
 public class JWTUtil implements JWT {
     
     UserDAO udao = new UserDAO();
+    CompanyDAO cdao = new CompanyDAO();
 
     public JWTUtil() {
         /*AESCrypt aes = new AESCrypt();
@@ -100,8 +103,10 @@ public class JWTUtil implements JWT {
                 String userId = claims.getId();
                 String companyId = claims.getSubject();
                 System.out.println(" User con Acceso " + userId);
-                if ( userId.length()>0 )
-                   result = udao.findById(Integer.valueOf(userId), Integer.valueOf(companyId));
+                if ( userId.length()>0 ) {
+                    Company company = cdao.findById(Integer.valueOf(companyId));
+                    result = udao.findById(Integer.valueOf(userId), company);
+                }
             }
         } catch ( Exception e) {
             System.out.println(" Error parse JWT " + e.getMessage());

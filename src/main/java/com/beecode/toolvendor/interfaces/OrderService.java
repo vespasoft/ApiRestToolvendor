@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.interfaces;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Order;
 import java.util.List;
 
@@ -14,15 +15,15 @@ import java.util.List;
  */
 public interface OrderService {
     
-    public String save(Order obj);
+    public String save(Order obj, Company company);
     
-    public String update(Order obj);
+    public String update(Order obj, Company company);
     
     public boolean delete(int id);
     
-    public Order findById(int id, int companyId);
+    public Order findById(int id, Company company);
     
-    public boolean findId(int id, int companyId);
+    public boolean findId(int id, Company company);
     
     public List getAllByCompany(Integer companyId);
     

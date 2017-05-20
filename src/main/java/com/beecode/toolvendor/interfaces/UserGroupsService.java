@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.interfaces;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.UserGroups;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public interface UserGroupsService {
     
-    public String save(UserGroups group, Integer companyId);
+    public String save(UserGroups group, Company company);
     
-    public String update(UserGroups group, Integer companyId);
+    public String update(UserGroups group, Company company);
     
     public boolean delete(int id);
     

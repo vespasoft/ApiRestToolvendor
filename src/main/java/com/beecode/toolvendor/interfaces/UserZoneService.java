@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.interfaces;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.UserZone;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public interface UserZoneService {
     
-    public String save(UserZone zone, Integer companyId);
+    public String save(UserZone zone, Company company);
     
-    public String update(UserZone zone, Integer companyId);
+    public String update(UserZone zone, Company company);
     
     public boolean delete(int id);
     

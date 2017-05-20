@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.UserGroupsDAO;
 import com.beecode.toolvendor.interfaces.UserGroupsService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Groups;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.UserGroups;
@@ -31,7 +32,7 @@ public class UserGroupsServiceImpl implements UserGroupsService {
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
-    public String save(UserGroups obj, Integer companyId) {
+    public String save(UserGroups obj, Company company) {
         UserGroups current = null;
         String message="";
         try {
@@ -47,9 +48,9 @@ public class UserGroupsServiceImpl implements UserGroupsService {
                 message="Este usuario ya tiene asignado este grupo";
             } else {
                 //--- obtiene el usuario a partir del userId ---
-                User user = userserv.findById(obj.getUserId(), companyId);
+                User user = userserv.findById(obj.getUserId(), company);
                 //--- obtiene el grupo a partir del groupId ---
-                Groups group = groupserv.findById(obj.getGroupId(), companyId);
+                Groups group = groupserv.findById(obj.getGroupId(), company.getId());
                 if (user==null) {
                     message="El campo userId no existe o es invalido";
                 } else if (group==null) {
@@ -74,7 +75,7 @@ public class UserGroupsServiceImpl implements UserGroupsService {
  
     //------------------- Actualizar los datos de un registro existente --------------------------
     @Override
-    public String update(UserGroups obj, Integer companyId) {
+    public String update(UserGroups obj, Company company) {
         UserGroups current = null;
         String message="";
         try {
@@ -93,9 +94,9 @@ public class UserGroupsServiceImpl implements UserGroupsService {
                     if (obj.getId()!=null) current.setId(obj.getId());
                     if (obj.getUserId()!=null) current.setUserId(obj.getUserId());
                     //--- obtiene el usuario a partir del userId ---
-                    User user = userserv.findById(current.getUserId(), companyId);
+                    User user = userserv.findById(current.getUserId(), company);
                     //--- obtiene el grupo a partir del groupId ---
-                    Groups group = groupserv.findById(current.getGroupId(), companyId);
+                    Groups group = groupserv.findById(current.getGroupId(), company.getId());
                     if (user==null) {
                         message="El campo userId no existe o es invalido";
                     } else if (group==null) {

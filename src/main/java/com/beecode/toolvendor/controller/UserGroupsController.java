@@ -88,7 +88,7 @@ public class UserGroupsController {
             // Se forza a guardar el registro relacionado con el Token
             usergroup.setUserId(session.getId());
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(usergroup, session.getCompany().getId());
+            String message = service.save(usergroup, session.getCompany());
             if ( message.isEmpty() ) {
                 if ( service.findUserGroups(session.getId(), usergroup.getGroupId()) ) {
                     result.put("success", Boolean.FALSE);
@@ -126,7 +126,7 @@ public class UserGroupsController {
                 // Se forza a guardar el registro relacionado con el Token
                 usergroup.setUserId(session.getId());
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(usergroup, session.getCompany().getId());
+                String message = service.update(usergroup, session.getCompany());
                 if ( message.isEmpty() ) {
                     UserGroups object = service.findById(id);
                     if ( object==null ) {

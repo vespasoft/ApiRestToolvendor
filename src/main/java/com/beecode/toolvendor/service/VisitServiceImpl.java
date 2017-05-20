@@ -8,6 +8,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.VisitDAO;
 import com.beecode.toolvendor.interfaces.VisitService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.Visit;
@@ -42,7 +43,7 @@ public class VisitServiceImpl implements VisitService {
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
-    public String save(Visit visit) {
+    public String save(Visit visit, Company company) {
         
         Visit currentVisit = null;
         String message="";
@@ -64,7 +65,7 @@ public class VisitServiceImpl implements VisitService {
             message="El campo VisitTypeId no puede estar vacio";
         } else if ( visit.getReason().length()==0 ) {
             message="El campo Reason es obligatorio";
-        } else if ( !userserv.findId(visit.getUserId(), visit.getCompanyId()) ) {
+        } else if ( !userserv.findId(visit.getUserId(), company) ) {
             message="No existe un registro con este UserId.";
         } else if ( !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
             message="No existe un registro con este CustomerId.";   
@@ -76,7 +77,7 @@ public class VisitServiceImpl implements VisitService {
             visit.setCreatedAt( timestamp );
             
             dao.add(visit);
-            User user = userserv.findById(visit.getUserId(), visit.getCompanyId());
+            User user = userserv.findById(visit.getUserId(), company);
             // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
             SendEmailScheduleVisitThread se = new SendEmailScheduleVisitThread(user, visit);
             se.start();
@@ -87,7 +88,7 @@ public class VisitServiceImpl implements VisitService {
     
     //----------------------- Actualizar los datos de un registro existente --------------------------
     @Override
-    public String update(Visit visit) {
+    public String update(Visit visit, Company company) {
         Visit currentVisit = null;
         String message="";
         if ( visit==null ) {
@@ -96,7 +97,7 @@ public class VisitServiceImpl implements VisitService {
             message="El campo Id no puede ser nullo";
         } else if ( visit.getId()==0 ) {
             message="El campo Id no puede ser 0";
-        } else if ( visit.getUserId()!=null && !userserv.findId(visit.getUserId(), visit.getCompanyId()) ) {
+        } else if ( visit.getUserId()!=null && !userserv.findId(visit.getUserId(), company) ) {
             message="No existe un registro con este UserId.";
         } else if ( visit.getCustomer()!=null && !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
             message="No existe un registro con este CustomerId.";

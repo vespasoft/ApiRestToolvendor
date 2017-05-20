@@ -68,7 +68,7 @@ public class UserController extends AppPreferences {
             // se verifica que el usuario autenticado tenga permisos..
             if ( security.isAdmin() ) {
                 // Obtenemos el listado de usuarios de la compañia
-                List list = service.getAllByCompany(session.getCompany().getId());
+                List list = service.getAllByCompany(session.getCompany());
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);

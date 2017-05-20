@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.OrderDetailDAO;
 import com.beecode.toolvendor.interfaces.OrderDetailService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.OrderDetail;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -31,7 +32,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
-    public String save(OrderDetail obj, Integer companyId) {
+    public String save(OrderDetail obj, Company company) {
         OrderDetail current = null;
         String message="";
         if ( obj==null ) {
@@ -40,9 +41,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             message="El campo Product no puede ser null";
         } else if ( obj.getOrder()==null ) {
             message="El campo Order no puede ser null";
-        } else if ( obj.getOrder()!=null && !orderserv.findId(obj.getOrder().getId(), companyId) ) {
+        } else if ( obj.getOrder()!=null && !orderserv.findId(obj.getOrder().getId(), company) ) {
             message="El campo OrderId no existe o es invalido.";    
-        } else if ( obj.getProduct()!=null && !productserv.findId(obj.getProduct().getId(), companyId) ) {
+        } else if ( obj.getProduct()!=null && !productserv.findId(obj.getProduct().getId(), company.getId()) ) {
             message="El campo productId no existe o es invalido.";    
         } else if ( obj.getCant()==null || obj.getCant()==0 ) {
             message="El campo cant no puede ser nullo o igual a 0";
@@ -60,7 +61,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
  
     //------------------- Actualizar los datos de un registro existente --------------------------
     @Override
-    public String update(OrderDetail obj, Integer companyId) {
+    public String update(OrderDetail obj, Company company) {
         OrderDetail current = null;
         String message="";
         
@@ -68,7 +69,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             message="Se espero un objeto Group en formato JSON";
         } else if ( obj.getId()==0 ) {
             message="El campo Id no puede estar vacio";
-        } else if ( obj.getOrder()!=null && !orderserv.findId(obj.getOrder().getId(), companyId) ) {
+        } else if ( obj.getOrder()!=null && !orderserv.findId(obj.getOrder().getId(), company) ) {
             message="El campo OrderId no existe o es invalido.";
         } else {
             //--- obtiene el registro con toda su info para luego editar --- 

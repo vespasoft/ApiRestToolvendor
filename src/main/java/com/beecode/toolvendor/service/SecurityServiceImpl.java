@@ -111,7 +111,7 @@ public class SecurityServiceImpl extends JWTUtil implements SecurityService {
     public User hasAccessUser(Integer userId) {
         // Se obtiene los datos del customer si pertenece a la compañia del usuario logueado
         udao = new UserDAO();
-        User result = udao.findById(userId, user.getCompany().getId());
+        User result = udao.findById(userId, user.getCompany());
         if ( result != null ) {
             // se verifica que el usuario autenticado tenga permisos..
             if ( isAdmin() || equalsUser(result.getId()) ) {

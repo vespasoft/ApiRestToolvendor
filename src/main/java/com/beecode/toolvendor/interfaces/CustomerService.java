@@ -5,6 +5,7 @@
  */
 package com.beecode.toolvendor.interfaces;
 
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public interface CustomerService {
     
-    public String save(Customer cstmr);
+    public String save(Customer cstmr, Company company);
     
-    public String update(Customer cstmr);
+    public String update(Customer cstmr, Company company);
     
     public boolean delete(int id);
     

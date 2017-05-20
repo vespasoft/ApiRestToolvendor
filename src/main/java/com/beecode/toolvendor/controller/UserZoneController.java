@@ -89,7 +89,7 @@ public class UserZoneController {
             // Se forza a guardar el registro relacionado con el Token
             userzone.setUserId(session.getId());
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(userzone, session.getCompany().getId());
+            String message = service.save(userzone, session.getCompany());
             if ( message.isEmpty() ) {
                 if ( service.findUserZone(session.getId(), userzone.getId()) ) {
                     result.put("success", Boolean.FALSE);
@@ -127,7 +127,7 @@ public class UserZoneController {
                 // Se forza a guardar el registro relacionado con el Token
                 userzone.setUserId(session.getId());
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(userzone, session.getCompany().getId());
+                String message = service.update(userzone, session.getCompany());
                 if ( message.isEmpty() ) {
                     UserZone object = service.findById(id);
                     if ( object==null ) {

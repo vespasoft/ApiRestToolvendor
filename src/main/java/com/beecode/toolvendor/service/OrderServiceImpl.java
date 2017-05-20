@@ -9,6 +9,7 @@ package com.beecode.toolvendor.service;
 import com.beecode.toolvendor.dao.OrderDAO;
 import com.beecode.toolvendor.interfaces.OrderService;
 import com.beecode.toolvendor.interfaces.OrderService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Order;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
     //----------------------------- DAO ------------------------------------------
     private final OrderDAO dao = new OrderDAO();
     //----------------------------- SERVICES -------------------------------------
-    private final UserServiceImpl orderserv = new UserServiceImpl();
+    private final UserServiceImpl userserv = new UserServiceImpl();
     private final CustomerServiceImpl cstmrserv = new CustomerServiceImpl();
     private final OrderTypeServiceImpl ordertypeserv = new OrderTypeServiceImpl();
     
@@ -34,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
     
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
-    public String save(Order order) {
+    public String save(Order order, Company company) {
         Order currentOrder = null;
         String message="";
         if ( order==null ) {
@@ -51,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
             message="El campo CustomerId no puede ser nullo";
         } else if ( order.getOrderType().getId()==0 ) {
             message="El campo OrderTypeId no puede estar vacio";
-        } else if ( !orderserv.findId(order.getUserId(), order.getCompanyId()) ) {
+        } else if ( !userserv.findId(order.getUserId(), company) ) {
             message="No existe un registro con este UserId.";
         } else if ( !cstmrserv.findId(order.getCustomerId(), order.getCompanyId()) ) {
             message="No existe un registro con este CustomerId.";   
@@ -69,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
  
     //----------------------- Actualizar los datos de un registro existente --------------------------
     @Override
-    public String update(Order order) {
+    public String update(Order order, Company company) {
         Order currentOrder = null;
         String message="";
         if ( order==null ) {
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
             message="El campo Id no puede ser nullo";
         } else if ( order.getId()==0 ) {
             message="El campo Id no puede ser 0";
-        } else if ( order.getUserId()!=null && !orderserv.findId(order.getUserId(), order.getCompanyId()) ) {
+        } else if ( order.getUserId()!=null && !userserv.findId(order.getUserId(), company) ) {
             message="No existe un registro con este UserId.";
         } else if ( order.getCustomerId()!=null && !cstmrserv.findId(order.getCustomerId(), order.getCompanyId()) ) {
             message="No existe un registro con este CustomerId.";
@@ -122,11 +123,11 @@ public class OrderServiceImpl implements OrderService {
 
     //--------------------- FIND BY ID OBJECT USER --------------------------
     @Override
-    public Order findById(int id, int companyId) {
+    public Order findById(int id, Company company) {
         Order result = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            result = dao.findById(id, companyId);
+            result = dao.findById(id, company.getId());
         } catch ( Exception e ) {
             System.out.println("Error in order findById: " + e.getMessage());
         }
@@ -136,9 +137,9 @@ public class OrderServiceImpl implements OrderService {
     
     //--------------------- FIND BY ID BOOLEAN --------------------------
     @Override
-    public boolean findId(int id, int companyId) {
+    public boolean findId(int id, Company company) {
         // se consulta en la BD si el id del usuario existe y es valido
-        return dao.findById(id, companyId)!=null;
+        return dao.findById(id, company.getId())!=null;
     }
  
     

@@ -8,6 +8,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.CustomerDAO;
 import com.beecode.toolvendor.interfaces.CustomerService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
 import java.util.Date;
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     
     //----------------------------- SAVE CUSTOMER --------------------------------
     @Override
-    public String save(Customer cstmr) {
+    public String save(Customer cstmr, Company company) {
         Customer currentCustomer = null;
         String message="";
         try {
@@ -55,11 +56,11 @@ public class CustomerServiceImpl implements CustomerService {
                 message="El campo CityId no puede ser igual a 0";
             } else if ( cstmr.getUser().getId()==0 ) {
                 message="El campo UserId no puede ser igual a 0";
-            } else if ( findName(cstmr.getCompanyName(), cstmr.getCompanyId()) ) {
+            } else if ( findName(cstmr.getCompanyName(), company.getId()) ) {
                 message="Ya existe un cliente con el mismo nombre";
-            } else if ( findEmail(cstmr.getContactEmail(), cstmr.getCompanyId()) ) {
+            } else if ( findEmail(cstmr.getContactEmail(), company.getId()) ) {
                 message="Ya existe un cliente con el mismo email";
-            } else if ( !userserv.findId(cstmr.getUser().getId(), cstmr.getCompanyId()) ) {
+            } else if ( !userserv.findId(cstmr.getUser().getId(), company) ) {
                 message="No existe ningun usuario con este Id.";
             } else if ( !cityserv.findId(cstmr.getCity().getId()) ) {
                 message="No existe una ciudad con este cityId.";        
@@ -78,7 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     //----------------------------- UPDATE CUSTOMER --------------------------------
     @Override
-    public String update(Customer cstmr) {
+    public String update(Customer cstmr, Company company) {
         Customer currentCustomer = null;
         String message="";
         try {
@@ -88,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
                 message="El campo Id no puede ser nullo";
             } else if ( cstmr.getId()==0 ) {
                 message="El campo Id no puede ser 0";
-            } else if ( cstmr.getUser().getId()!=null && !userserv.findId(cstmr.getUser().getId(), cstmr.getCompanyId()) ) {
+            } else if ( cstmr.getUser().getId()!=null && !userserv.findId(cstmr.getUser().getId(), company) ) {
                 message="No existe un registro con este userId.";
             } else if ( cstmr.getCity()!=null && !cityserv.findId(cstmr.getCity().getId()) ) {
                 message="No existe un registro con este cityId.";    

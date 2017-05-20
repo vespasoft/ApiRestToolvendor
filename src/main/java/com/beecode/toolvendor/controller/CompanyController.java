@@ -230,7 +230,7 @@ public class CompanyController {
             Company object = security.hasAccessCompany(id);
             if ( object!=null ) {
                 // Obtenemos el listado de usuarios de una compañia
-                List list = userserv.getAllByCompany(object.getId());
+                List list = userserv.getAllByCompany(object);
                 result.put("success", Boolean.TRUE);
                 result.put("result", list);
                 return new ResponseEntity<>(result, HttpStatus.OK);

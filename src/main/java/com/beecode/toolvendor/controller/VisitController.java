@@ -118,7 +118,7 @@ public class VisitController extends AppPreferences {
             // Se forza a guardar el registro relacionado con el Token
             visit.setCompanyId(session.getCompany().getId());
             //----------------------------- crea un nuevo registro -------------------------------
-            String message = service.save(visit);
+            String message = service.save(visit, session.getCompany());
             if ( message.isEmpty() ) {
                 result.put("success", Boolean.TRUE);
                 result.put("message", MESSAGE_HTTP_SAVE_OK);
@@ -152,7 +152,7 @@ public class VisitController extends AppPreferences {
                 //------ Se forza a guardar el registro relacionado con el Token
                 visit.setCompanyId(session.getCompany().getId());
                 //------ se actualiza el registro en la base de datos ----
-                String message = service.update(visit);
+                String message = service.update(visit, session.getCompany());
                 if ( message.isEmpty() ) {
                     Visit object = service.findById(id, session.getCompany().getId());
                     if ( object==null ) {

@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.UserDAO;
 import com.beecode.toolvendor.interfaces.UserService;
+import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.thread.SendEmailForgotThread;
 import com.beecode.toolvendor.thread.SendEmailWellcomeThread;
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
                 message="El campo UserId no puede estar vacio";
             } else {
                 //--- obtiene el registro con toda su info para luego editar ---
-                currentUser = dao.findById(user.getId(), user.getCompany().getId());
+                currentUser = dao.findById(user.getId(), user.getCompany());
                 if (currentUser!=null) {
                     //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
                     if (user.getId()!=null) currentUser.setId(user.getId());
@@ -195,11 +196,11 @@ public class UserServiceImpl implements UserService {
     
     //--------------------- FIND BY ID AND COMPANY OBJECT USER --------------------------
     @Override
-    public User findById(int id, int companyId) {
+    public User findById(int id, Company company) {
         User user = null;
         try {
             // Se busca en la bd los datos del usuario por Id.
-            user = dao.findById(id, companyId);
+            user = dao.findById(id, company);
         } catch ( Exception e ) {
             System.out.println("Error in user findById: " + e.getMessage());
         }
@@ -243,9 +244,9 @@ public class UserServiceImpl implements UserService {
     
     //--------------------- FIND BY ID BOOLEAN ---------------------------------
     @Override
-    public boolean findId(int id, int companyId) {
+    public boolean findId(int id, Company company) {
         // se consulta en la BD si el id del usuario existe y es valido
-        return dao.findById(id, companyId)!=null;
+        return dao.findById(id, company)!=null;
     }
 
     //--------------------- FIND BY EMAIL BOOLEAN ------------------------------
@@ -257,11 +258,11 @@ public class UserServiceImpl implements UserService {
 
     //--------------------- GET ALL COMPANY LIST --------------------------
     @Override
-    public List getAllByCompany(Integer companyId) {
+    public List getAllByCompany(Company company) {
         List<User> list = null;
         try {
             // Se consulta en la bd los usuarios registrados de una compañia.
-            list = dao.getAllByCompany(companyId);
+            list = dao.getAllByCompany(company);
             
         } catch ( Exception e ) {
             System.out.println("Error in user getAllByCompany: " + e.getMessage());

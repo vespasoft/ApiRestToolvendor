@@ -667,8 +667,27 @@
  */
 
 
-
-
+ // ------------------------------------------------------------------------------------------
+ // U P L O A D   F I L E.
+ // ------------------------------------------------------------------------------------------
+ /**
+  * @api      {post}          /product/      Listar
+  * @apiVersion 1.0.0
+  * @apiName  UploadFile
+  * @apiGroup Files
+  *
+  * @apiExample {post} Ejemplo de Solicitud:
+  *                      http://toolvendor-beecode.rhcloud.com/upload
+  *
+  * @apiDescription  Este metodo POST sube un archivo al repositorio Amazon S3 de Toolvendor,
+  *                  Se puede subir casi cualquier tipo de archivo de imagen o video. El servicio despues de hacer el Upload retorna
+  *                  una respuesta con los datos de la ruta del archivo <code>filesize, filename, url, success</code>
+  *
+  * @apiParam    {String}    file1         el valor <code>file1</code> es un parametro de tipo file que contiene la el archivo a subir al repositorio.
+  *
+  *
+  * @apiUse  RespuestaSuccessListar
+  */
 
 
 // ------------------------------------------------------------------------------------------
@@ -681,12 +700,12 @@
  * @apiName  GetAll
  * @apiGroup Producto
  *
- * @apiExample {put} Ejemplo de Solicitud:
- *                      https://apirestfm.herokuapp.com/api/product/
+ * @apiExample {get} Ejemplo de Solicitud:
+ *                      http://toolvendor-beecode.rhcloud.com/rest/product
  *
  * @apiDescription  Devuelve una lista de todos los Productos. Las Productos se devuelven ordenados por fecha de creación,
  *                  los Productos más recientemente creados aparecen en primer lugar. Las columnas disponibles a mostrar son
- *                  <code>id, department_id, name, description, reference, price, photo</code>
+ *                  <code>id, barcode, name, description, detail, enabled, price, tax, photo, brand, family, category, presentation, productType</code>
  * @apiName  GetAll
  * @apiGroup Producto
  *
@@ -699,19 +718,26 @@
  * @apiName  CreateProducto
  * @apiGroup Producto
  *
- * @apiExample {put} Ejemplo de Solicitud:
- *                      https://apirestfm.herokuapp.com/api/product/
+ * @apiExample {post} Ejemplo de Solicitud:
+ *                      http://toolvendor-beecode.rhcloud.com/rest/product/
  *
- * @apiDescription  Crea un nuevo objeto Producto. Las columnas guardar son <code>department_id, name, description, reference, price, photo</code>.
+ * @apiDescription  Crea un nuevo objeto Producto. Las columnas guardar son <code>barcode, name, description, detail, enabled, price, tax, photo, brand, family, category, presentation, productType</code>.
  *                   La solicitud retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito,
  *                   de lo contrario devuelve <code>status 400</code>. Para mas informacion vease los ejemplos a continuación.
  *
- * @apiParam    {String}    department_id   el valor <code>id</code> del Departamento al cual pertenece el Producto.
+ * @apiParam    {String}    barcode         el valor <code>id</code> del Departamento al cual pertenece el Producto.
  * @apiParam    {String}    name            Nombre del Producto que se va a mostrar al usuario.
  * @apiParam    {String}    [description]   La descripción del Producto que se va a mostrar al usuario.
- * @apiParam    {String}    [reference]     Referencia del Producto.
+ * @apiParam    {String}    [detail]        Detalles del Producto.
+ * @apiParam    {String}    [enabled]       Indica si el producto esta activo.
  * @apiParam    {Decimal}   [price]         Precio de venta del Producto para mostrar. Ej. $57.99
+ * @apiParam    {Decimal}   [tax]           Precio de tax del Producto para mostrar. Ej. $7.99
  * @apiParam    {String}    [photo]         En esta columna se almacena el path de ubicación de la imagen a mostrar del producto.
+ * @apiParam    {String}    [brand]         Marca del Producto.
+ * @apiParam    {String}    [family]        Familia del producto.
+ * @apiParam    {String}    [category]      Categoria del Producto.
+ * @apiParam    {String}    [presentation]  Presentacion del Producto.
+ * @apiParam    {String}    [productType]   Tipo del Producto.
  *
  * @apiUse  RespuestaSuccessInsertarEditar
  */
@@ -720,14 +746,14 @@
  * @api      {get}          /product/:id   Leer
  * @apiDescription  Recupera los detalles de un Producto existente. Suministrar el <code>id</code> del Producto para devolver la
  *                  información de la Producto correspondiente. La respuesta devuelve un conjunto de variables, la variable
- *                  <code>result</code> contiene JSON con las siguientes columnas: <code>id, department_id, name, description, reference, price, photo</code>.
+ *                  <code>result</code> contiene JSON con las siguientes columnas: <code>id, barcode, name, description, detail, enabled, price, tax, photo, brand, family, category, presentation, productType</code>.
  * @apiVersion 1.0.0
  * @apiParam {Number}       id              El <code>id</code> del Producto que se está leyendo.
  * @apiName  GetProducto
  * @apiGroup Producto
  *
- * @apiExample {put} Ejemplo de Solicitud:
- *                      https://apirestfm.herokuapp.com/api/product/135e656e6cda8640820350816ab59f2d
+ * @apiExample {get} Ejemplo de Solicitud:
+ *                      http://toolvendor-beecode.rhcloud.com/rest/product/20
  *
  * @apiUse  RespuestaSuccessListar
  */
@@ -739,21 +765,28 @@
  * @apiGroup    Producto
  *
  * @apiExample {put} Ejemplo de Solicitud:
- *                      https://apirestfm.herokuapp.com/api/product/135e656e6cda8640820350816ab59f2d
+ *                      http://toolvendor-beecode.rhcloud.com/rest/product/20
  *
  * @apiDescription  Actualiza los detalles del Producto específico, mediante el identificación de los valores de los parámetros pasados.
  *                  Cualquiera de los parámetros no previstos serán dejados sin cambios. Las columnas a actualizar son
- *                  <code>department_id, name, description, reference, price, photo</code>.
+ *                  <code>id, barcode, name, description, detail, enabled, price, tax, photo, brand, family, category, presentation, productType</code>.
  *                  Tenga en cuenta que el atributo <code>id</code> no es editable. La solicitud
  *                  retorna un JSON con la informacion con <code>status 200</code> en caso de tener exito, de lo contrario devuelve <code>status 400</code>.
  *                  Para mas información vease los ejemplos a continuación.
  *
- * @apiParam    {String}    department_id   el valor <code>id</code> del Departamento al cual pertenece el Producto.
+ * @apiParam    {String}    barcode         el valor <code>id</code> del Departamento al cual pertenece el Producto.
  * @apiParam    {String}    name            Nombre del Producto que se va a mostrar al usuario.
  * @apiParam    {String}    [description]   La descripción del Producto que se va a mostrar al usuario.
- * @apiParam    {String}    [reference]     Referencia del Producto.
+ * @apiParam    {String}    [detail]        Detalles del Producto.
+ * @apiParam    {String}    [enabled]       Indica si el producto esta activo.
  * @apiParam    {Decimal}   [price]         Precio de venta del Producto para mostrar. Ej. $57.99
+ * @apiParam    {Decimal}   [tax]           Precio de tax del Producto para mostrar. Ej. $7.99
  * @apiParam    {String}    [photo]         En esta columna se almacena el path de ubicación de la imagen a mostrar del producto.
+ * @apiParam    {String}    [brand]         Marca del Producto.
+ * @apiParam    {String}    [family]        Familia del producto.
+ * @apiParam    {String}    [category]      Categoria del Producto.
+ * @apiParam    {String}    [presentation]  Presentacion del Producto.
+ * @apiParam    {String}    [productType]   Tipo del Producto.
  *
  * @apiUse      RespuestaSuccessInsertarEditar
  * @apiUse      ErrorAlEditar
@@ -765,9 +798,9 @@
  * @apiGroup    Producto
  *
  * @apiExample {delete} Ejemplo de Solicitud:
- *                      https://apirestfm.herokuapp.com/api/product/135e656e6cda8640820350816ab59f2d
+ *                      http://toolvendor-beecode.rhcloud.com/rest/product/2
  *
- * @apiDescription  Permite borrar un Producto. Solo es posible suprimir el Producto, si éste no ha sido vinculado con una <code>Orden</code>.
+ * @apiDescription  Permite borrar un Producto. Solo es posible suprimir el Producto, si éste no ha sido vinculado con una <code>Orden, Cotizacion</code>.
  *                  Para eliminarlo, debe indicar el <code>id</code> del Producto a borrar. La solicitud devuelve un objeto con un
  *                  parámetro <code>success=true</code> en caso de éxito. De lo contrario, esta llamada devuelve un error ( <code>success=false</code> )
  . Para mas información vease los ejemplos a continuación.

@@ -671,10 +671,10 @@
  // U P L O A D   F I L E.
  // ------------------------------------------------------------------------------------------
  /**
-  * @api      {post}          /product/      Listar
+  * @api      {post}          /upload/      Upload
   * @apiVersion 1.0.0
-  * @apiName  UploadFile
-  * @apiGroup Files
+  * @apiName  Upload
+  * @apiGroup UploadFile
   *
   * @apiExample {post} Ejemplo de Solicitud:
   *                      http://toolvendor-beecode.rhcloud.com/upload

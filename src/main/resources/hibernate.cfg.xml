@@ -12,9 +12,17 @@
     <property name="hibernate.connection.password">mAdCv7rhesFI</property>
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.show_sql">true</property>
-    <property name = "hibernate.connection.isolation">2</property>
-    <property name="hibernate.connection.autoReconnect">true</property>
-    <property name="hibernate.connection.autoReconnectForPools">true</property>
+    <property name="hibernate.connection.isolation">2</property>
+    <!--<property name="hibernate.connection.autoReconnect">true</property>
+    <property name="hibernate.connection.autoReconnectForPools">true</property>-->
+    
+    <!-- Connection handling -->
+    <property name="connection.autoReconnect">true</property>
+    <property name="connection.autoReconnectForPools">true</property>
+    <property name="connection.is-connection-validation-required">true</property>
+    <property name="current_session_context_class">thread</property>
+    <property name="max_fetch_depth">1</property>
+
     <mapping class="com.beecode.toolvendor.model.Call"/>
     <mapping class="com.beecode.toolvendor.model.Catalog"/>
     <mapping class="com.beecode.toolvendor.model.Contact"/>

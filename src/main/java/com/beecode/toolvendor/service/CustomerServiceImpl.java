@@ -204,11 +204,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     //--------------------- GET ALL CUSTOMER BY USER --------------------------
     @Override
-    public List getAllByUser(Integer userId) {
+    public List getAllByUser(User user) {
         List<User> list = null;
         try {
             // Se consulta en la bd los customer registrados para un usuario.
-            list = dao.getAllByUser(userId);
+            list = dao.getAllByUser(user);
         } catch ( Exception e ) {
             System.out.println("Error in customer getAllByUser: " + e.getMessage());
         }

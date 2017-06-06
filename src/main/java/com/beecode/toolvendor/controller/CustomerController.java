@@ -59,7 +59,7 @@ public class CustomerController extends AppPreferences {
         } else {
             //---- Obtiene todos los customer registrados de un usuario -----
             System.out.println("List all customer by user " + session.getId());
-            List list = service.getAllByUser(session.getId());
+            List list = service.getAllByUser(session);
             if ( list==null ) {
                 result.put("success", Boolean.FALSE);
                 result.put("message", MESSAGE_HTTP_IS_EMPTY);

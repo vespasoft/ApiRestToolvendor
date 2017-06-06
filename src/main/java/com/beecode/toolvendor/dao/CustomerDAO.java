@@ -6,6 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Customer;
+import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.util.SessionUtil;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -80,13 +81,13 @@ public class CustomerDAO {
         Parameters:  userId (int)
         Return: List<Visit>
     */
-    public List getAllByUser(Integer userId) {
+    public List getAllByUser(User user) {
         Session session = SessionUtil.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
            // Add restriction.
-           cr.add(Restrictions.eq("userId", userId));
+           cr.add(Restrictions.eq("user", user));
            //crit.add(Restrictions.like("id", id+"%"));
            result = cr.list();
            if ( result!=null )

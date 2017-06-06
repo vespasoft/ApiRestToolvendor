@@ -7,6 +7,7 @@ package com.beecode.toolvendor.interfaces;
 
 import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
+import com.beecode.toolvendor.model.User;
 import java.util.List;
 
 /**
@@ -33,6 +34,6 @@ public interface CustomerService {
     
     public List getAllByCompany(Integer companyId);
     
-    public List getAllByUser(Integer userId);
+    public List getAllByUser(User user);
     
 }

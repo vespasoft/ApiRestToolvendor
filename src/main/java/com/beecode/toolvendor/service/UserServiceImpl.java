@@ -7,10 +7,10 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.UserDAO;
 import com.beecode.toolvendor.interfaces.UserService;
+import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.thread.SendEmailForgotThread;
-import com.beecode.toolvendor.thread.SendEmailWellcomeThread;
 import static com.beecode.toolvendor.util.AppPreferences.TOKEN_PASSWORD_LENGTH;
 import com.beecode.toolvendor.util.StringUtil;
 import java.util.Date;
@@ -32,9 +32,11 @@ public class UserServiceImpl implements UserService {
     private CityServiceImpl cityserv;
     private CompanyServiceImpl companyserv;
     private UserTypeServiceImpl usertypeserv;
+    private BackLogServiceImpl backlog;
     
 
     public UserServiceImpl() {
+        backlog = new BackLogServiceImpl();
         dao = new UserDAO();
         cityserv = new CityServiceImpl();
         companyserv = new CompanyServiceImpl();
@@ -89,9 +91,14 @@ public class UserServiceImpl implements UserService {
                 // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
                 // SendEmailWellcomeThread se = new SendEmailWellcomeThread(currentUser);
                 // se.start();
+                backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    "se guardo un usuario correctamente"));
             }
         } catch ( Exception e ) {
-            System.out.println("Error in user save: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    e.getMessage()));
         }
         
         return message;
@@ -135,7 +142,9 @@ public class UserServiceImpl implements UserService {
 
             }
         } catch ( Exception e ) {
-            System.out.println("Error in user update: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "update",
+                                    e.getMessage()));
         }
         
         return message;
@@ -144,25 +153,32 @@ public class UserServiceImpl implements UserService {
     //----------------------------- FORGOT ----------------------------------
     public String forgot(User user) {
         String message="";
-        if ( user==null ) {
-            message="An object user with email is required.";
-        } else if ( user.getEmail()==null ) {
-            message="Email is required.";
-        } else {
-            user = findByEmail(user.getEmail());
-            if( ( user==null) ) {
-                message="The email is not valid or not exits.";
-            } else  {
-                user.setPassword(StringUtil.generateTokenString(TOKEN_PASSWORD_LENGTH));
-                //--- se ejecuta el update en la capa de datos ---
-                dao.update(user);
-                // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                SendEmailForgotThread se = new SendEmailForgotThread(user);
-                se.start();
-                //EmailServiceImpl instance = new EmailServiceImpl();
-                //instance.SendEmailForgot(user);
+        try {
+            if ( user==null ) {
+                message="An object user with email is required.";
+            } else if ( user.getEmail()==null ) {
+                message="Email is required.";
+            } else {
+                user = findByEmail(user.getEmail());
+                if( ( user==null) ) {
+                    message="The email is not valid or not exits.";
+                } else  {
+                    user.setPassword(StringUtil.generateTokenString(TOKEN_PASSWORD_LENGTH));
+                    //--- se ejecuta el update en la capa de datos ---
+                    dao.update(user);
+                    // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
+                    SendEmailForgotThread se = new SendEmailForgotThread(user);
+                    se.start();
+                    //EmailServiceImpl instance = new EmailServiceImpl();
+                    //instance.SendEmailForgot(user);
+                }
             }
+        } catch ( Exception e ) {
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "forgot",
+                                    e.getMessage()));
         }
+        
         return message;
     }
 
@@ -174,7 +190,9 @@ public class UserServiceImpl implements UserService {
             int i = dao.delete(id);
             result = i==1;
         } catch ( Exception e ) {
-            System.out.println("Error in user delete: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "delete",
+                                    e.getMessage()));
         }
         
         return result;
@@ -188,7 +206,9 @@ public class UserServiceImpl implements UserService {
             // Se busca en la bd los datos del usuario por Id.
             user = dao.findById(id);
         } catch ( Exception e ) {
-            System.out.println("Error in user findById: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "findById",
+                                    e.getMessage()));
         }
         
         return user;
@@ -202,7 +222,9 @@ public class UserServiceImpl implements UserService {
             // Se busca en la bd los datos del usuario por Id.
             user = dao.findById(id, company);
         } catch ( Exception e ) {
-            System.out.println("Error in user findById: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "findById",
+                                    e.getMessage()));
         }
         
         return user;
@@ -216,7 +238,9 @@ public class UserServiceImpl implements UserService {
             // Se busca en la bd los datos del usuario por Email.
             user = dao.findByEmail(email);
         } catch ( Exception e ) {
-            System.out.println("Error in user findByEmail: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "findByEmail",
+                                    e.getMessage()));
         }
         
         return user;
@@ -230,7 +254,9 @@ public class UserServiceImpl implements UserService {
             // Este método consulta los datos del usuario verificando coincidencias de email y password
             user = dao.authentication(email, password);
         } catch ( Exception e ) {
-            System.out.println("Error in user findByAuth: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "findByAuth",
+                                    e.getMessage()));
         }
         return user;
     }
@@ -265,7 +291,9 @@ public class UserServiceImpl implements UserService {
             list = dao.getAllByCompany(company);
             
         } catch ( Exception e ) {
-            System.out.println("Error in user getAllByCompany: " + e.getMessage());
+            backlog.save(new BackLog(UserServiceImpl.class.getSimpleName(), 
+                                    "getAllByCompany",
+                                    e.getMessage()));
         }
         return list;
     }

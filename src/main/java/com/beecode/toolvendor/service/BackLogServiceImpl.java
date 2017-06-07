@@ -58,9 +58,6 @@ public class BackLogServiceImpl implements BackLogService {
                 if (obj.getId()!=0) current.setId(obj.getId());
                 if (obj.getClass_name()!=null) current.setClass_name(obj.getClass_name());
                 if (obj.getVoid_name()!=null) current.setVoid_name(obj.getVoid_name());
-                if (obj.getCompanyId()!=null) current.setCompanyId(obj.getCompanyId());
-                if (obj.getModules_id()!=null) current.setModules_id(obj.getModules_id());
-                if (obj.getUserId()!=null) current.setUserId(obj.getUserId());
                 //--- se ejecuta el update en la capa de datos ---
                 dao.update(current);
                 return true;

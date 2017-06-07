@@ -99,6 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
                 if (currentCustomer!=null) {
                     //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
                     if (cstmr.getId()!=0) currentCustomer.setId(cstmr.getId());
+                    if (cstmr.getCompanyName()!=null) currentCustomer.setCompanyName(cstmr.getCompanyName());
                     if (cstmr.getContactName()!=null) currentCustomer.setContactName(cstmr.getContactName());
                     if (cstmr.getContactPhone()!=null) currentCustomer.setContactPhone(cstmr.getContactPhone());
                     if (cstmr.getContactEmail()!=null) currentCustomer.setContactEmail(cstmr.getContactEmail());

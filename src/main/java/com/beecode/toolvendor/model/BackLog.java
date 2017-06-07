@@ -31,9 +31,6 @@ public class BackLog implements java.io.Serializable {
     private String class_name;
     private String void_name;
     private String error_message;
-    private Integer companyId;
-    private Integer userId;
-    private Integer modules_id;
 
     public BackLog() {
     }
@@ -42,9 +39,6 @@ public class BackLog implements java.io.Serializable {
         this.class_name = class_name;
         this.void_name = void_name;
         this.error_message = message;
-        //this.companyId = companyId;
-        //this.userId = userId;
-        //this.modules_id = modules_id;
     }
 
     @Id
@@ -94,34 +88,5 @@ public class BackLog implements java.io.Serializable {
     public void setError_message(String error_message) {
         this.error_message = error_message;
     }
-
-    @Column(name="country_id")
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
-    @Column(name="user_id")
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    @Column(name="module_id")
-    public Integer getModules_id() {
-        return modules_id;
-    }
-
-    public void setModules_id(Integer modules_id) {
-        this.modules_id = modules_id;
-    }
-    
-    
     
 }

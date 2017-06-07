@@ -1,7 +1,6 @@
 package com.beecode.toolvendor.model;
 // Generated Dec 14, 2016 3:53:36 PM by Hibernate Tools 4.3.1
 
-
 import com.beecode.toolvendor.util.HibernateUtil;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -35,7 +35,7 @@ public class BackLogServiceImpl implements BackLogService {
         } else {
             //--- AtCreated fecha de creación del registro
             obj.setCreatedAt(new Date());
-            dao.add(obj);
+            //dao.add(obj);
             System.out.println("Error in class: " +obj.getClass_name()+" method: "+ obj.getVoid_name() +". " + obj.getError_message());
             return true;
         }

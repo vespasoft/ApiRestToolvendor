@@ -23,7 +23,7 @@
     <property name="current_session_context_class">thread</property>
     <property name="max_fetch_depth">1</property>
 
-    <mapping class="com.beecode.toolvendor.model.BackLog"/>
+    <!--<mapping class="com.beecode.toolvendor.model.BackLog"/>-->
     <mapping class="com.beecode.toolvendor.model.Call"/>
     <mapping class="com.beecode.toolvendor.model.Catalog"/>
     <mapping class="com.beecode.toolvendor.model.Contact"/>

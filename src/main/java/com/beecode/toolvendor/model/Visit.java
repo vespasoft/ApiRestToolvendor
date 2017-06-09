@@ -39,6 +39,7 @@ public class Visit  implements java.io.Serializable {
      private String firm;
      private String comment;
      private String reason;
+     private String status;
 
     public Visit() {
     }
@@ -184,7 +185,7 @@ public class Visit  implements java.io.Serializable {
     }
     
     public void setStatus(String status) {
-        
+        this.status = status;
     }
 
     public String getStatus() {

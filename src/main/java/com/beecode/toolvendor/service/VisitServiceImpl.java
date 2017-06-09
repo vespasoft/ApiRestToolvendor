@@ -5,7 +5,6 @@
  */
 package com.beecode.toolvendor.service;
 
-
 import com.beecode.toolvendor.dao.VisitDAO;
 import com.beecode.toolvendor.interfaces.VisitService;
 import com.beecode.toolvendor.model.Company;
@@ -74,7 +73,12 @@ public class VisitServiceImpl implements VisitService {
         } else {
             //--- Created At fecha de creación del registro
             Timestamp timestamp = new Timestamp(new Date().getTime());
-            visit.setCreatedAt( timestamp );
+            visit.setCreatedAt( timestamp );            
+            
+            // Logica que define el estatus de la visita
+            if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
+            if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+            if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
             
             dao.add(visit);
             User user = userserv.findById(visit.getUserId(), company);
@@ -118,7 +122,14 @@ public class VisitServiceImpl implements VisitService {
                 if (visit.getComment()!=null) currentVisit.setComment(visit.getComment());
                 if (visit.getReason()!=null) currentVisit.setReason(visit.getReason());
                 if (visit.getFirm()!=null) currentVisit.setFirm(visit.getFirm());
-                //if (visit.getVisitPictures()!=null) currentVisit.setVisitPictures(visit.getVisitPictures());
+                if (visit.getReason_nullification()!=null) currentVisit.setReason_nullification(visit.getReason_nullification());
+                
+                // Logica que define el estatus de la visita
+                if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
+                if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+                if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+                if ( visit.getReason_nullification()!=null) visit.setStatus("nullified");
+
                 //--- LastUpdate fecha de actualizacion del registro
                 Timestamp timestamp = new Timestamp(new Date().getTime());
                 currentVisit.setLastUpdate(timestamp);

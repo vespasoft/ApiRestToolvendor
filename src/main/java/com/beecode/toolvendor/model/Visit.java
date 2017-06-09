@@ -25,7 +25,6 @@ import javax.persistence.TemporalType;
 )
 public class Visit  implements java.io.Serializable {
 
-
      private Integer id;
      private Customer customer;
      private Integer userId;
@@ -39,12 +38,13 @@ public class Visit  implements java.io.Serializable {
      private String firm;
      private String comment;
      private String reason;
-     private String status;
+     private String reason_nullification;
+     private String estatus;
 
     public Visit() {
     }
 
-    public Visit(Customer customer, Integer userId, Integer companyId, VisitType visitType, Timestamp createdAt, Timestamp scheduledDate, String reason) {
+    public Visit(Customer customer, Integer userId, Integer companyId, VisitType visitType, Timestamp createdAt, Timestamp scheduledDate, String reason, String reason_nullification, String status) {
        this.customer = customer;
        this.userId = userId;
        this.companyId = companyId;
@@ -52,10 +52,11 @@ public class Visit  implements java.io.Serializable {
        this.createdAt = createdAt;
        this.scheduledDate = scheduledDate;
        this.reason = reason;
+       this.reason_nullification = reason_nullification;
+       this.estatus = status;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
-
+    @Id @GeneratedValue(strategy=IDENTITY)
     
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
@@ -153,7 +154,6 @@ public class Visit  implements java.io.Serializable {
     public void setCheckout(Date checkout) {
         this.checkout = checkout;
     }
-
     
     @Column(name="firm")
     public String getFirm() {
@@ -173,7 +173,6 @@ public class Visit  implements java.io.Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
     
     @Column(name="reason", length=100)
     public String getReason() {
@@ -183,18 +182,23 @@ public class Visit  implements java.io.Serializable {
     public void setReason(String reason) {
         this.reason = reason;
     }
-    
-    public void setStatus(String status) {
-        this.status = status;
+
+    @Column(name="reason_nullification", length=100)
+    public String getReason_nullification() {
+        return reason_nullification;
     }
 
+    public void setReason_nullification(String reason_nullification) {
+        this.reason_nullification = reason_nullification;
+    }
+    
+    @Column(name="status", length=100)
     public String getStatus() {
-        if ( getCheckin()==null && getCheckout()==null) return "pendiente";
-        else if ( getCheckin()!=null && getCheckout()==null) return "checkin";
-        else if ( getCheckin()!=null && getCheckout()!=null) return "checkout";
-        else return "";
+        return this.estatus;
+    }
+    
+    public void setStatus(String status) {
+        this.estatus = status;
     }
 
 }
-
-

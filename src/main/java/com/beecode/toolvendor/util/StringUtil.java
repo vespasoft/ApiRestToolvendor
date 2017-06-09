@@ -5,7 +5,11 @@
  */
 package com.beecode.toolvendor.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
@@ -16,6 +20,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @author luisvespa
  */
 public class StringUtil {
+    
     
     /*
      * converts a Java object into JSON representation
@@ -52,5 +57,7 @@ public class StringUtil {
             System.out.println(token);
             return token;
     }
+    
+    
     
 }

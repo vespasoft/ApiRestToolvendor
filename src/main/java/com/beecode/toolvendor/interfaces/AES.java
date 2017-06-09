@@ -10,10 +10,8 @@ package com.beecode.toolvendor.interfaces;
  * @author luisvespa
  */
 public interface AES {
-    public static final String ENCRYP_PASS = "-25EcfM2nCWFvj6Hd9Rg7S$%X%dr*DVH";
+    public static final String ENCRYP_PASS = "FooBar1234567890";
     public static final String VECTOR_INICIO = "Sx5kaVX+D-3hvGr!";
-    
-    public void addKey(String value);
     
     public String encrypt(String plainText);
     

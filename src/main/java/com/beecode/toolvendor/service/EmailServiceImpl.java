@@ -598,29 +598,98 @@ public class EmailServiceImpl implements EmailService {
     public void SendEmailVisit(Customer cstmr, Visit visit) {
         String toEmail = cstmr.getContactEmail();
         String emailSubject = "Bienvenido a Toolvendor App";
-        
-        String emailBody = "<html>\n" +
-                        "    <head>\n" +
-                        "        <title>Toolvendor App</title>\n" +
-                        "        <meta charset=\"UTF-8\">\n" +
-                        "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                        "    </head>\n" +
-                        "    <body>\n" +
-                        "        <H3>Toolvendor App </H3> \n" +
-                        "        \n" +
-                        "        <h4>Estimado "+cstmr.getContactName()+",</h4> \n" +
-                        "        \n" +
-                        "        <h4>Hemos finalizado exitosamente su visita,</h4> \n" +
-                        "        \n" +
-                        "        <h4>En este correo le enviamos adjunto un PDF con todo el detalle de su visita.</h4>\n" +
-                        "        \n" +
-                        "        \n" +
-                        "        <h4>Atentamente, </h4>\n" +
-                        "        \n" +
-                        "        <h4>Ana Mariela Canelones </h4>\n" +
-                        "        <h4>Gerente de Ventas </h4>\n" +
-                        "    </body>\n" +
-                        "</html>";
+        String emailBody = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
+        "\n" +
+        "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+        "\n" +
+        "<head>\n" +
+        "\n" +
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n" +
+        "\n" +
+        "<title>Toolvendor App</title>\n" +
+        "\n" +
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n" +
+        "\n" +
+        "</head>\n" +
+        "\n" +
+        "<body style=\"margin: 0; padding: 0;\">\n" +
+        "\n" +
+        "   <table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+        "    <tr>\n" +
+        "       <td >\n" +
+        "         <table align=\"center\" bgcolor=\"#70bbd9\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;\">\n" +
+        "\n" +
+        "            <tr>\n" +
+        "              <td align=\"center\" bgcolor=\"#70bbd9\" style=\"color: #ffffff; padding: 10px 0 30px 0; font-family: Arial, sans-serif; font-size: 28px;\">\n" +
+        "                 <b>Toolvendor App</b>\n" +
+        "              </td>\n" +
+        "            </tr>\n" +
+        "            <tr>\n" +
+        "              <td  bgcolor=\"#ffffff\" style=\"padding: 40px 30px 40px 30px;\">\n" +
+        "                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+        "                    <tr>\n" +
+        "                       <td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 24px;\">\n" +
+        "                         <b>Estimado "+cstmr.getContactName()+",</b>\n" +
+        "                       </td>\n" +
+        "                    </tr>\n" +
+        "                    <tr>\n" +
+        "                      <td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\n" +
+        "\n" +
+        "                       <h4>Hemos finalizado exitosamente su visita,</h4> \n" +
+        "\n" +
+        "                       <b>En este correo le enviamos adjunto un PDF con todo el detalle de su visita.</b>\n" +
+        "\n" +
+        "                      </td>\n" +
+        "                    </tr>\n" +
+        "                    <tr>\n" +
+        "                      <td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\n" +
+        "                        <br>\n" +
+        "                        <br>\n" +
+        "                          Atentamente, el equipo de soporte ToolvendorApp\n" +
+        "                      </td>\n" +
+        "                    </tr>\n" +
+        "                 </table>\n" +
+        "              </td>\n" +
+        "            </tr>\n" +
+        "            <tr>\n" +
+        "              <td bgcolor=\"#ee4c50\" style=\"padding: 30px 30px 30px 30px;\">\n" +
+        "                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+        "                  <tr>\n" +
+        "                    <td  align=\"right\">\n" +
+        "                      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+        "                        <tr>\n" +
+        "                          <td>\n" +
+        "                          <a href=\"http://www.twitter.com/\">\n" +
+        "                           <img src=\"images/tw.gif\" alt=\"Twitter\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+        "                          </a>\n" +
+        "                          </td>\n" +
+        "\n" +
+        "                        <td style=\"font-size: 0; line-height: 0;\" width=\"20\">&nbsp;</td>\n" +
+        "                          <td>\n" +
+        "                          <a href=\"http://www.twitter.com/\">\n" +
+        "                           <img src=\"images/fb.gif\" alt=\"Facebook\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+        "                          </a>\n" +
+        "                          </td>\n" +
+        "                        </tr>\n" +
+        "                        </table>\n" +
+        "                    </td>\n" +
+        "                    <td style=\"color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;\">\n" +
+        "                     &reg; Toolvendor App, beecode 2017<br/>\n" +
+        "                     <a href=\"#\" style=\"color: #ffffff;\"><font color=\"#ffffff\">Unsubscribe</font></a> to this newsletter instantly\n" +
+        "\n" +
+        "                    </td>\n" +
+        "                  </tr>\n" +
+        "                </table>\n" +
+        "              </td>\n" +
+        "            </tr>\n" +
+        "          </table>\n" +
+        "       </td>\n" +
+        "    </tr>\n" +
+        "   </table>\n" +
+        "\n" +
+        "</body>\n" +
+        "\n" +
+        "</html>";
         
         SendEmail se = new SendEmail();
         se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html");

@@ -9,13 +9,16 @@ import com.beecode.toolvendor.interfaces.AES;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -25,77 +28,53 @@ import sun.misc.BASE64Encoder;
  */
 public class AESCrypt implements AES {
 
-    private SecretKey key;       
-    private Cipher cipher;  
-    private String algoritmo= "AES";
-    private int keysize=16;
+    public static SecureRandom sr = new SecureRandom();
+    
+    //private String clave = "FooBar1234567890"; // 128 bit
+    private byte[] iv = new byte[16];   // Vector de inicialización
 
-    /**
-    * Crea la Llave para encriptar/desencriptar
-    * @param String value
-    */
-    @Override
-    public void addKey( String value ){
-        byte[] valuebytes = value.getBytes();            
-        key = new SecretKeySpec( Arrays.copyOf( valuebytes, keysize ) , algoritmo );      
+    public AESCrypt() {
+        // para utilizar los metodos de sifrado AES es necesario inicializar la clase
+        sr.nextBytes(iv);
     }
-
+    
     /**
     * Metodo para encriptar un texto
     * @param String texto
     * @return String texto encriptado
     */
-    @Override
-    public String encrypt( String texto ){
-        String value="";
+    public String encrypt(String plainText) {
         try {
-            cipher = Cipher.getInstance( algoritmo );             
-            cipher.init( Cipher.ENCRYPT_MODE, key );             
-            byte[] textobytes = texto.getBytes();
-            byte[] cipherbytes = cipher.doFinal( textobytes );
-            value = new BASE64Encoder().encode( cipherbytes );
-        } catch (NoSuchAlgorithmException ex) {
-            System.err.println( ex.getMessage() );
-        } catch (NoSuchPaddingException ex) {
-            System.err.println( ex.getMessage() );
-        } catch (InvalidKeyException ex) {
-            System.err.println( ex.getMessage() );
-        } catch (IllegalBlockSizeException ex) {
-            System.err.println( ex.getMessage() );
-        } catch (BadPaddingException ex) {
-            System.err.println( ex.getMessage() );
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            SecretKeySpec sks = new SecretKeySpec(ENCRYP_PASS.getBytes("UTF-8"), "AES");
+            cipher.init(Cipher.ENCRYPT_MODE, sks, new IvParameterSpec(iv));
+
+            byte[] encriptado = cipher.doFinal(plainText.getBytes());
+            return DatatypeConverter.printBase64Binary(encriptado);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return value;
+        return null;
     }
 
-     /**
+    /**
     * Metodo para desencriptar un texto
     * @param texto Texto encriptado
     * @return String texto desencriptado
     */
-    @Override
-    public String decrypt( String texto ){
-        String str="";        
+    public String decrypt(String cryptedText) {
         try {
-            byte[] value = new BASE64Decoder().decodeBuffer(texto);                 
-            cipher = Cipher.getInstance( algoritmo );            
-            cipher.init( Cipher.DECRYPT_MODE, key );
-            byte[] cipherbytes = cipher.doFinal( value );
-            str = new String( cipherbytes );                                  
-        } catch (InvalidKeyException ex) {
-            System.err.println( ex.getMessage() );
-        }  catch (IllegalBlockSizeException ex) {
-            System.err.println( ex.getMessage() );
-        } catch (BadPaddingException ex) {
-            System.err.println( ex.getMessage() );            
-        }   catch (IOException ex) {
-            System.err.println( ex.getMessage() );
-        }catch (NoSuchAlgorithmException ex) {
-            System.err.println( ex.getMessage() );
-        } catch (NoSuchPaddingException ex) {
-            System.err.println( ex.getMessage() );
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            SecretKeySpec sks = new SecretKeySpec(ENCRYP_PASS.getBytes("UTF-8"), "AES");
+            cipher.init(Cipher.DECRYPT_MODE, sks, new IvParameterSpec(iv));
+
+            byte[] dec = cipher.doFinal(DatatypeConverter.parseBase64Binary(cryptedText));
+            return new String(dec);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return str;
+        return null;
     }
+    
 
 }

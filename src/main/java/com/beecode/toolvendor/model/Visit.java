@@ -183,7 +183,12 @@ public class Visit  implements java.io.Serializable {
         this.reason = reason;
     }
 
-
+    public String getStatus() {
+        if ( getCheckin()==null && getCheckout()==null) return "pendiente";
+        else if ( getCheckin()!=null && getCheckout()==null) return "checkin";
+        else if ( getCheckin()!=null && getCheckout()!=null) return "checkout";
+        else return null;
+    }
 
 }
 

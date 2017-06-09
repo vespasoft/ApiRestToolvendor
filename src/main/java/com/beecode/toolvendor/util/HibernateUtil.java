@@ -19,7 +19,7 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
 
     public static final String CATALOG = "toolvendorv1";    // LIVE
-    //public static final String CATALOG = "toolvendor";         // LOCAL
+    //public static final String CATALOG = "toolvendor";        // LOCAL
     
     private static SessionFactory sessionFactory;
     

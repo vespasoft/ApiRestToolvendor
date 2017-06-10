@@ -71,8 +71,7 @@ public class VisitController extends AppPreferences {
         
     }
     
-    //-------------------Retrieve Single Visit--------------------------------------------------------
-     
+    //------------------------- Retrieve Single Visit -----------------------------------------------------
     @RequestMapping(value = "/visit/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getVisit(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
         result = new HashMap<String,Object>();

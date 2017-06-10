@@ -112,10 +112,6 @@ public class VisitServiceImpl implements VisitService {
                 message="El campo Id no puede ser 0";
             } else if ( visit.getUserId()!=null && !userserv.findId(visit.getUserId(), company) ) {
                 message="No existe un registro con este UserId.";
-            } else if ( visit.getCustomer()!=null && !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
-                message="No existe un registro con este CustomerId.";
-            } else if ( visit.getVisitType()!=null && !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
-                message="No existe un registro con este visitucttypeId.";
             } else {
                 //--- obtiene el registro con toda su info para luego editar ---
                 currentVisit = dao.findById(visit.getId(), visit.getCompanyId());

@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.VisitDAO;
 import com.beecode.toolvendor.interfaces.VisitService;
+import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
@@ -25,15 +26,17 @@ import java.util.concurrent.atomic.AtomicLong;
 public class VisitServiceImpl implements VisitService {
 
     private static final AtomicLong counter = new AtomicLong();
-     
+    
     //----------------------------- DAO ------------------------------------------
     private VisitDAO dao;
     //----------------------------- SERVICES -------------------------------------
     private UserServiceImpl userserv;
     private CustomerServiceImpl cstmrserv;
     private VisitTypeServiceImpl visittypeserv;
+    private BackLogServiceImpl backlog;
     
     public VisitServiceImpl() {
+        backlog = new BackLogServiceImpl();
         dao = new VisitDAO();
         userserv = new UserServiceImpl();
         cstmrserv = new CustomerServiceImpl();
@@ -43,48 +46,53 @@ public class VisitServiceImpl implements VisitService {
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
     public String save(Visit visit, Company company) {
-        
         Visit currentVisit = null;
         String message="";
-        if ( visit==null ) {
-            message="Se espero un objeto visit en formato JSON";
-        } else if ( visit.getCustomer()==null ) {
-            message="El campo Customer no puede ser nullo";
-        } else if ( visit.getScheduledDate()==null ) {
-            message="El campo ScheduledDate no puede ser nullo";
-        } else if ( visit.getUserId()==null ) {
-            message="El campo UserId no puede ser nullo";
-        } else if ( visit.getVisitType()==null ) {
-            message="El campo VisitTypeId no puede ser nullo";
-        } else if ( visit.getUserId()==0 ) {
-            message="El campo UserId no puede ser nullo";
-        } else if ( visit.getCustomer().getId()==0 ) {
-            message="El campo CustomerId no puede ser nullo";
-        } else if ( visit.getVisitType().getId()==0 ) {
-            message="El campo VisitTypeId no puede estar vacio";
-        } else if ( visit.getReason().length()==0 ) {
-            message="El campo Reason es obligatorio";
-        } else if ( !userserv.findId(visit.getUserId(), company) ) {
-            message="No existe un registro con este UserId.";
-        } else if ( !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
-            message="No existe un registro con este CustomerId.";   
-        } else if ( !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
-            message="No existe un registro con este VisitTypeId.";
-        } else {
-            //--- Created At fecha de creación del registro
-            Timestamp timestamp = new Timestamp(new Date().getTime());
-            visit.setCreatedAt( timestamp );            
-            
-            // Logica que define el estatus de la visita
-            if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
-            if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
-            if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
-            
-            dao.add(visit);
-            User user = userserv.findById(visit.getUserId(), company);
-            // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-            SendEmailScheduleVisitThread se = new SendEmailScheduleVisitThread(user, visit);
-            se.start();
+        try {    
+            if ( visit==null ) {
+                message="Se espero un objeto visit en formato JSON";
+            } else if ( visit.getCustomer()==null ) {
+                message="El campo Customer no puede ser nullo";
+            } else if ( visit.getScheduledDate()==null ) {
+                message="El campo ScheduledDate no puede ser nullo";
+            } else if ( visit.getUserId()==null ) {
+                message="El campo UserId no puede ser nullo";
+            } else if ( visit.getVisitType()==null ) {
+                message="El campo VisitTypeId no puede ser nullo";
+            } else if ( visit.getUserId()==0 ) {
+                message="El campo UserId no puede ser nullo";
+            } else if ( visit.getCustomer().getId()==0 ) {
+                message="El campo CustomerId no puede ser nullo";
+            } else if ( visit.getVisitType().getId()==0 ) {
+                message="El campo VisitTypeId no puede estar vacio";
+            } else if ( visit.getReason().length()==0 ) {
+                message="El campo Reason es obligatorio";
+            } else if ( !userserv.findId(visit.getUserId(), company) ) {
+                message="No existe un registro con este UserId.";
+            } else if ( !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
+                message="No existe un registro con este CustomerId.";   
+            } else if ( !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
+                message="No existe un registro con este VisitTypeId.";
+            } else {
+                //--- Created At fecha de creación del registro
+                Timestamp timestamp = new Timestamp(new Date().getTime());
+                visit.setCreatedAt( timestamp );            
+
+                // Logica que define el estatus de la visita
+                if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
+                if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+                if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+
+                dao.add(visit);
+                User user = userserv.findById(visit.getUserId(), company);
+                // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
+                SendEmailScheduleVisitThread se = new SendEmailScheduleVisitThread(user, visit);
+                se.start();
+            }
+        } catch ( Exception e ) {
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    e.getMessage()));
         }
         
         return message;
@@ -95,49 +103,55 @@ public class VisitServiceImpl implements VisitService {
     public String update(Visit visit, Company company) {
         Visit currentVisit = null;
         String message="";
-        if ( visit==null ) {
-            message="Se espero un objeto visit en formato JSON";
-        } else if ( visit.getId()==null ) {
-            message="El campo Id no puede ser nullo";
-        } else if ( visit.getId()==0 ) {
-            message="El campo Id no puede ser 0";
-        } else if ( visit.getUserId()!=null && !userserv.findId(visit.getUserId(), company) ) {
-            message="No existe un registro con este UserId.";
-        } else if ( visit.getCustomer()!=null && !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
-            message="No existe un registro con este CustomerId.";
-        } else if ( visit.getVisitType()!=null && !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
-            message="No existe un registro con este visitucttypeId.";
-        } else {
-            //--- obtiene el registro con toda su info para luego editar ---
-            currentVisit = dao.findById(visit.getId(), visit.getCompanyId());
-            if (currentVisit!=null) {
-                //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
-                if (visit.getId()!=null) currentVisit.setId(visit.getId());
-                if (visit.getScheduledDate()!=null) currentVisit.setScheduledDate(visit.getScheduledDate());
-                if (visit.getCheckin()!=null) currentVisit.setCheckin(visit.getCheckin());
-                if (visit.getCheckout()!=null) currentVisit.setCheckout(visit.getCheckout());
-                if (visit.getUserId()!=null) currentVisit.setUserId(visit.getUserId());
-                if (visit.getCustomer().getId()!=null) currentVisit.setCustomer(visit.getCustomer());
-                if (visit.getVisitType()!=null) currentVisit.setVisitType(visit.getVisitType());
-                if (visit.getComment()!=null) currentVisit.setComment(visit.getComment());
-                if (visit.getReason()!=null) currentVisit.setReason(visit.getReason());
-                if (visit.getFirm()!=null) currentVisit.setFirm(visit.getFirm());
-                if (visit.getReason_nullification()!=null) currentVisit.setReason_nullification(visit.getReason_nullification());
-                
-                // Logica que define el estatus de la visita
-                if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
-                if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
-                if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
-                if ( visit.getReason_nullification()!=null) visit.setStatus("nullified");
-
-                //--- LastUpdate fecha de actualizacion del registro
-                Timestamp timestamp = new Timestamp(new Date().getTime());
-                currentVisit.setLastUpdate(timestamp);
-                //--- se ejecuta el update en la capa de datos ---
-                dao.update(currentVisit);
+        try {
+            if ( visit==null ) {
+                message="Se espero un objeto visit en formato JSON";
+            } else if ( visit.getId()==null ) {
+                message="El campo Id no puede ser nullo";
+            } else if ( visit.getId()==0 ) {
+                message="El campo Id no puede ser 0";
+            } else if ( visit.getUserId()!=null && !userserv.findId(visit.getUserId(), company) ) {
+                message="No existe un registro con este UserId.";
+            } else if ( visit.getCustomer()!=null && !cstmrserv.findId(visit.getCustomer().getId(), visit.getCompanyId()) ) {
+                message="No existe un registro con este CustomerId.";
+            } else if ( visit.getVisitType()!=null && !visittypeserv.findId(visit.getVisitType().getId(), visit.getCompanyId()) ) {
+                message="No existe un registro con este visitucttypeId.";
             } else {
-                message="No se encontro un registro asociado para este id";
+                //--- obtiene el registro con toda su info para luego editar ---
+                currentVisit = dao.findById(visit.getId(), visit.getCompanyId());
+                if (currentVisit!=null) {
+                    //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
+                    if (visit.getId()!=null) currentVisit.setId(visit.getId());
+                    if (visit.getScheduledDate()!=null) currentVisit.setScheduledDate(visit.getScheduledDate());
+                    if (visit.getCheckin()!=null) currentVisit.setCheckin(visit.getCheckin());
+                    if (visit.getCheckout()!=null) currentVisit.setCheckout(visit.getCheckout());
+                    if (visit.getUserId()!=null) currentVisit.setUserId(visit.getUserId());
+                    if (visit.getCustomer().getId()!=null) currentVisit.setCustomer(visit.getCustomer());
+                    if (visit.getVisitType()!=null) currentVisit.setVisitType(visit.getVisitType());
+                    if (visit.getComment()!=null) currentVisit.setComment(visit.getComment());
+                    if (visit.getReason()!=null) currentVisit.setReason(visit.getReason());
+                    if (visit.getFirm()!=null) currentVisit.setFirm(visit.getFirm());
+                    if (visit.getReason_nullification()!=null) currentVisit.setReason_nullification(visit.getReason_nullification());
+
+                    // Logica que define el estatus de la visita
+                    if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
+                    if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+                    if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+                    if ( visit.getReason_nullification()!=null) visit.setStatus("nullified");
+
+                    //--- LastUpdate fecha de actualizacion del registro
+                    Timestamp timestamp = new Timestamp(new Date().getTime());
+                    currentVisit.setLastUpdate(timestamp);
+                    //--- se ejecuta el update en la capa de datos ---
+                    dao.update(currentVisit);
+                } else {
+                    message="No se encontro un registro asociado para este id";
+                }
             }
+        } catch ( Exception e ) {
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "update",
+                                    e.getMessage()));
         }
         
         return message;
@@ -165,7 +179,9 @@ public class VisitServiceImpl implements VisitService {
                 
             }
         } catch ( Exception e ) {
-            System.out.println("Error in visit sendEmailServicePage: " + e.getMessage());
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "sendEmailServicePage",
+                                    e.getMessage()));
         }
         
         return message;
@@ -179,7 +195,9 @@ public class VisitServiceImpl implements VisitService {
             int i = dao.delete(id);
             result = i==1;
         } catch ( Exception e ) {
-            System.out.println("Error in visit delete: " + e.getMessage());
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "delete",
+                                    e.getMessage()));
         }
         
         return result;
@@ -193,7 +211,9 @@ public class VisitServiceImpl implements VisitService {
             // Se busca en la bd los datos del usuario por Id.
             result = dao.findById(id, companyId);
         } catch ( Exception e ) {
-            System.out.println("Error in visit findById: " + e.getMessage());
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "findById",
+                                    e.getMessage()));
         }
         
         return result;
@@ -215,7 +235,9 @@ public class VisitServiceImpl implements VisitService {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByCompany(companyId);
         } catch ( Exception e ) {
-            System.out.println("Error in visit getAllByCompany: " + e.getMessage());
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "getAllByCompany",
+                                    e.getMessage()));
         }
         return list;
     }
@@ -227,7 +249,9 @@ public class VisitServiceImpl implements VisitService {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByUser(userId);
         } catch ( Exception e ) {
-            System.out.println("Error in visit getAllByUser: " + e.getMessage());
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "getAllByUser",
+                                    e.getMessage()));
         }
         return list;
     }
@@ -239,7 +263,9 @@ public class VisitServiceImpl implements VisitService {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByCustomer(customerId);
         } catch ( Exception e ) {
-            System.out.println("Error in visit getAllByCustomer: " + e.getMessage());
+            backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
+                                    "getAllByCustomer",
+                                    e.getMessage()));
         }
         return list;
     }

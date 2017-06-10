@@ -8,6 +8,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.CustomerDAO;
 import com.beecode.toolvendor.interfaces.CustomerService;
+import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
@@ -26,12 +27,14 @@ public class CustomerServiceImpl implements CustomerService {
     //----------------------------- SERVICES ---------------------------------
     private UserServiceImpl userserv = new UserServiceImpl();
     private CityServiceImpl cityserv = new CityServiceImpl();
+    private BackLogServiceImpl backlog;
     
     //------------------------------- DAO ------------------------------------
     private CustomerDAO dao;
 
     public CustomerServiceImpl() {
         dao = new CustomerDAO();
+        backlog = new BackLogServiceImpl();
     }
     
     //----------------------------- SAVE CUSTOMER --------------------------------
@@ -72,7 +75,9 @@ public class CustomerServiceImpl implements CustomerService {
                 
             }
         } catch ( Exception e ) {
-            System.out.println("Error in customer save: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    e.getMessage()));
         }
         return message;
     }
@@ -122,7 +127,9 @@ public class CustomerServiceImpl implements CustomerService {
 
             }
         } catch ( Exception e ) {
-            System.out.println("Error in customer update: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "update",
+                                    e.getMessage()));
         }
         return message;
     }
@@ -136,7 +143,9 @@ public class CustomerServiceImpl implements CustomerService {
             result = i==1;
             
         } catch ( Exception e ) {
-            System.out.println("Error in customer delete: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "delete",
+                                    e.getMessage()));
         }
         
         return result;
@@ -172,7 +181,9 @@ public class CustomerServiceImpl implements CustomerService {
             // Se busca en la bd los datos del customer por Id.
             result = dao.findById(id, companyId);
         } catch ( Exception e ) {
-            System.out.println("Error in customer findById: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "findById",
+                                    e.getMessage()));
         }
         return result;
     }
@@ -185,7 +196,9 @@ public class CustomerServiceImpl implements CustomerService {
             // Se busca en la bd los datos del customer por Email.
             result = dao.findByEmail(email, companyId);
         } catch ( Exception e ) {
-            System.out.println("Error in customer findByEmail: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "findByEmail",
+                                    e.getMessage()));
         }
         return result;
     }
@@ -198,7 +211,9 @@ public class CustomerServiceImpl implements CustomerService {
             // Se consulta en la bd los customer registrados para un usuario.
             list = dao.getAllByCompany(companyId);
         } catch ( Exception e ) {
-            System.out.println("Error in customer getAllByCompany: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "getAllByCompany",
+                                    e.getMessage()));
         }
         return list;
     }
@@ -211,7 +226,9 @@ public class CustomerServiceImpl implements CustomerService {
             // Se consulta en la bd los customer registrados para un usuario.
             list = dao.getAllByUser(user);
         } catch ( Exception e ) {
-            System.out.println("Error in customer getAllByUser: " + e.getMessage());
+            backlog.save(new BackLog(CustomerServiceImpl.class.getSimpleName(), 
+                                    "getAllByUser",
+                                    e.getMessage()));
         }
         return list;
     }

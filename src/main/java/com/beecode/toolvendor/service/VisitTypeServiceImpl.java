@@ -8,9 +8,7 @@ package com.beecode.toolvendor.service;
 import com.beecode.toolvendor.dao.VisitTypeDAO;
 import com.beecode.toolvendor.interfaces.VisitTypeService;
 import com.beecode.toolvendor.model.VisitType;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**

@@ -8,6 +8,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.ProductDAO;
 import com.beecode.toolvendor.interfaces.ProductService;
+import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.Product;
 import java.util.Date;
 import java.util.List;
@@ -25,13 +26,20 @@ public class ProductServiceImpl implements ProductService  {
     private final ProductDAO dao = new ProductDAO();
     
     //----------------------------- SERVICES ------------------------------------
-    private final BrandServiceImpl brandserv = new BrandServiceImpl();
-    private final CategoryServiceImpl categoryserv = new CategoryServiceImpl();
-    private final FamilyServiceImpl familyserv = new FamilyServiceImpl();
-    private final PresentationServiceImpl presentationserv = new PresentationServiceImpl();
-    private final ProductTypeServiceImpl producttypeserv = new ProductTypeServiceImpl();
+    private BrandServiceImpl brandserv;
+    private CategoryServiceImpl categoryserv;
+    private FamilyServiceImpl familyserv;
+    private PresentationServiceImpl presentationserv;
+    private ProductTypeServiceImpl producttypeserv;
+    private BackLogServiceImpl backlog;
 
     public ProductServiceImpl() {
+        backlog = new BackLogServiceImpl();
+        brandserv = new BrandServiceImpl();
+        categoryserv = new CategoryServiceImpl();
+        familyserv = new FamilyServiceImpl();
+        presentationserv = new PresentationServiceImpl();
+        producttypeserv = new ProductTypeServiceImpl();
     }
     
     //----------------------------- SAVE PRODUCT --------------------------------
@@ -83,7 +91,9 @@ public class ProductServiceImpl implements ProductService  {
                 }
             }
         } catch ( Exception e ) {
-            System.out.println("Error in product save: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    e.getMessage()));
         }
         
         return message;
@@ -138,6 +148,9 @@ public class ProductServiceImpl implements ProductService  {
             }
         } catch ( Exception e ) {
             System.out.println("Error in product update: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "update",
+                                    e.getMessage()));
         }
         
         
@@ -153,6 +166,9 @@ public class ProductServiceImpl implements ProductService  {
             result = i==1;
         } catch ( Exception e ) {
             System.out.println("Error in product delete: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "delete",
+                                    e.getMessage()));
         }
         
         return result;
@@ -193,6 +209,9 @@ public class ProductServiceImpl implements ProductService  {
             result = dao.findById(id, companyId);
         } catch ( Exception e ) {
             System.out.println("Error in product findById: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "findById",
+                                    e.getMessage()));
         }
         return result;
     }
@@ -206,6 +225,9 @@ public class ProductServiceImpl implements ProductService  {
             result = dao.findByName(name, companyId);
         } catch ( Exception e ) {
             System.out.println("Error in product findByName: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "findByName",
+                                    e.getMessage()));
         }
         return result;
     }
@@ -219,6 +241,9 @@ public class ProductServiceImpl implements ProductService  {
             result = dao.findByBarcode(barcode, companyId);
         } catch ( Exception e ) {
             System.out.println("Error in product findByBarcode: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "findByBarcode",
+                                    e.getMessage()));
         }
         return result;
     }
@@ -232,6 +257,9 @@ public class ProductServiceImpl implements ProductService  {
             list = dao.getAllByCompany(companyId);
         } catch ( Exception e ) {
             System.out.println("Error in product getAllByCompany: " + e.getMessage());
+            backlog.save(new BackLog(ProductServiceImpl.class.getSimpleName(), 
+                                    "getAllByCompany",
+                                    e.getMessage()));
         }
         return list;
     }

@@ -7,6 +7,7 @@ package com.beecode.toolvendor.service;
 
 import com.beecode.toolvendor.dao.VisitPictureDAO;
 import com.beecode.toolvendor.interfaces.VisitPictureService;
+import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.VisitPicture;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -21,11 +22,13 @@ public class VisitPictureServiceImpl implements VisitPictureService {
      
     //----------------------------- SERVICES -------------------------------------
     private VisitServiceImpl visitserv;
+    private BackLogServiceImpl backlog;
     
     //----------------------------- DAO ------------------------------------------
     private VisitPictureDAO dao;
 
     public VisitPictureServiceImpl() {
+        backlog = new BackLogServiceImpl();
         dao = new VisitPictureDAO();
         visitserv = new VisitServiceImpl();
     }
@@ -35,31 +38,37 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     public String save(VisitPicture obj, Integer companyId) {
         VisitPicture current = null;
         String message="";
-        if ( obj==null ) {
-            message="Se espero un objeto VisitPicture en formato JSON";
-        } else if ( obj.getVisitId()==null ) {
-            message="El campo VisitId no puede ser null";
-        } else if ( obj.getPicture()==null ) {
-            message="El campo Picture no puede ser null";
-        } else if ( obj.getVisitId()==0 ) {
-            message="El campo VisitId no puede ser igual a 0";
-        } else if ( obj.getPicture().length()==0 ) {
-            message="Debe indicar un nombre para la imagen con la extension .jpg o .png";    
-        } else if ( obj.getVisitId()!=null && !visitserv.findId(obj.getVisitId(), companyId) ) {
-            message="El campo visitId no existe o es invalido.";    
-        } else if ( findPicture(obj.getPicture()) ) {
-            message="Ya existe una imagen usando este nombre en el servidor";
-        } else {
-            
-            //--- AtCreated fecha de creación del registro
-            dao.add(obj);
-            
-            //--- obtiene el registro guardado con toda su info para la respuesta ---
-            /*current = dao.findByPicture(obj.getPicture());
-            if ( current==null) {
-                message="El registro no se pudo guardar, ocurrio un error inesperado.";
-            }*/
+        try {
+            if ( obj==null ) {
+                message="Se espero un objeto VisitPicture en formato JSON";
+            } else if ( obj.getVisitId()==null ) {
+                message="El campo VisitId no puede ser null";
+            } else if ( obj.getPicture()==null ) {
+                message="El campo Picture no puede ser null";
+            } else if ( obj.getVisitId()==0 ) {
+                message="El campo VisitId no puede ser igual a 0";
+            } else if ( obj.getPicture().length()==0 ) {
+                message="Debe indicar un nombre para la imagen con la extension .jpg o .png";    
+            } else if ( obj.getVisitId()!=null && !visitserv.findId(obj.getVisitId(), companyId) ) {
+                message="El campo visitId no existe o es invalido.";    
+            } else if ( findPicture(obj.getPicture()) ) {
+                message="Ya existe una imagen usando este nombre en el servidor";
+            } else {
 
+                //--- AtCreated fecha de creación del registro
+                dao.add(obj);
+
+                //--- obtiene el registro guardado con toda su info para la respuesta ---
+                /*current = dao.findByPicture(obj.getPicture());
+                if ( current==null) {
+                    message="El registro no se pudo guardar, ocurrio un error inesperado.";
+                }*/
+
+            }
+        } catch ( Exception e ) {
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    e.getMessage()));
         }
         //-------------- si ocurrio un error la variable contiene el mensaje de error ---------------
         
@@ -71,28 +80,32 @@ public class VisitPictureServiceImpl implements VisitPictureService {
     public String update(VisitPicture obj, Integer companyId) {
         VisitPicture current = null;
         String message="";
-        
-        if ( obj==null ) {
-            message="Se espero un objeto Group en formato JSON";
-        } else if ( obj.getId()==0 ) {
-            message="El campo Id no puede estar vacio";
-        } else if ( obj.getVisitId()!=null && !findId(obj.getVisitId()) ) {
-            message="No existe un registro con este visitId.";
-        } else {
-            //--- obtiene el registro con toda su info para luego editar --- 
-            current = dao.findById( obj.getId() );
-            if (current!=null) {
-                //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
-                if (obj.getPicture()!=null) current.setPicture(obj.getPicture());
-                if (obj.getComment()!=null) current.setComment(obj.getComment());
-                
-                //--- se ejecuta el update en la capa de datos ---
-                dao.update(current);
+        try {
+            if ( obj==null ) {
+                message="Se espero un objeto Group en formato JSON";
+            } else if ( obj.getId()==0 ) {
+                message="El campo Id no puede estar vacio";
+            } else if ( obj.getVisitId()!=null && !findId(obj.getVisitId()) ) {
+                message="No existe un registro con este visitId.";
             } else {
-                message="No se encontro un registro asociado para este id";
+                //--- obtiene el registro con toda su info para luego editar --- 
+                current = dao.findById( obj.getId() );
+                if (current!=null) {
+                    //--- se reemplaza solo los campos obtenidos y que no vengan null desde el front
+                    if (obj.getPicture()!=null) current.setPicture(obj.getPicture());
+                    if (obj.getComment()!=null) current.setComment(obj.getComment());
+
+                    //--- se ejecuta el update en la capa de datos ---
+                    dao.update(current);
+                } else {
+                    message="No se encontro un registro asociado para este id";
+                }
             }
+        } catch ( Exception e ) {
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "update",
+                                    e.getMessage()));
         }
-        
         return message;
     }
  
@@ -104,7 +117,9 @@ public class VisitPictureServiceImpl implements VisitPictureService {
             int i = dao.delete(id);
             result = i==1;
         } catch ( Exception e ) {
-            System.out.println("Error in Stock delete: " + e.getMessage());
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "delete",
+                                    e.getMessage()));
         }
         
         return result;
@@ -118,7 +133,9 @@ public class VisitPictureServiceImpl implements VisitPictureService {
             // Se busca en la bd una imagen por Id.
             result = dao.findById(id);
         } catch ( Exception e ) {
-            System.out.println("Error in VisitPicture findById: " + e.getMessage());
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "findById",
+                                    e.getMessage()));
         }
         
         return result;
@@ -131,7 +148,9 @@ public class VisitPictureServiceImpl implements VisitPictureService {
             // Se busca en la bd una imagen por nombre.
             result = dao.findByPicture(picture);
         } catch ( Exception e ) {
-            System.out.println("Error in VisitPicture findById: " + e.getMessage());
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "findByPicture",
+                                    e.getMessage()));
         }
         
         return result;
@@ -158,7 +177,9 @@ public class VisitPictureServiceImpl implements VisitPictureService {
             // Se consulta en la bd las marcas registradas de una compañia.
             list = dao.getAllByVisit(visitId);
         } catch ( Exception e ) {
-            System.out.println("Error in Stock getAllByProduct: " + e.getMessage());
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "getAllByVisit",
+                                    e.getMessage()));
         }
         return list;
     }

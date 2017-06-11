@@ -9,6 +9,7 @@ package com.beecode.toolvendor.service;
 import com.beecode.toolvendor.dao.OrderDAO;
 import com.beecode.toolvendor.interfaces.OrderService;
 import com.beecode.toolvendor.interfaces.OrderService;
+import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Order;
 import java.util.Date;
@@ -26,11 +27,16 @@ public class OrderServiceImpl implements OrderService {
     //----------------------------- DAO ------------------------------------------
     private final OrderDAO dao = new OrderDAO();
     //----------------------------- SERVICES -------------------------------------
-    private final UserServiceImpl userserv = new UserServiceImpl();
-    private final CustomerServiceImpl cstmrserv = new CustomerServiceImpl();
-    private final OrderTypeServiceImpl ordertypeserv = new OrderTypeServiceImpl();
+    private UserServiceImpl userserv = new UserServiceImpl();
+    private CustomerServiceImpl cstmrserv = new CustomerServiceImpl();
+    private OrderTypeServiceImpl ordertypeserv = new OrderTypeServiceImpl();
+    private BackLogServiceImpl backlog;
     
     public OrderServiceImpl() {
+        backlog = new BackLogServiceImpl();
+        userserv = new UserServiceImpl();
+        cstmrserv = new CustomerServiceImpl();
+        ordertypeserv = new OrderTypeServiceImpl();
     }
     
     //----------------------- Agregar nuevo registro ---------------------------------
@@ -38,30 +44,36 @@ public class OrderServiceImpl implements OrderService {
     public String save(Order order, Company company) {
         Order currentOrder = null;
         String message="";
-        if ( order==null ) {
-            message="Se espero un objeto order en formato JSON";
-        } else if ( order.getCustomerId()==null ) {
-            message="El campo CustomerId no puede ser nullo";
-        } else if ( order.getUserId()==null ) {
-            message="El campo UserId no puede ser nullo";
-        } else if ( order.getOrderType()==null ) {
-            message="El campo OrderTypeId no puede ser nullo";
-        } else if ( order.getUserId()==0 ) {
-            message="El campo UserId no puede ser nullo";
-        } else if ( order.getCustomerId()==0 ) {
-            message="El campo CustomerId no puede ser nullo";
-        } else if ( order.getOrderType().getId()==0 ) {
-            message="El campo OrderTypeId no puede estar vacio";
-        } else if ( !userserv.findId(order.getUserId(), company) ) {
-            message="No existe un registro con este UserId.";
-        } else if ( !cstmrserv.findId(order.getCustomerId(), order.getCompanyId()) ) {
-            message="No existe un registro con este CustomerId.";   
-        } else if ( !ordertypeserv.findId(order.getOrderType().getId()) ) {
-            message="No existe un registro con este OrderTypeId.";
-        } else {
-            //--- Created At fecha de creación del registro
-            order.setCreatedAt(new Date() );
-            dao.add(order);
+        try {
+            if ( order==null ) {
+                message="Se espero un objeto order en formato JSON";
+            } else if ( order.getCustomerId()==null ) {
+                message="El campo CustomerId no puede ser nullo";
+            } else if ( order.getUserId()==null ) {
+                message="El campo UserId no puede ser nullo";
+            } else if ( order.getOrderType()==null ) {
+                message="El campo OrderTypeId no puede ser nullo";
+            } else if ( order.getUserId()==0 ) {
+                message="El campo UserId no puede ser nullo";
+            } else if ( order.getCustomerId()==0 ) {
+                message="El campo CustomerId no puede ser nullo";
+            } else if ( order.getOrderType().getId()==0 ) {
+                message="El campo OrderTypeId no puede estar vacio";
+            } else if ( !userserv.findId(order.getUserId(), company) ) {
+                message="No existe un registro con este UserId.";
+            } else if ( !cstmrserv.findId(order.getCustomerId(), order.getCompanyId()) ) {
+                message="No existe un registro con este CustomerId.";   
+            } else if ( !ordertypeserv.findId(order.getOrderType().getId()) ) {
+                message="No existe un registro con este OrderTypeId.";
+            } else {
+                //--- Created At fecha de creación del registro
+                order.setCreatedAt(new Date() );
+                dao.add(order);
+            }
+        } catch ( Exception e ) {
+            backlog.save(new BackLog(VisitPictureServiceImpl.class.getSimpleName(), 
+                                    "save",
+                                    e.getMessage()));
         }
         //-------------- si ocurrio un error la variable contiene el mensaje de error ---------------
         

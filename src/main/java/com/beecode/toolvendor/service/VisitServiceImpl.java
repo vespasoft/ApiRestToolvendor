@@ -80,8 +80,8 @@ public class VisitServiceImpl implements VisitService {
 
                 // Logica que define el estatus de la visita
                 if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
-                if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
-                if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+                else if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+                else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
 
                 dao.add(visit);
                 User user = userserv.findById(visit.getUserId(), company);
@@ -93,6 +93,7 @@ public class VisitServiceImpl implements VisitService {
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "save",
                                     e.getMessage()));
+            System.out.print("Error save: " + e.getMessage());
         }
         
         return message;
@@ -122,7 +123,7 @@ public class VisitServiceImpl implements VisitService {
                     if (visit.getCheckin()!=null) currentVisit.setCheckin(visit.getCheckin());
                     if (visit.getCheckout()!=null) currentVisit.setCheckout(visit.getCheckout());
                     if (visit.getUserId()!=null) currentVisit.setUserId(visit.getUserId());
-                    if (visit.getCustomer().getId()!=null) currentVisit.setCustomer(visit.getCustomer());
+                    if (visit.getCustomer()!=null) currentVisit.setCustomer(visit.getCustomer());
                     if (visit.getVisitType()!=null) currentVisit.setVisitType(visit.getVisitType());
                     if (visit.getComment()!=null) currentVisit.setComment(visit.getComment());
                     if (visit.getReason()!=null) currentVisit.setReason(visit.getReason());
@@ -131,10 +132,9 @@ public class VisitServiceImpl implements VisitService {
 
                     // Logica que define el estatus de la visita
                     if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
-                    if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
-                    if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
-                    if ( visit.getReason_nullification()!=null) visit.setStatus("nullified");
-
+                    else if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+                    else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+                    
                     //--- LastUpdate fecha de actualizacion del registro
                     Timestamp timestamp = new Timestamp(new Date().getTime());
                     currentVisit.setLastUpdate(timestamp);
@@ -145,6 +145,7 @@ public class VisitServiceImpl implements VisitService {
                 }
             }
         } catch ( Exception e ) {
+            System.out.print("Error update: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "update",
                                     e.getMessage()));
@@ -175,6 +176,7 @@ public class VisitServiceImpl implements VisitService {
                 
             }
         } catch ( Exception e ) {
+            System.out.print("Error sendEmailServicePage: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "sendEmailServicePage",
                                     e.getMessage()));
@@ -191,6 +193,7 @@ public class VisitServiceImpl implements VisitService {
             int i = dao.delete(id);
             result = i==1;
         } catch ( Exception e ) {
+            System.out.print("Error delete: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "delete",
                                     e.getMessage()));
@@ -207,6 +210,7 @@ public class VisitServiceImpl implements VisitService {
             // Se busca en la bd los datos del usuario por Id.
             result = dao.findById(id, companyId);
         } catch ( Exception e ) {
+            System.out.print("Error findById: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "findById",
                                     e.getMessage()));
@@ -231,6 +235,7 @@ public class VisitServiceImpl implements VisitService {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByCompany(companyId);
         } catch ( Exception e ) {
+            System.out.print("Error getAllByCompany: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "getAllByCompany",
                                     e.getMessage()));
@@ -245,6 +250,7 @@ public class VisitServiceImpl implements VisitService {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByUser(userId);
         } catch ( Exception e ) {
+            System.out.print("Error getAllByUser: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "getAllByUser",
                                     e.getMessage()));
@@ -259,6 +265,7 @@ public class VisitServiceImpl implements VisitService {
             // Se consulta en la bd los usuarios registrados de una compañia.
             list = dao.getAllByCustomer(customerId);
         } catch ( Exception e ) {
+            System.out.print("Error getAllByCustomer: " + e.getMessage());
             backlog.save(new BackLog(VisitServiceImpl.class.getSimpleName(), 
                                     "getAllByCustomer",
                                     e.getMessage()));

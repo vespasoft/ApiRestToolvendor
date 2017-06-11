@@ -183,7 +183,7 @@ public class Visit  implements java.io.Serializable {
         this.reason = reason;
     }
 
-    @Column(name="reason_nullification", length=100)
+    @Column(name="reason_nullification")
     public String getReason_nullification() {
         return reason_nullification;
     }

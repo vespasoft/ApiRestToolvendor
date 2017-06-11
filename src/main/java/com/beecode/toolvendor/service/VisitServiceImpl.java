@@ -79,9 +79,9 @@ public class VisitServiceImpl implements VisitService {
                 visit.setCreatedAt( timestamp );            
 
                 // Logica que define el estatus de la visita
-                if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
-                else if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
-                else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+                if ( visit.getCheckin()==null && visit.getCheckout()==null) currentVisit.setStatus("pending");
+                else if ( visit.getCheckin()!=null && visit.getCheckout()==null) currentVisit.setStatus("checkin");
+                else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) currentVisit.setStatus("checkout");
 
                 dao.add(visit);
                 User user = userserv.findById(visit.getUserId(), company);
@@ -131,9 +131,9 @@ public class VisitServiceImpl implements VisitService {
                     if (visit.getReason_nullification()!=null) currentVisit.setReason_nullification(visit.getReason_nullification());
 
                     // Logica que define el estatus de la visita
-                    if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
-                    else if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
-                    else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
+                    if ( visit.getCheckin()==null && visit.getCheckout()==null) currentVisit.setStatus("pending");
+                    else if ( visit.getCheckin()!=null && visit.getCheckout()==null) currentVisit.setStatus("checkin");
+                    else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) currentVisit.setStatus("checkout");
                     
                     //--- LastUpdate fecha de actualizacion del registro
                     Timestamp timestamp = new Timestamp(new Date().getTime());

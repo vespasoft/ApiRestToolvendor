@@ -46,7 +46,6 @@ public class VisitServiceImpl implements VisitService {
     //----------------------- Agregar nuevo registro ---------------------------------
     @Override
     public String save(Visit visit, Company company) {
-        Visit currentVisit = null;
         String message="";
         try {    
             if ( visit==null ) {
@@ -79,9 +78,9 @@ public class VisitServiceImpl implements VisitService {
                 visit.setCreatedAt( timestamp );            
 
                 // Logica que define el estatus de la visita
-                if ( visit.getCheckin()==null && visit.getCheckout()==null) currentVisit.setStatus("pending");
-                else if ( visit.getCheckin()!=null && visit.getCheckout()==null) currentVisit.setStatus("checkin");
-                else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) currentVisit.setStatus("checkout");
+                if ( visit.getCheckin()==null && visit.getCheckout()==null) visit.setStatus("pending");
+                else if ( visit.getCheckin()!=null && visit.getCheckout()==null) visit.setStatus("checkin");
+                else if ( visit.getCheckin()!=null && visit.getCheckout()!=null) visit.setStatus("checkout");
 
                 dao.add(visit);
                 User user = userserv.findById(visit.getUserId(), company);

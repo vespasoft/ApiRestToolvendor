@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Company;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -25,7 +25,7 @@ public class CompanyDAO {
     private static String queryDelete = "delete from Company where id = :id";
     
     public void add(Company entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -38,7 +38,7 @@ public class CompanyDAO {
     }
     
     public void update(Company entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -51,7 +51,7 @@ public class CompanyDAO {
     }
     
     public List getAll() {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -69,7 +69,7 @@ public class CompanyDAO {
     }
     
     public Company findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Company result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -94,7 +94,7 @@ public class CompanyDAO {
        Este metodo permite hacer una busqueda por cualquier campo String de la tabla.
     */
     public Company findByEmail(String email) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Company result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -121,7 +121,7 @@ public class CompanyDAO {
        Este metodo permite hacer una busqueda por cualquier campo String de la tabla.
     */
     public Company findByStringField(String field, String value) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Company result = null;
         try{
            Criteria cr = session.createCriteria(Company.class);
@@ -144,7 +144,7 @@ public class CompanyDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

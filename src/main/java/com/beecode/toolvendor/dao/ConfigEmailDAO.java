@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.ConfigEmail;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -24,7 +24,7 @@ public class ConfigEmailDAO {
     private final String queryDelete = "delete from ConfigEmail where id = :id";
     
     public void add(ConfigEmail entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -37,7 +37,7 @@ public class ConfigEmailDAO {
     }
     
     public void update(ConfigEmail entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -50,7 +50,7 @@ public class ConfigEmailDAO {
     }
     
     public ConfigEmail findByCompanyId(int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         ConfigEmail result = null;
         Transaction tx = null;
         try{
@@ -74,7 +74,7 @@ public class ConfigEmailDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

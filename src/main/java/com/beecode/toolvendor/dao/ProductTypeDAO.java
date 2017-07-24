@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.ProductType;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -28,7 +28,7 @@ public class ProductTypeDAO {
     private static String queryDelete = "delete from ProductType where id = :id";
     
     public void add(ProductType entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +41,7 @@ public class ProductTypeDAO {
     }
     
     public void update(ProductType entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +54,7 @@ public class ProductTypeDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(ProductType.class);
@@ -72,7 +72,7 @@ public class ProductTypeDAO {
     }
     
     public ProductType findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         ProductType result = null;
         Transaction tx = null;
         try{
@@ -97,7 +97,7 @@ public class ProductTypeDAO {
     }
     
     public ProductType findByName(String name, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         ProductType result = null;
         Transaction tx = null;
         try{
@@ -122,7 +122,7 @@ public class ProductTypeDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

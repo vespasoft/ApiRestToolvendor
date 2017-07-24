@@ -7,7 +7,7 @@ package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -32,7 +32,7 @@ public class CustomerDAO {
     private static String queryDelete = "delete from Customer where id = :id";
     
     public boolean add(Customer entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         boolean result = false;
         try {
@@ -54,7 +54,7 @@ public class CustomerDAO {
     }
     
     public boolean update(Customer entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         boolean result = false;
         try {
@@ -82,7 +82,7 @@ public class CustomerDAO {
         Return: List<Visit>
     */
     public List getAllByUser(User user) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -108,7 +108,7 @@ public class CustomerDAO {
         Return: List<Customer>
     */
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -128,7 +128,7 @@ public class CustomerDAO {
     }
     
     public Customer findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -150,7 +150,7 @@ public class CustomerDAO {
     }
     
     public Customer findByCompanyName(String companyname, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -172,7 +172,7 @@ public class CustomerDAO {
     }
     
     public Customer findByEmail(String email, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Customer result = null;
         try{
            Criteria cr = session.createCriteria(Customer.class);
@@ -194,7 +194,7 @@ public class CustomerDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         try {
             Query query = session.createQuery(queryDelete);

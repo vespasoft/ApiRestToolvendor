@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.UserType;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -26,7 +26,7 @@ public class UserTypeDAO {
     private static String queryDelete = "delete from UserType where id = :id";
     
     public void add(UserType entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -39,7 +39,7 @@ public class UserTypeDAO {
     }
     
     public void update(UserType entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -52,7 +52,7 @@ public class UserTypeDAO {
     }
     
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(UserType.class);
@@ -70,7 +70,7 @@ public class UserTypeDAO {
     }
     
     /*public UserType findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserType result = null;
         try {
            Criteria cr = session.createCriteria(UserType.class);
@@ -91,7 +91,7 @@ public class UserTypeDAO {
     }*/
     
     public UserType findById(int id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserType result = null;
         try {
            Criteria cr = session.createCriteria(UserType.class);
@@ -113,7 +113,7 @@ public class UserTypeDAO {
     }
     
     public UserType findByDescription(String descrip, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserType result = null;
         try{
            Criteria cr = session.createCriteria(UserType.class);
@@ -137,7 +137,7 @@ public class UserTypeDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

@@ -7,7 +7,7 @@ package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.City;
 import com.beecode.toolvendor.model.Country;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -29,7 +29,7 @@ public class CityDAO {
     private static String queryDelete = "delete from City where id = :id";
     
     public void add(City entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -42,7 +42,7 @@ public class CityDAO {
     }
     
     public void update(City entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -55,7 +55,7 @@ public class CityDAO {
     }
     
     public List getAllByCountry(Country country) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try {
            Criteria cr = session.createCriteria(City.class);
@@ -73,7 +73,7 @@ public class CityDAO {
     }
     
     public City findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         City result = null;
         try{
            Criteria cr = session.createCriteria(City.class);
@@ -94,7 +94,7 @@ public class CityDAO {
     }
     
     public City findByName(String name) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         City result = null;
         try{
            Criteria cr = session.createCriteria(City.class);
@@ -117,7 +117,7 @@ public class CityDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

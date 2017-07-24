@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Permission;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -28,7 +28,7 @@ public class PermissionDAO {
     private final String queryDelete = "delete from Permission where id = :id";
     
     public void add(Permission entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +41,7 @@ public class PermissionDAO {
     }
     
     public void update(Permission entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +54,7 @@ public class PermissionDAO {
     }
     
     public List getAllByGroup(Integer groupId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Permission.class);
@@ -72,7 +72,7 @@ public class PermissionDAO {
     }
     
     public Permission findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Permission result = null;
         try {
            Criteria cr = session.createCriteria(Permission.class);
@@ -93,7 +93,7 @@ public class PermissionDAO {
     }
     
     public Permission findByGroupModule(int groupId, int moduleId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Permission result = null;
         try {
            Criteria cr = session.createCriteria(Permission.class);
@@ -115,7 +115,7 @@ public class PermissionDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);
@@ -127,7 +127,7 @@ public class PermissionDAO {
     }
     
     /*public List getAll(int groupId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Query query = session.createQuery(queryAll);
         query.setInteger("groupId", groupId);
         List result = query.list();
@@ -135,7 +135,7 @@ public class PermissionDAO {
     }
     
     public List findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Query query = session.createQuery(queryId);
         query.setInteger(fieldId, id);
         List result = query.list();
@@ -143,7 +143,7 @@ public class PermissionDAO {
     }
     
     public List findByModuleId(int groupId, int moduleId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Query query = session.createQuery(queryDuplex);
         query.setInteger("groupId", groupId);
         query.setInteger("moduleId", moduleId);

@@ -7,7 +7,7 @@ package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Groups;
 import com.beecode.toolvendor.model.UserGroups;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -29,7 +29,7 @@ public class UserGroupsDAO {
     private static String queryDelete = "delete from UserGroups where id = :id";
     
     public void add(UserGroups entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -42,7 +42,7 @@ public class UserGroupsDAO {
     }
     
     public void update(UserGroups entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -55,7 +55,7 @@ public class UserGroupsDAO {
     }
     
     public List getAllByUser(Integer userId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(UserGroups.class)
@@ -75,7 +75,7 @@ public class UserGroupsDAO {
     }
     
     public UserGroups findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserGroups result = null;
         try {
            Criteria cr = session.createCriteria(UserGroups.class);
@@ -96,7 +96,7 @@ public class UserGroupsDAO {
     }
     
     public UserGroups findByUserGroups(Integer userId, Integer groupId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserGroups result = null;
         try {
            Criteria cr = session.createCriteria(Groups.class);
@@ -118,7 +118,7 @@ public class UserGroupsDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

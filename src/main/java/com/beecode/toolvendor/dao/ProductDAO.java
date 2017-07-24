@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Product;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -28,7 +28,7 @@ public class ProductDAO {
     private static final String queryDelete = "delete from Product where id = :id";
     
     public boolean add(Product entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         boolean result = false;
         try {
@@ -50,7 +50,7 @@ public class ProductDAO {
     }
     
     public boolean update(Product entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         boolean result = false;
         try {
@@ -78,7 +78,7 @@ public class ProductDAO {
         Return: List<Product>
     */
     public List getAllByCompany(Integer companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(Product.class);
@@ -98,7 +98,7 @@ public class ProductDAO {
     }
     
     public Product findById(Integer id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Product result = null;
         try{
            Criteria cr = session.createCriteria(Product.class);
@@ -119,7 +119,7 @@ public class ProductDAO {
     }
     
     public Product findById(Integer id, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Product result = null;
         try{
            Criteria cr = session.createCriteria(Product.class);
@@ -141,7 +141,7 @@ public class ProductDAO {
     }
     
     public Product findByName(String name, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Product result = null;
         try{
            Criteria cr = session.createCriteria(Product.class);
@@ -165,7 +165,7 @@ public class ProductDAO {
     }
     
     public Product findByBarcode(String barcode, int companyId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Product result = null;
         try{
            Criteria cr = session.createCriteria(Product.class);
@@ -188,7 +188,7 @@ public class ProductDAO {
     }
     
     public int delete(Integer id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

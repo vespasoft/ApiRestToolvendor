@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.OrderDetail;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -25,7 +25,7 @@ public class OrderDetailDAO {
     private static String queryDelete = "delete from OrderDetail where id = :id";
     
     public void add(OrderDetail entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -38,7 +38,7 @@ public class OrderDetailDAO {
     }
     
     public void update(OrderDetail entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -57,7 +57,7 @@ public class OrderDetailDAO {
     Return: List<OrderDetail>
     */
     public List getAllByOrder(int orderId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(OrderDetail.class);
@@ -83,7 +83,7 @@ public class OrderDetailDAO {
     Return: OrderDetail
     */
     public OrderDetail findById(Integer id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         OrderDetail result = null;
         try{
            Criteria cr = session.createCriteria(OrderDetail.class);
@@ -104,7 +104,7 @@ public class OrderDetailDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

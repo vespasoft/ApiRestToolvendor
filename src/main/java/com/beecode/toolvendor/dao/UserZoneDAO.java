@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.UserZone;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -28,7 +28,7 @@ public class UserZoneDAO {
     private static String queryDelete = "delete from UserZone where id = :id";
     
     public void add(UserZone entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -41,7 +41,7 @@ public class UserZoneDAO {
     }
     
     public void update(UserZone entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +54,7 @@ public class UserZoneDAO {
     }
     
     public List getAllByUser(Integer userId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         List result = null;
         try{
            Criteria cr = session.createCriteria(UserZone.class)
@@ -74,7 +74,7 @@ public class UserZoneDAO {
     }
     
     public UserZone findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserZone result = null;
         try {
            Criteria cr = session.createCriteria(UserZone.class);
@@ -95,7 +95,7 @@ public class UserZoneDAO {
     }
     
     public UserZone findByUserZone(Integer userId, Integer zoneId) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         UserZone result = null;
         try {
            Criteria cr = session.createCriteria(UserZone.class);
@@ -117,7 +117,7 @@ public class UserZoneDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

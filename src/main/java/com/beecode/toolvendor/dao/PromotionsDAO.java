@@ -6,7 +6,7 @@
 package com.beecode.toolvendor.dao;
 
 import com.beecode.toolvendor.model.Promotions;
-import com.beecode.toolvendor.util.SessionUtil;
+import com.beecode.toolvendor.util.SessionUtil1;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -27,7 +27,7 @@ public class PromotionsDAO {
     private static String queryDelete = "delete from Promotions where id = :id";
     
     public void add(Promotions entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         add(session, entity);
         tx.commit();
@@ -40,7 +40,7 @@ public class PromotionsDAO {
     }
     
     public void update(Promotions entity) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         update(session, entity);
         tx.commit();
@@ -54,7 +54,7 @@ public class PromotionsDAO {
     
     public List getAllByCompany(Integer companyId) {
         List result = null;
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         try{
             Transaction tx = session.beginTransaction();
             Query query = session.createQuery(queryAll);
@@ -73,7 +73,7 @@ public class PromotionsDAO {
     }
     
     public Promotions findById(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Promotions result = null;
         Transaction tx = null;
         try{
@@ -97,7 +97,7 @@ public class PromotionsDAO {
     }
     
     public int delete(int id) {
-        Session session = SessionUtil.getSession();
+        Session session = SessionUtil1.getSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(queryDelete);
         query.setInteger(fieldId, id);

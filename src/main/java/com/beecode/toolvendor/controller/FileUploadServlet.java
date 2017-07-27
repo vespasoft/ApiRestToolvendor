@@ -5,23 +5,15 @@
  */
 package com.beecode.toolvendor.controller;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.beecode.toolvendor.security.SecurityUtil;
 import com.beecode.toolvendor.service.AmazonS3Service;
 import com.beecode.toolvendor.util.ImageValidator;
-import com.beecode.toolvendor.util.StringUtil;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
  
 import javax.servlet.ServletException;

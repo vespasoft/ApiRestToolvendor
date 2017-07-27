@@ -120,6 +120,8 @@ public class UserController extends AppPreferences {
         result = new HashMap<String,Object>();
         service = new UserServiceImpl();
         security = new SecurityServiceImpl();
+        PDFServiceImpl pdfservice = new PDFServiceImpl();
+        
         String message="";
         User user = null;
         
@@ -147,6 +149,8 @@ public class UserController extends AppPreferences {
             result.put("message", message);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
+            // se crea un documento pdf de ejemplo y se guarda en AS3
+            pdfservice.CreateSampleDocument();
             System.out.println("User encontrado: " + user.getName());
             String token = security.createJWT(user);
             User uid = security.parseJWT(token);

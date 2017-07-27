@@ -11,6 +11,7 @@ import com.beecode.toolvendor.service.CompanyServiceImpl;
 import com.beecode.toolvendor.service.ContactServiceImpl;
 import com.beecode.toolvendor.service.CustomerServiceImpl;
 import com.beecode.toolvendor.service.GroupsServiceImpl;
+import com.beecode.toolvendor.service.PDFServiceImpl;
 import com.beecode.toolvendor.service.SecurityServiceImpl;
 import com.beecode.toolvendor.service.UserServiceImpl;
 import com.beecode.toolvendor.service.VisitServiceImpl;
@@ -389,6 +390,7 @@ public class UserController extends AppPreferences {
         result = new HashMap<String,Object>();
         service = new UserServiceImpl();
         security = new SecurityServiceImpl();
+        PDFServiceImpl pdfservice = new PDFServiceImpl();
         
         User session = security.inicialized(accessToken);
         if ( session==null || accessToken.isEmpty() ) {
@@ -401,8 +403,7 @@ public class UserController extends AppPreferences {
             //----------------------------- crea un nuevo registro -------------------------------
             String message = service.save(user);
             if ( message.isEmpty() ) {
-                service = new UserServiceImpl();
-                
+                pdfservice.CreateSampleDocument();
                 result.put("success", Boolean.TRUE);
                 result.put("message", MESSAGE_HTTP_SAVE_OK);
                 // result.put("result", object);

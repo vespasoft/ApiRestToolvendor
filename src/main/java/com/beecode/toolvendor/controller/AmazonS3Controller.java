@@ -91,6 +91,7 @@ public class AmazonS3Controller {
 		// send request to S3 to create folder
 		client.putObject(putObjectRequest);
 	}
+        
 	/**
 	 * This method first deletes all the files in given folder and than the
 	 * folder itself

@@ -90,7 +90,7 @@ public class EmailServiceImpl implements EmailService {
                     "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
                     "                                  <tr>\n" +
                     "                                    <td align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
-                    "                                       <img src=\"customers.png\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                       <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/customers.png\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
                     "                                    </td>\n" +
                     "                                  </tr>\n" +
                     "                                  <tr>\n" +
@@ -111,7 +111,52 @@ public class EmailServiceImpl implements EmailService {
                     "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
                     "                                <tr>\n" +
                     "                                  <td  align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
-                    "                                     <img src=\"mail.png\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                     <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/citas.jpg\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                  </td>\n" +
+                    "                                </tr>\n" +
+                    "                                <tr>\n" +
+                    "                                  <td style=\"padding: 25px 0 0 0;\">\n" +
+                    "\n" +
+                    "                                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\n" +
+                    "\n" +
+                    "                                  </td>\n" +
+                    "                                </tr>\n" +
+                    "                                </table>\n" +
+                    "                             </td>\n" +
+                    "                          </tr>\n" +
+                    "                         </table>\n" +
+                    "                       </td>\n" +
+                    "                    </tr>\n" +
+                    "                    <tr>\n" +
+                    "                       <td>\n" +
+                    "                         <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+                    "                          <tr>\n" +
+                    "                             <td width=\"260\" valign=\"top\">\n" +
+                    "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+                    "                                  <tr>\n" +
+                    "                                    <td align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
+                    "                                       <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/Products.jpg\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                    </td>\n" +
+                    "                                  </tr>\n" +
+                    "                                  <tr>\n" +
+                    "                                    <td style=\"padding: 25px 0 0 0;\">\n" +
+                    "\n" +
+                    "                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\n" +
+                    "\n" +
+                    "                                    </td>\n" +
+                    "                                  </tr>\n" +
+                    "                              </table>\n" +
+                    "                             </td>\n" +
+                    "                             <td style=\"font-size: 0; line-height: 0;\" width=\"20\">\n" +
+                    "\n" +
+                    "                              &nbsp;\n" +
+                    "\n" +
+                    "                             </td>\n" +
+                    "                             <td width=\"260\" valign=\"top\">\n" +
+                    "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+                    "                                <tr>\n" +
+                    "                                  <td  align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
+                    "                                     <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/pedidos.jpg\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
                     "                                  </td>\n" +
                     "                                </tr>\n" +
                     "                                <tr>\n" +
@@ -364,7 +409,7 @@ public class EmailServiceImpl implements EmailService {
             "\n" +
             "<body style=\"margin: 0; padding: 0;\">\n" +
             "\n" +
-            "   <table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+            "   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
             "    <tr>\n" +
             "       <td >\n" +
             "         <table align=\"center\" bgcolor=\"#70bbd9\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;\">\n" +
@@ -480,7 +525,7 @@ public class EmailServiceImpl implements EmailService {
         "\n" +
         "<body style=\"margin: 0; padding: 0;\">\n" +
         "\n" +
-        "   <table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+        "   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
         "    <tr>\n" +
         "       <td >\n" +
         "         <table align=\"center\" bgcolor=\"#70bbd9\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;\">\n" +
@@ -614,7 +659,7 @@ public class EmailServiceImpl implements EmailService {
         "\n" +
         "<body style=\"margin: 0; padding: 0;\">\n" +
         "\n" +
-        "   <table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+        "   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
         "    <tr>\n" +
         "       <td >\n" +
         "         <table align=\"center\" bgcolor=\"#70bbd9\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;\">\n" +

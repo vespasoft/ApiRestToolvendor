@@ -15,7 +15,7 @@ public interface SendEmail {
     public static final String SMTP_PORT = "587"; //25 or 587"
     public static final String SMTP_PORT_SSL = "993"; //25 or 587"
     public static final String SMTP_AUTH_USER = "admin@beecode.co";
-    public static final String SMTP_AUTH_PWD  = "Portuguesa8-";
+    public static final String SMTP_AUTH_PWD  = "Beecode#100";
     public static final String EMAIL_FROM = "admin@beecode.co";
     public static final String SUBJECT_FROM_PERSONAL = "TOOLVENDOR APP";
     

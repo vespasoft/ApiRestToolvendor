@@ -192,14 +192,14 @@ public class EmailServiceImpl implements EmailService {
                     "                        <tr>\n" +
                     "                          <td>\n" +
                     "                          <a href=\"http://www.twitter.com/\">\n" +
-                    "                           <img src=\"images/tw.gif\" alt=\"Twitter\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+                    "                            \n" +
                     "                          </a>\n" +
                     "                          </td>\n" +
-                    "\n" +
+                    "                           \n" +
                     "                        <td style=\"font-size: 0; line-height: 0;\" width=\"20\">&nbsp;</td>\n" +
                     "                          <td>\n" +
                     "                          <a href=\"http://www.twitter.com/\">\n" +
-                    "                           <img src=\"images/fb.gif\" alt=\"Facebook\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+                    "                           \n" +
                     "                          </a>\n" +
                     "                          </td>\n" +
                     "                        </tr>\n" +

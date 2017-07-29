@@ -113,6 +113,8 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
         });
 
         try {
+            MimeMultipart multipart = new MimeMultipart("related");
+            
             final Message message = new MimeMessage(session);
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
             try {
@@ -123,22 +125,18 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
             message.setSubject(subject);
             if (content.equalsIgnoreCase("text")) message.setText(messageContent);
             else if (content.equalsIgnoreCase("text/html")) {
-                /*if (filename!=null) {
+                if (filename!=null) {
                     // Create the message part
                     BodyPart messageBodyPart = new MimeBodyPart();
-
-                    // Now set the actual message
-                    messageBodyPart.setText(messageBody);
-
-                    // Create a multipar message
-                    Multipart multipart = new MimeMultipart();
-
-                    // Set text message part
+                    
+                    messageBodyPart.setContent(messageBody, "text/html");
+	        
+                    //add it
                     multipart.addBodyPart(messageBodyPart);
 
                     // Part two is attachment
                     messageBodyPart = new MimeBodyPart();
-                    DataSource source = new FileDataSource(filename);
+                    DataSource source = new FileDataSource(System.getenv("OPENSHIFT_DATA_DIR") + "visitdoc.pdf");
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName(filename);
                     multipart.addBodyPart(messageBodyPart);
@@ -146,9 +144,8 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     message.setContent(multipart, "text/html");
                 } else {
                     message.setContent(messageBody, "text/html");
-                }*/
-                
-                message.setContent(messageContent, "text/html");
+                }
+                // message.setContent(messageContent, "text/html");
             }
             message.setSentDate(new Date());
             Transport.send(message);

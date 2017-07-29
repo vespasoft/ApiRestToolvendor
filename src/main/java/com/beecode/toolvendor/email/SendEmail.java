@@ -136,7 +136,7 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
 
                     // Part two is attachment
                     messageBodyPart = new MimeBodyPart();
-                    DataSource source = new FileDataSource(System.getenv("OPENSHIFT_DATA_DIR") + "visitdoc.pdf");
+                    DataSource source = new FileDataSource(filename);
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName(filename);
                     multipart.addBodyPart(messageBodyPart);

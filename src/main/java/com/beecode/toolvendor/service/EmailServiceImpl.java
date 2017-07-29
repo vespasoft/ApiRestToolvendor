@@ -785,7 +785,7 @@ public class EmailServiceImpl implements EmailService {
         "</html>";
         
         SendEmail se = new SendEmail();
-        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html", null);
+        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html", System.getenv("OPENSHIFT_DATA_DIR") + "visitdoc.pdf");
     }
     
     @Override

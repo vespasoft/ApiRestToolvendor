@@ -9,10 +9,8 @@ import com.beecode.toolvendor.dao.VisitDAO;
 import com.beecode.toolvendor.interfaces.VisitService;
 import com.beecode.toolvendor.model.BackLog;
 import com.beecode.toolvendor.model.Company;
-import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.Visit;
-import com.beecode.toolvendor.model.VisitPicture;
 import com.beecode.toolvendor.thread.SendEmailScheduleVisitThread;
 import com.beecode.toolvendor.thread.SendEmailVisitThread;
 import java.sql.Timestamp;
@@ -34,7 +32,6 @@ public class VisitServiceImpl implements VisitService {
     private UserServiceImpl userserv;
     private CustomerServiceImpl cstmrserv;
     private VisitTypeServiceImpl visittypeserv;
-    private VisitPictureServiceImpl pictureserv;
     private PDFServiceImpl pdfserv;
     private BackLogServiceImpl backlog;
     
@@ -44,7 +41,6 @@ public class VisitServiceImpl implements VisitService {
         userserv = new UserServiceImpl();
         cstmrserv = new CustomerServiceImpl();
         visittypeserv = new VisitTypeServiceImpl();
-        pictureserv = new VisitPictureServiceImpl();
         pdfserv = new PDFServiceImpl();
     }
     

@@ -150,7 +150,7 @@ public class PDFServiceImpl {
             Document document = new Document(PageSize.A4, 50, 50, 50, 50);
             
             PdfWriter writer = PdfWriter.getInstance(document,
-                    new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") + visit.getId() + ".pdf"));
+                    new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") + "visitdoc.pdf"));
             
             document.open();
             
@@ -248,12 +248,12 @@ public class PDFServiceImpl {
             // create a client connection based on credentials
             AmazonS3Service s3service = new AmazonS3Service();
             s3service.getBucket("toolvendor-files-bucket");
-            s3service.createFolder("toolvendor-files-bucket", "products");
+            s3service.createFolder("toolvendor-files-bucket", "files");
             
             // url complete https://s3.amazonaws.com/toolvendor-files-bucket/files/
             String fileName = "files/" + visit.getId() + ".pdf";
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
-                        new File(System.getenv("OPENSHIFT_DATA_DIR") + visit.getId() + ".pdf"));
+                        new File(System.getenv("OPENSHIFT_DATA_DIR") +  "visitdoc.pdf"));
             
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);

@@ -12,14 +12,21 @@ import static com.beecode.toolvendor.interfaces.SendEmail.SUBJECT_FROM_PERSONAL;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +91,7 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
     }
 
     @Override
-    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content) {
+    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content, String filename) {
         this.to = toEmail;
         this.subject = emailSubject;
         this.messageContent = emailBody;
@@ -115,7 +122,32 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
             }
             message.setSubject(subject);
             if (content.equalsIgnoreCase("text")) message.setText(messageContent);
-            else if (content.equalsIgnoreCase("text/html")) message.setContent(messageContent, "text/html");
+            else if (content.equalsIgnoreCase("text/html")) {
+                if (filename!=null) {
+                    // Create the message part
+                    BodyPart messageBodyPart = new MimeBodyPart();
+
+                    // Now set the actual message
+                    messageBodyPart.setText(messageBody);
+
+                    // Create a multipar message
+                    Multipart multipart = new MimeMultipart();
+
+                    // Set text message part
+                    multipart.addBodyPart(messageBodyPart);
+
+                    // Part two is attachment
+                    messageBodyPart = new MimeBodyPart();
+                    DataSource source = new FileDataSource(filename);
+                    messageBodyPart.setDataHandler(new DataHandler(source));
+                    messageBodyPart.setFileName(filename);
+                    multipart.addBodyPart(messageBodyPart);
+
+                    message.setContent(multipart, "text/html");
+                } else {
+                    message.setContent(messageBody, "text/html");
+                }
+            }
             message.setSentDate(new Date());
             Transport.send(message);
             

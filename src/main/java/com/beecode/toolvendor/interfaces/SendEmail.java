@@ -21,6 +21,6 @@ public interface SendEmail {
     
     public void SendMailSSL(String toEmail, String emailSubject, String emailBody, String content);
     
-    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content);
+    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content, String filename);
     
 }

@@ -6,19 +6,30 @@
 package com.beecode.toolvendor.email;
 
 import com.beecode.toolvendor.interfaces.SendEmail;
+import static com.beecode.toolvendor.interfaces.SendEmail.EMAIL_FROM;
+import static com.beecode.toolvendor.interfaces.SendEmail.SMTP_AUTH_PWD;
+import static com.beecode.toolvendor.interfaces.SendEmail.SMTP_AUTH_USER;
+import static com.beecode.toolvendor.interfaces.SendEmail.SUBJECT_FROM_PERSONAL;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +110,7 @@ public class SendEmailOffice365 implements SendEmail {
             LOGGER.error("Error al enviar mensagem: " + ex.getMessage(), ex);
         }
     }
-
+    
     private Properties getEmailProperties() {
         final Properties config = new Properties();
         config.put("mail.smtp.auth", "true");
@@ -116,7 +127,7 @@ public class SendEmailOffice365 implements SendEmail {
     }
 
     @Override
-    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content) {
+    public void SendMailTSL(String toEmail, String emailSubject, String emailBody, String content, String filename) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

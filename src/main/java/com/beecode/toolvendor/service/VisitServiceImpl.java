@@ -151,7 +151,7 @@ public class VisitServiceImpl implements VisitService {
                         SendEmailVisitThread se = new SendEmailVisitThread(vendor.getCompany().getEmail(), currentVisit);
                         se.start();
                         // ejecuta un thread en 2do plano donde se envia el correo al Administrador.
-                        SendEmailVisitThread se2 = new SendEmailVisitThread(vendor.getCompany().getEmail(), currentVisit);
+                        SendEmailVisitThread se2 = new SendEmailVisitThread(currentVisit.getCustomer().getContactEmail(), currentVisit);
                         se2.start();
                     }
                 } else {

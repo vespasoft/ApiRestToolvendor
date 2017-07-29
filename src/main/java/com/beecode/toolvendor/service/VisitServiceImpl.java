@@ -148,15 +148,15 @@ public class VisitServiceImpl implements VisitService {
                     if (currentVisit.getStatus().equalsIgnoreCase("checkout")) {
                         // se obtienes los datos necesarios para crear el pdf de la visita
                         User vendor = userserv.findById(currentVisit.getUserId());
-                        List<VisitPicture> pictures = pictureserv.getAllByVisit(currentVisit.getId());
+                        //List<VisitPicture> pictures = pictureserv.getAllByVisit(currentVisit.getId());
                         // se crear el archivo pdf de la visita y se sube al repo S3
-                        pdfserv.CreateVisitDocument(currentVisit, vendor, pictures);
+                        pdfserv.CreateVisitDocument(currentVisit, vendor);
                         // ejecuta un thread en 2do plano donde se envia el correo al Cliente.
                         SendEmailVisitThread se = new SendEmailVisitThread(vendor.getCompany().getEmail(), currentVisit);
                         se.start();
                         // ejecuta un thread en 2do plano donde se envia el correo al Administrador.
-                        // SendEmailVisitThread se2 = new SendEmailVisitThread(vendor.getCompany().getEmail(), currentVisit);
-                        // se2.start();
+                        SendEmailVisitThread se2 = new SendEmailVisitThread(vendor.getCompany().getEmail(), currentVisit);
+                        se2.start();
                     }
                 } else {
                     message="No se encontro un registro asociado para este id";

@@ -143,8 +143,9 @@ public class PDFServiceImpl {
     /*
         This method create a pdf sample document 
     */
-    public void CreateVisitDocument(Visit visit, User vendor, java.util.List<VisitPicture> pictures) {
-        
+    public void CreateVisitDocument(Visit visit, User vendor) {
+        VisitPictureServiceImpl pictureserv = new VisitPictureServiceImpl();
+        java.util.List<VisitPicture> pictures = pictureserv.getAllByVisit(visit.getId());
         try {
             Document document = new Document(PageSize.A4, 50, 50, 50, 50);
             

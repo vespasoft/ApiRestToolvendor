@@ -202,29 +202,16 @@ public class PDFServiceImpl {
             someSectionText = new Paragraph("Evidencias fotograficas");
             section1.add(someSectionText);
             
-            // TABLE 
-            PdfPTable t = new PdfPTable(3);
-            t.setSpacingBefore(25);
-            t.setSpacingAfter(25);
-            PdfPCell c1 = new PdfPCell(new Phrase("Header1"));  
-            t.addCell(c1);
-            PdfPCell c2 = new PdfPCell(new Phrase("Header2"));
-            t.addCell(c2);
-            PdfPCell c3 = new PdfPCell(new Phrase("Header3"));
-            t.addCell(c3);
-            Image image2;
-            
-            try {
-                // fotos 
-                for (int i = 0; i < pictures.size(); i++) {
-                    image2 = Image.getInstance(pictures.get(i).getPicture());
-                    image2.scaleAbsolute(120f, 120f);
-                    t.addCell(image2);
+            // fotos 
+            for (int i = 0; i < pictures.size(); i++) {
+                try {
+                    Image image = Image.getInstance(pictures.get(i).getPicture());
+                    image.scaleAbsolute(120f, 120f);
+                    section1.add(image);
+                } catch (BadElementException | IOException ex) {
+                    Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (BadElementException | IOException ex) {
-                Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-            section1.add(t);
             
             // List Object
             List l = new List(true, false, 10);

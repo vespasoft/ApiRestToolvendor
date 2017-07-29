@@ -133,7 +133,7 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     messageBodyPart = new MimeBodyPart();
                     DataSource source = new FileDataSource(filename);
                     messageBodyPart.setDataHandler(new DataHandler(source));
-                    messageBodyPart.setFileName(filename);
+                    messageBodyPart.setFileName("recibo-visita.pdf");
                     messageBodyPart.setContent(messageBody, "text/html");
                     multipart.addBodyPart(messageBodyPart);
 

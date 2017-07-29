@@ -157,8 +157,8 @@ public class UserController extends AppPreferences {
             User uid = security.parseJWT(token);
             
             // se crea un documento pdf de ejemplo y se guarda en AS3
-            Visit visitdemo = visitserv.findById(1, 1);
-            pdfservice.CreateVisitDocument(visitdemo, uid);
+            //Visit visitdemo = visitserv.findById(1, 1);
+            //pdfservice.CreateVisitDocument(visitdemo, uid);
             
             result.put("success", Boolean.TRUE);
             result.put("message", "Bienvenido al sistema toolvendor");

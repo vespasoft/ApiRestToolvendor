@@ -113,7 +113,6 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
         });
 
         try {
-            MimeMultipart multipart = new MimeMultipart("related");
             
             final Message message = new MimeMessage(session);
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -129,16 +128,22 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     // Create the message part
                     BodyPart messageBodyPart = new MimeBodyPart();
                     
-                    messageBodyPart.setContent(messageBody, "text/html");
+                    // Now set the actual message
+                    messageBodyPart.setText("This is message body");
+                    // messageBodyPart.setContent(messageBody, "text/html");
+                    
+                    // Create a multipar message
+                    Multipart multipart = new MimeMultipart();
+                    
                     //add it
                     multipart.addBodyPart(messageBodyPart);
                     
                     // Part two is attachment
                     messageBodyPart = new MimeBodyPart();
+                    
                     DataSource source = new FileDataSource(filename);
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName("recibo-visita.pdf");
-                    
                     multipart.addBodyPart(messageBodyPart);
 
                     message.setContent(multipart, "text/html");

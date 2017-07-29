@@ -234,14 +234,16 @@ public class PDFServiceImpl {
             document.close();
             
             // create a client connection based on credentials
-            AmazonS3Service s3service = new AmazonS3Service();
+            // Este codigo subia el PDF al repositorio s3, pero ya no es necesario 
+            // ya que se adjunta en el email que se enviar al cliente y al administrador
+            /*AmazonS3Service s3service = new AmazonS3Service();
             s3service.getBucket("toolvendor-files-bucket");
             s3service.createFolder("toolvendor-files-bucket", "files");
             
             // url complete https://s3.amazonaws.com/toolvendor-files-bucket/files/
             String fileName = "files/" + visit.getId() + ".pdf";
             s3service.uploadFile("toolvendor-files-bucket", fileName, 
-                        new File(System.getenv("OPENSHIFT_DATA_DIR") +  "visitdoc.pdf"));
+                        new File(System.getenv("OPENSHIFT_DATA_DIR") +  "visitdoc.pdf"));*/
             
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);

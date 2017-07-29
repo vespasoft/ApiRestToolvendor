@@ -129,16 +129,12 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     // Create the message part
                     BodyPart messageBodyPart = new MimeBodyPart();
                     
-                    messageBodyPart.setContent(messageBody, "text/html");
-	        
-                    //add it
-                    multipart.addBodyPart(messageBodyPart);
-
                     // Part two is attachment
                     messageBodyPart = new MimeBodyPart();
                     DataSource source = new FileDataSource(filename);
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName(filename);
+                    messageBodyPart.setContent(messageBody, "text/html");
                     multipart.addBodyPart(messageBodyPart);
 
                     message.setContent(multipart, "text/html");

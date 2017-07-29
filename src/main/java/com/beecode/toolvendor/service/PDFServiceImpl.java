@@ -57,7 +57,6 @@ public class PDFServiceImpl {
             Paragraph paragraph1 = new Paragraph();
 
             paragraph1.setSpacingBefore(50);
-
             paragraph1.add(anchorTarget);
             document.add(paragraph1);
 
@@ -71,7 +70,6 @@ public class PDFServiceImpl {
             18, Font.BOLDITALIC, new CMYKColor(0, 255, 255,17)));
             Chapter chapter1 = new Chapter(title1, 1);
             chapter1.setNumberDepth(0);
-            
             
             // SECTION
             Paragraph title11 = new Paragraph("This is Section 1 in Chapter 1", 
@@ -204,27 +202,16 @@ public class PDFServiceImpl {
             someSectionText = new Paragraph("Evidencias fotograficas");
             section1.add(someSectionText);
             
-            // TABLE 
-            PdfPTable t = new PdfPTable(3);
-            t.setSpacingBefore(25);
-            t.setSpacingAfter(25);
-            PdfPCell c1 = new PdfPCell(new Phrase("Header1"));  
-            t.addCell(c1);
-            PdfPCell c2 = new PdfPCell(new Phrase("Header2"));
-            t.addCell(c2);
-            PdfPCell c3 = new PdfPCell(new Phrase("Header3"));
-            t.addCell(c3);
-            
-            for (VisitPicture item : pictures) {
+            // fotos 
+            for (int i = 0; i < pictures.size(); i++) {
                 try {
-                    Image image = Image.getInstance(item.getPicture());
+                    Image image = Image.getInstance(pictures.get(i).getPicture());
                     image.scaleAbsolute(120f, 120f);
-                    t.addCell(image);
+                    section1.add(image);
                 } catch (BadElementException | IOException ex) {
                     Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            section1.add(t);
             
             // List Object
             List l = new List(true, false, 10);

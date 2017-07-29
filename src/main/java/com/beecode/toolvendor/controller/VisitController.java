@@ -179,7 +179,7 @@ public class VisitController extends AppPreferences {
     }
     
     // ------------------- Send Service Page Visit --------------------------------------------------------
-    /*@RequestMapping(value = "/visit/sendservicepage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/visit/sendvisitemail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> sendservicepage(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
         result = new HashMap<String,Object>();
         service = new VisitServiceImpl();
@@ -195,7 +195,7 @@ public class VisitController extends AppPreferences {
             System.out.println("Updating visit " + id);
             //------ se verifica que el Id existe y pertenece a la misma empresa ----
             if ( service.findId(id, session.getCompany().getId()) ) {
-                String message = service.sendEmailServicePage(id, session.getCompany().getId());
+                String message = service.sendVisitEmail(id, session.getCompany().getId());
                 
                 if ( message.isEmpty() ) {
                     result.put("success", Boolean.TRUE);
@@ -214,7 +214,7 @@ public class VisitController extends AppPreferences {
             }
         }
         
-    }*/
+    }
  
     //------------------- Delete a Visit --------------------------------------------------------
     

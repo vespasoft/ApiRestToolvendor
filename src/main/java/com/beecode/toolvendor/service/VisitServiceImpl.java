@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- *
+ * 
  * @author luisvespa
  */
 public class VisitServiceImpl implements VisitService {
@@ -48,7 +48,7 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public String save(Visit visit, Company company) {
         String message="";
-        try {    
+        try {
             if ( visit==null ) {
                 message="Se espero un objeto visit en formato JSON";
             } else if ( visit.getCustomer()==null ) {
@@ -169,9 +169,9 @@ public class VisitServiceImpl implements VisitService {
     }
     
     //--------------------- Send email service page --------------------------
-    /*public String sendEmailServicePage(int id, int companyId) {
+    public String sendVisitEmail(int id, int companyId) {
         Visit visit = null;
-        Customer cstmr = null;
+        User vendor = null;
         String message="";
         try {
             // Se busca en la bd los datos del usuario por Id.
@@ -179,13 +179,19 @@ public class VisitServiceImpl implements VisitService {
             if ( visit==null ) {
                 message="El Id de la visita no existe o es invalido";
             } else {
-                cstmr = cstmrserv.findById(visit.getCustomer().getId(), companyId);
-                if ( cstmr==null ) {
-                    message="El id del cliente no existe o es invalido";
+                // se obtienes los datos necesarios para crear el pdf de la visita
+                vendor = userserv.findById(visit.getUserId());
+                if ( vendor==null ) {
+                    message="El id del usuario no existe o es invalido";
                 } else {
-                    // ejecuta un thread (hilo) en 2do plano donde se envia el correo.
-                    SendEmailVisitThread se = new SendEmailVisitThread(cstmr, visit);
+                    // se crear el archivo pdf de la visita y se sube al repo S3
+                    pdfserv.CreateVisitDocument(visit, vendor);
+                    // ejecuta un thread en 2do plano donde se envia el correo al Cliente.
+                    SendEmailVisitThread se = new SendEmailVisitThread(vendor.getCompany().getEmail(), visit);
                     se.start();
+                    // ejecuta un thread en 2do plano donde se envia el correo al Administrador.
+                    SendEmailVisitThread se2 = new SendEmailVisitThread(visit.getCustomer().getContactEmail(), visit);
+                    se2.start();
                 }
                 
             }
@@ -197,7 +203,7 @@ public class VisitServiceImpl implements VisitService {
         }
         
         return message;
-    }*/
+    }
     
     //----------------------------- DELETE USER ----------------------------------
     @Override

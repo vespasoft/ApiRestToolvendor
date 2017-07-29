@@ -688,7 +688,7 @@ public class EmailServiceImpl implements EmailService {
     public void SendEmailVisit(String to, Visit visit) {
         Customer cstmr = visit.getCustomer();
         String toEmail = to;
-        String emailSubject = "Bienvenido a Toolvendor App";
+        String emailSubject = "Comprabante de visita culminada";
         String emailBody = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
         "\n" +
         "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
@@ -785,7 +785,7 @@ public class EmailServiceImpl implements EmailService {
         "</html>";
         
         SendEmail se = new SendEmail();
-        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html", "https://s3.amazonaws.com/toolvendor-files-bucket/files/"+visit.getId()+".pdf");
+        se.SendMailTSL(toEmail, emailSubject, emailBody, "text/html", null);
     }
     
     @Override

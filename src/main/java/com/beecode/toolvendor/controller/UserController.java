@@ -6,6 +6,7 @@
 package com.beecode.toolvendor.controller;
 
 import com.beecode.toolvendor.model.User;
+import com.beecode.toolvendor.model.Visit;
 import com.beecode.toolvendor.service.CallServiceImpl;
 import com.beecode.toolvendor.service.CompanyServiceImpl;
 import com.beecode.toolvendor.service.ContactServiceImpl;
@@ -120,6 +121,7 @@ public class UserController extends AppPreferences {
         result = new HashMap<String,Object>();
         service = new UserServiceImpl();
         security = new SecurityServiceImpl();
+        visitserv = new VisitServiceImpl();
         PDFServiceImpl pdfservice = new PDFServiceImpl();
         
         String message="";
@@ -137,23 +139,27 @@ public class UserController extends AppPreferences {
         } else {
             user = security.authentication(login.getEmail(), login.getPassword());
             
-            if( ( user==null) ) {
+            if ( (user==null)) {
                 message="The username or password is invalid.";
             } else 
                 message="";
         }
-            
+        
         //-------------- si ocurrio un error la variable contiene el mensaje de error ---------------
         if ( message.length()>0 ) {
             result.put("success", Boolean.FALSE);
             result.put("message", message);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else  {
-            // se crea un documento pdf de ejemplo y se guarda en AS3
-            pdfservice.CreateSampleDocument();
+            
             System.out.println("User encontrado: " + user.getName());
             String token = security.createJWT(user);
             User uid = security.parseJWT(token);
+            
+            // se crea un documento pdf de ejemplo y se guarda en AS3
+            Visit visitdemo = visitserv.findById(1, 1);
+            pdfservice.CreateVisitDocument(visitdemo, uid);
+            
             result.put("success", Boolean.TRUE);
             result.put("message", "Bienvenido al sistema toolvendor");
             result.put("user", user);

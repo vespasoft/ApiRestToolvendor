@@ -222,16 +222,6 @@ public class UserDAO {
         try{
            //session.refresh(User.class); 
            Criteria cr = session.createCriteria(User.class);
-           cr.setProjection(Projections.projectionList()
-                   .add(Projections.property("id"), "id")
-                   .add(Projections.property("name"), "name")
-                   .add(Projections.property("phone"), "phone")
-                   .add(Projections.property("email"), "email")
-                   .add(Projections.property("photo"), "photo")
-                   .add(Projections.property("latitud"), "latitud")
-                   .add(Projections.property("longitude"), "longitude")
-                   .add(Projections.property("companyId"), "companyId"));
-           cr.setResultTransformer(Transformers.aliasToBean(User.class)); 
            // Add restriction.
            cr.add(Restrictions.eq("id", id));
            //crit.add(Restrictions.like("id", id+"%"));

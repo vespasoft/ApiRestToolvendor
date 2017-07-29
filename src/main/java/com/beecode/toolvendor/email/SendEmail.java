@@ -123,7 +123,7 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
             message.setSubject(subject);
             if (content.equalsIgnoreCase("text")) message.setText(messageContent);
             else if (content.equalsIgnoreCase("text/html")) {
-                if (filename!=null) {
+                /*if (filename!=null) {
                     // Create the message part
                     BodyPart messageBodyPart = new MimeBodyPart();
 
@@ -146,7 +146,9 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     message.setContent(multipart, "text/html");
                 } else {
                     message.setContent(messageBody, "text/html");
-                }
+                }*/
+                
+                message.setContent(messageContent, "text/html");
             }
             message.setSentDate(new Date());
             Transport.send(message);

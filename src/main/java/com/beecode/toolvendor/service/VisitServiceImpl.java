@@ -12,6 +12,7 @@ import com.beecode.toolvendor.model.Company;
 import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.User;
 import com.beecode.toolvendor.model.Visit;
+import com.beecode.toolvendor.model.VisitPicture;
 import com.beecode.toolvendor.thread.SendEmailScheduleVisitThread;
 import com.beecode.toolvendor.thread.SendEmailVisitThread;
 import java.sql.Timestamp;
@@ -33,6 +34,8 @@ public class VisitServiceImpl implements VisitService {
     private UserServiceImpl userserv;
     private CustomerServiceImpl cstmrserv;
     private VisitTypeServiceImpl visittypeserv;
+    private VisitPictureServiceImpl pictureserv;
+    private PDFServiceImpl pdfserv;
     private BackLogServiceImpl backlog;
     
     public VisitServiceImpl() {
@@ -41,6 +44,8 @@ public class VisitServiceImpl implements VisitService {
         userserv = new UserServiceImpl();
         cstmrserv = new CustomerServiceImpl();
         visittypeserv = new VisitTypeServiceImpl();
+        pictureserv = new VisitPictureServiceImpl();
+        pdfserv = new PDFServiceImpl();
     }
     
     //----------------------- Agregar nuevo registro ---------------------------------
@@ -139,6 +144,20 @@ public class VisitServiceImpl implements VisitService {
                     currentVisit.setLastUpdate(timestamp);
                     //--- se ejecuta el update en la capa de datos ---
                     dao.update(currentVisit);
+                    
+                    if (currentVisit.getStatus().equalsIgnoreCase("checkout")) {
+                        // se obtienes los datos necesarios para crear el pdf de la visita
+                        User vendor = userserv.findById(currentVisit.getUserId());
+                        List<VisitPicture> pictures = pictureserv.getAllByVisit(currentVisit.getId());
+                        // se crear el archivo pdf de la visita y se sube al repo S3
+                        pdfserv.CreateVisitDocument(currentVisit, vendor, pictures);
+                        // ejecuta un thread en 2do plano donde se envia el correo al Cliente.
+                        SendEmailVisitThread se = new SendEmailVisitThread(currentVisit.getCustomer().getContactEmail(), currentVisit);
+                        se.start();
+                        // ejecuta un thread en 2do plano donde se envia el correo al Administrador.
+                        SendEmailVisitThread se2 = new SendEmailVisitThread(vendor.getCompany().getEmail(), currentVisit);
+                        se2.start();
+                    }
                 } else {
                     message="No se encontro un registro asociado para este id";
                 }
@@ -154,7 +173,7 @@ public class VisitServiceImpl implements VisitService {
     }
     
     //--------------------- Send email service page --------------------------
-    public String sendEmailServicePage(int id, int companyId) {
+    /*public String sendEmailServicePage(int id, int companyId) {
         Visit visit = null;
         Customer cstmr = null;
         String message="";
@@ -182,7 +201,7 @@ public class VisitServiceImpl implements VisitService {
         }
         
         return message;
-    }
+    }*/
     
     //----------------------------- DELETE USER ----------------------------------
     @Override

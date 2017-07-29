@@ -5,7 +5,6 @@
  */
 package com.beecode.toolvendor.thread;
 
-import com.beecode.toolvendor.model.Customer;
 import com.beecode.toolvendor.model.Visit;
 import com.beecode.toolvendor.service.EmailServiceImpl;
 
@@ -15,15 +14,15 @@ import com.beecode.toolvendor.service.EmailServiceImpl;
  */
 public class SendEmailVisitThread extends Thread {
 
-    private Customer cstmr;
+    private String to;
     private Visit visit;
 
-    public Customer getCstmr() {
-        return cstmr;
+    public String getTo() {
+        return to;
     }
 
-    public void setCstmr(Customer cstmr) {
-        this.cstmr = cstmr;
+    public void setTo(String to) {
+        this.to = to;
     }
 
     public Visit getVisit() {
@@ -34,8 +33,8 @@ public class SendEmailVisitThread extends Thread {
         this.visit = visit;
     }
 
-    public SendEmailVisitThread(Customer cstmr, Visit visit) {
-        this.cstmr = cstmr;
+    public SendEmailVisitThread(String to, Visit visit) {
+        this.to = to;
         this.visit = visit;
     }
     
@@ -43,12 +42,9 @@ public class SendEmailVisitThread extends Thread {
     public void run() {
         // se instancia la clase controladora de correos
         EmailServiceImpl emailserv = new EmailServiceImpl();
-        // se valida que el object user no sea nulo
-        if ( cstmr!=null )
-            // se envia el correo de notificación de la visita programada al usuario
-            emailserv.SendEmailVisit(cstmr, visit);
+        // se envia el correo de notificación de la visita programada al usuario
+        emailserv.SendEmailVisit(to, visit);
     }
-    
     
     
 }

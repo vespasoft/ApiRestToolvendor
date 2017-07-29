@@ -22,7 +22,7 @@ public interface EmailService {
     
     public void SendEmailProgramVisit(User user, Visit visit);
     
-    public void SendEmailVisit(Customer cstmr, Visit visit);
+    public void SendEmailVisit(String to, Visit visit);
     
     public void SendEmailOrder(Customer cstmr, Order order);
     

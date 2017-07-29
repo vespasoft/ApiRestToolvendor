@@ -179,7 +179,7 @@ public class VisitController extends AppPreferences {
     }
     
     // ------------------- Send Service Page Visit --------------------------------------------------------
-    @RequestMapping(value = "/visit/sendservicepage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@RequestMapping(value = "/visit/sendservicepage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> sendservicepage(@RequestHeader(value="Access-Token") String accessToken, @PathVariable("id") Integer id) {
         result = new HashMap<String,Object>();
         service = new VisitServiceImpl();
@@ -214,7 +214,7 @@ public class VisitController extends AppPreferences {
             }
         }
         
-    }
+    }*/
  
     //------------------- Delete a Visit --------------------------------------------------------
     

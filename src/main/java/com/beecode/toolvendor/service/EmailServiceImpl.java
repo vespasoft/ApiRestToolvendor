@@ -280,7 +280,7 @@ public class EmailServiceImpl implements EmailService {
                     "\n" +
                     "                      </td>\n" +
                     "                    </tr>\n" +
-                    "                    <tr>\n" +
+                     "                    <tr>\n" +
                     "                       <td>\n" +
                     "                         <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
                     "                          <tr>\n" +
@@ -288,7 +288,7 @@ public class EmailServiceImpl implements EmailService {
                     "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
                     "                                  <tr>\n" +
                     "                                    <td align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
-                    "                                       <img src=\"customers.png\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                       <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/customers.png\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
                     "                                    </td>\n" +
                     "                                  </tr>\n" +
                     "                                  <tr>\n" +
@@ -309,7 +309,52 @@ public class EmailServiceImpl implements EmailService {
                     "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
                     "                                <tr>\n" +
                     "                                  <td  align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
-                    "                                     <img src=\"mail.png\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                     <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/citas.jpg\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                  </td>\n" +
+                    "                                </tr>\n" +
+                    "                                <tr>\n" +
+                    "                                  <td style=\"padding: 25px 0 0 0;\">\n" +
+                    "\n" +
+                    "                                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\n" +
+                    "\n" +
+                    "                                  </td>\n" +
+                    "                                </tr>\n" +
+                    "                                </table>\n" +
+                    "                             </td>\n" +
+                    "                          </tr>\n" +
+                    "                         </table>\n" +
+                    "                       </td>\n" +
+                    "                    </tr>\n" +
+                    "                    <tr>\n" +
+                    "                       <td>\n" +
+                    "                         <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+                    "                          <tr>\n" +
+                    "                             <td width=\"260\" valign=\"top\">\n" +
+                    "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+                    "                                  <tr>\n" +
+                    "                                    <td align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
+                    "                                       <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/Products.jpg\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
+                    "                                    </td>\n" +
+                    "                                  </tr>\n" +
+                    "                                  <tr>\n" +
+                    "                                    <td style=\"padding: 25px 0 0 0;\">\n" +
+                    "\n" +
+                    "                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\n" +
+                    "\n" +
+                    "                                    </td>\n" +
+                    "                                  </tr>\n" +
+                    "                              </table>\n" +
+                    "                             </td>\n" +
+                    "                             <td style=\"font-size: 0; line-height: 0;\" width=\"20\">\n" +
+                    "\n" +
+                    "                              &nbsp;\n" +
+                    "\n" +
+                    "                             </td>\n" +
+                    "                             <td width=\"260\" valign=\"top\">\n" +
+                    "                               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
+                    "                                <tr>\n" +
+                    "                                  <td  align=\"center\" style=\"padding: 30px 0 30px 0;\">\n" +
+                    "                                     <img src=\"https://s3.amazonaws.com/toolvendor-files-bucket/img/pedidos.jpg\" alt=\"\" width=\"100\" height=\"110\" style=\"display: block;\" />\n" +
                     "                                  </td>\n" +
                     "                                </tr>\n" +
                     "                                <tr>\n" +
@@ -345,14 +390,14 @@ public class EmailServiceImpl implements EmailService {
                     "                        <tr>\n" +
                     "                          <td>\n" +
                     "                          <a href=\"http://www.twitter.com/\">\n" +
-                    "                           <img src=\"images/tw.gif\" alt=\"Twitter\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+                    "                            \n" +
                     "                          </a>\n" +
                     "                          </td>\n" +
-                    "\n" +
+                    "                           \n" +
                     "                        <td style=\"font-size: 0; line-height: 0;\" width=\"20\">&nbsp;</td>\n" +
                     "                          <td>\n" +
                     "                          <a href=\"http://www.twitter.com/\">\n" +
-                    "                           <img src=\"images/fb.gif\" alt=\"Facebook\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+                    "                           \n" +
                     "                          </a>\n" +
                     "                          </td>\n" +
                     "                        </tr>\n" +
@@ -469,14 +514,14 @@ public class EmailServiceImpl implements EmailService {
             "                        <tr>\n" +
             "                          <td>\n" +
             "                          <a href=\"http://www.twitter.com/\">\n" +
-            "                           <img src=\"images/tw.gif\" alt=\"Twitter\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+            "                            \n" +
             "                          </a>\n" +
             "                          </td>\n" +
-            "\n" +
+            "                           \n" +
             "                        <td style=\"font-size: 0; line-height: 0;\" width=\"20\">&nbsp;</td>\n" +
             "                          <td>\n" +
             "                          <a href=\"http://www.twitter.com/\">\n" +
-            "                           <img src=\"images/fb.gif\" alt=\"Facebook\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+            "                           \n" +
             "                          </a>\n" +
             "                          </td>\n" +
             "                        </tr>\n" +
@@ -604,14 +649,14 @@ public class EmailServiceImpl implements EmailService {
         "                        <tr>\n" +
         "                          <td>\n" +
         "                          <a href=\"http://www.twitter.com/\">\n" +
-        "                           <img src=\"images/tw.gif\" alt=\"Twitter\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+        "                            \n" +
         "                          </a>\n" +
         "                          </td>\n" +
-        "\n" +
+        "                           \n" +
         "                        <td style=\"font-size: 0; line-height: 0;\" width=\"20\">&nbsp;</td>\n" +
         "                          <td>\n" +
         "                          <a href=\"http://www.twitter.com/\">\n" +
-        "                           <img src=\"images/fb.gif\" alt=\"Facebook\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+        "                           \n" +
         "                          </a>\n" +
         "                          </td>\n" +
         "                        </tr>\n" +
@@ -640,8 +685,9 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void SendEmailVisit(Customer cstmr, Visit visit) {
-        String toEmail = cstmr.getContactEmail();
+    public void SendEmailVisit(String to, Visit visit) {
+        Customer cstmr = visit.getCustomer();
+        String toEmail = to;
         String emailSubject = "Bienvenido a Toolvendor App";
         String emailBody = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
         "\n" +
@@ -674,15 +720,17 @@ public class EmailServiceImpl implements EmailService {
         "                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n" +
         "                    <tr>\n" +
         "                       <td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 24px;\">\n" +
-        "                         <b>Estimado "+cstmr.getContactName()+",</b>\n" +
+        "                         Estimado <b>"+cstmr.getContactName()+",</b>\n" +
         "                       </td>\n" +
         "                    </tr>\n" +
         "                    <tr>\n" +
         "                      <td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\n" +
         "\n" +
-        "                       <h4>Hemos finalizado exitosamente su visita,</h4> \n" +
+        "                       <h4>Hemos finalizado exitosamente la visita en <b>"+cstmr.getCompanyName()+"</b>.</h4> \n" +
         "\n" +
         "                       <b>En este correo le enviamos adjunto un PDF con todo el detalle de su visita.</b>\n" +
+        "\n" +
+        "                       para descargar el comprobante en formato PDF haga clic <a href=\"https://s3.amazonaws.com/toolvendor-files-bucket/files/"+visit.getId()+".pdf\">aqui</a>." +
         "\n" +
         "                      </td>\n" +
         "                    </tr>\n" +
@@ -705,14 +753,14 @@ public class EmailServiceImpl implements EmailService {
         "                        <tr>\n" +
         "                          <td>\n" +
         "                          <a href=\"http://www.twitter.com/\">\n" +
-        "                           <img src=\"images/tw.gif\" alt=\"Twitter\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+        "                            \n" +
         "                          </a>\n" +
         "                          </td>\n" +
-        "\n" +
+        "                           \n" +
         "                        <td style=\"font-size: 0; line-height: 0;\" width=\"20\">&nbsp;</td>\n" +
         "                          <td>\n" +
         "                          <a href=\"http://www.twitter.com/\">\n" +
-        "                           <img src=\"images/fb.gif\" alt=\"Facebook\" width=\"38\" height=\"38\" style=\"display: block;\" border=\"0\" />\n" +
+        "                           \n" +
         "                          </a>\n" +
         "                          </td>\n" +
         "                        </tr>\n" +
@@ -721,7 +769,7 @@ public class EmailServiceImpl implements EmailService {
         "                    <td style=\"color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;\">\n" +
         "                     &reg; Toolvendor App, beecode 2017<br/>\n" +
         "                     <a href=\"#\" style=\"color: #ffffff;\"><font color=\"#ffffff\">Unsubscribe</font></a> to this newsletter instantly\n" +
-        "\n" +
+        "                    \n" +
         "                    </td>\n" +
         "                  </tr>\n" +
         "                </table>\n" +

@@ -173,48 +173,33 @@ public class PDFServiceImpl {
             section1.add(someSectionText);
             
             // TABLE 
-            PdfPTable tt = new PdfPTable(3);
+            PdfPTable tt = new PdfPTable(2);
             tt.setSpacingBefore(25);
             tt.setSpacingAfter(25);
             PdfPCell cc1 = new PdfPCell(new Phrase("Datos del Cliente"));  
             tt.addCell(cc1);
-            PdfPCell cc2 = new PdfPCell(new Phrase("Datos Vendedor"));
+            PdfPCell cc2 = new PdfPCell(new Phrase("Datos Visita"));
             tt.addCell(cc2);
-            PdfPCell cc3 = new PdfPCell(new Phrase("Datos Visita"));
-            tt.addCell(cc3);
             // row 1
-            tt.addCell("Cliente: " + visit.getCustomer().getCompanyName());
-            tt.addCell("Vendedor: " + vendor.getName() );
-            tt.addCell("Scheduled Date: " + visit.getScheduledDate());
-            // row 2
-            tt.addCell("Contact: " + visit.getCustomer().getContactName());
-            tt.addCell("Phone: " + vendor.getPhone() );
-            tt.addCell("Checkin: " + visit.getCheckin());
-            // row 3
-            tt.addCell("Contact: " + visit.getCustomer().getContactPhone());
-            tt.addCell("Vendedor: " + vendor.getEmail() );
-            tt.addCell("Checkout: " + visit.getCheckin());
-            // row 4
-            tt.addCell("");
-            // Firma del vendedor
-            try {
-                Image image = Image.getInstance(visit.getFirm());
-                image.scaleAbsolute(120f, 120f);
-                tt.addCell(image);
-            } catch (BadElementException | IOException ex) {
-                Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tt.addCell("Visit Type: " + visit.getVisitType().getName());
-            // row 4
-            tt.addCell("");
-            tt.addCell("");
-            tt.addCell("Reason: " + visit.getReason());
-            // row 5
-            tt.addCell("");
-            tt.addCell("");
-            tt.addCell("Comment: " + visit.getComment());
+            // datos del cliente
+            List dcliente = new List(true, false, 10);
+            dcliente.add(new ListItem("Cliente: " + visit.getCustomer().getCompanyName()));
+            dcliente.add(new ListItem("Contact: " + visit.getCustomer().getContactName()));
+            dcliente.add(new ListItem("Phone: " + visit.getCustomer().getContactPhone()));
+            tt.addCell(dcliente.toString());
+            
+            List dvisit = new List(true, false, 10);
+            dcliente.add(new ListItem("Scheduled Date: " + visit.getScheduledDate()));
+            dcliente.add(new ListItem("Checkin: " + visit.getCheckin()));
+            dcliente.add(new ListItem("Checkout: " + visit.getCheckin()));
+            dcliente.add(new ListItem("Visit Type: " + visit.getVisitType().getName()));
+            dcliente.add(new ListItem("Reason: " + visit.getReason()));
+            tt.addCell(dvisit.toString());
             
             section1.add(tt);
+            
+            someSectionText = new Paragraph("Comment: " + visit.getComment());
+            section1.add(someSectionText);
             
             someSectionText = new Paragraph("Evidencias fotograficas");
             section1.add(someSectionText);
@@ -240,6 +225,22 @@ public class PDFServiceImpl {
                 }
             }
             section1.add(t);
+            
+            // List Object
+            List l = new List(true, false, 10);
+            l.add(new ListItem("Vendedor: " + vendor.getName()));
+            l.add(new ListItem("Phone: " + vendor.getPhone()));
+            l.add(new ListItem("Email: " + vendor.getEmail()));
+            section1.add(l);
+            
+            // Firma del vendedor
+            try {
+                Image image = Image.getInstance(visit.getFirm());
+                image.scaleAbsolute(120f, 120f);
+                section1.add(image);
+            } catch (BadElementException | IOException ex) {
+                Logger.getLogger(PDFServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             document.add(chapter1);
             

@@ -125,28 +125,26 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
             if (content.equalsIgnoreCase("text")) message.setText(messageContent);
             else if (content.equalsIgnoreCase("text/html")) {
                 if (filename!=null) {
-                    // Create the message part
-                    BodyPart messageBodyPart = new MimeBodyPart();
-                    
-                    // Now set the actual message
-                    messageBodyPart.setText(messageBody);
-                    // messageBodyPart.setContent(messageBody, "text/html; charset=utf-8");
-                    
                     // Create a multipar message
                     Multipart multipart = new MimeMultipart();
                     
-                    //add it
-                    multipart.addBodyPart(messageBodyPart);
+                    MimeBodyPart htmlPart = new MimeBodyPart();
+                    String htmlContent = messageBody;
+                    htmlPart.setContent(htmlContent, "text/html");
+                    multipart.addBodyPart(htmlPart);
+
+                    //MimeBodyPart attachementPart = new MimeBodyPart();
+                    //attachementPart.attachFile(new File("D:/cp/pic.jpg"));
+                    //multipart.addBodyPart(attachementPart);
                     
-                    // Part two is attachment
-                    messageBodyPart = new MimeBodyPart();
-                    
+                    // Create the message part
+                    BodyPart messageBodyPart = new MimeBodyPart();
                     DataSource source = new FileDataSource(filename);
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName("recibo-visita.pdf");
                     multipart.addBodyPart(messageBodyPart);
-
-                    message.setContent(multipart, "text/html");
+                    
+                    message.setContent(multipart);
                 } else {
                     message.setContent(messageBody, "text/html");
                 }

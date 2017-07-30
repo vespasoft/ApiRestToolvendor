@@ -129,9 +129,8 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     BodyPart messageBodyPart = new MimeBodyPart();
                     
                     // Now set the actual message
-                    //messageBodyPart.setText(messageBody);
-                    messageBodyPart.setContent(messageBody, "text/html; charset=utf-8");
-                    // messageBodyPart.setContent(messageBody, "text/html");
+                    messageBodyPart.setText(messageBody);
+                    // messageBodyPart.setContent(messageBody, "text/html; charset=utf-8");
                     
                     // Create a multipar message
                     Multipart multipart = new MimeMultipart();

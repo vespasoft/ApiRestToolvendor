@@ -9,9 +9,12 @@ import static com.beecode.toolvendor.interfaces.SendEmail.EMAIL_FROM;
 import static com.beecode.toolvendor.interfaces.SendEmail.SMTP_AUTH_PWD;
 import static com.beecode.toolvendor.interfaces.SendEmail.SMTP_AUTH_USER;
 import static com.beecode.toolvendor.interfaces.SendEmail.SUBJECT_FROM_PERSONAL;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -133,16 +136,17 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
                     htmlPart.setContent(htmlContent, "text/html");
                     multipart.addBodyPart(htmlPart);
 
-                    //MimeBodyPart attachementPart = new MimeBodyPart();
-                    //attachementPart.attachFile(new File("D:/cp/pic.jpg"));
-                    //multipart.addBodyPart(attachementPart);
+                    MimeBodyPart attachementPart = new MimeBodyPart();
+                    attachementPart.attachFile(new File(filename));
+                    attachementPart.setFileName("recibo-visita.pdf");
+                    multipart.addBodyPart(attachementPart);
                     
                     // Create the message part
-                    BodyPart messageBodyPart = new MimeBodyPart();
-                    DataSource source = new FileDataSource(filename);
-                    messageBodyPart.setDataHandler(new DataHandler(source));
-                    messageBodyPart.setFileName("recibo-visita.pdf");
-                    multipart.addBodyPart(messageBodyPart);
+                    //BodyPart messageBodyPart = new MimeBodyPart();
+                    //DataSource source = new FileDataSource(filename);
+                    //messageBodyPart.setDataHandler(new DataHandler(source));
+                    //messageBodyPart.setFileName("recibo-visita.pdf");
+                    //multipart.addBodyPart(messageBodyPart);
                     
                     message.setContent(multipart);
                 } else {
@@ -156,6 +160,8 @@ public class SendEmail implements com.beecode.toolvendor.interfaces.SendEmail  {
             System.out.println("SendMailTSL is done.");
         } catch (final MessagingException ex) {
             LOGGER.error("Error al enviar mensagem: " + ex.getMessage(), ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

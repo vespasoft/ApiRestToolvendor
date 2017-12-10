@@ -6,19 +6,20 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     
     <!---  Local environment  -->
-    <!--- <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/toolvendorv1?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/toolvendorv1?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property> -->
+    <property name="hibernate.connection.password">root</property>
     
-    <!-- Openshift environment  -->
+    <!-- Openshift environment 
     <property name="hibernate.connection.url">jdbc:mysql://127.10.243.2:3306/toolvendorv1?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">admin44PjVCd</property>
-    <property name="hibernate.connection.password">mAdCv7rhesFI</property>
+    <property name="hibernate.connection.password">mAdCv7rhesFI</property> -->
     
-    <!---   Development environment     
-    <property name="hibernate.connection.url">jdbc:mysql://rds-toolvendor.cxwe2akvxjma.us-east-1.rds.amazonaws.com:3306/toolvendordev</property>
-    <property name="hibernate.connection.username">luigi</property>
-    <property name="hibernate.connection.password">beecodebeecode</property> -->
+    <!--- Amazon Web Service environment  
+    <property name="hibernate.connection.url">jdbc:mysql://dbinstance.cfdjz5yovzpg.us-east-2.rds.amazonaws.com:3306/toolvendorv1</property>
+    <property name="hibernate.connection.username">master</property>
+    <property name="hibernate.connection.password">12345678</property> --> 
+    
     <!-- <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property> -->
     <!-- <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" /> -->
     

@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- *
+ * 
  * @author luisvespa
  */
 @Controller
@@ -61,7 +61,6 @@ public class CountryController {
     }
     
     //-------------------Retrieve Single Country--------------------------------------------------------
-     
     @RequestMapping(value = "/country/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCountry(@PathVariable("id") int id) {
         Map<String,Object> result = new HashMap<String,Object>();
